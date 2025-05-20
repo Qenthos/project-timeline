@@ -5,6 +5,64 @@
 
 /***0px***/
 
+.header__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+
+  &-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  &-avatar {
+    position: relative;
+
+    &-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 4px solid $color-red;
+      cursor: pointer;
+    }
+  }
+
+  &-item--ranking {
+    background-color: white;
+    padding: 10px 15px;
+    border: 4px solid $color-red;
+    border-radius: 10px;
+  }
+
+  &-dropdown {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    z-index: 1000;
+    width: max-content;
+    border: 3px solid $color-red;
+
+    &-item {
+      margin: 0.5rem 0;
+
+      &-link {
+        text-decoration: none;
+        color: #333;
+
+        &:hover {
+          color: #007bff;
+        }
+      }
+    }
+  }
+}
 
 /***640px***/
 @include mobile-sm {
@@ -16,12 +74,10 @@
 
 /***1024px***/
 @include mobile-lg {
-
 }
 
 /***1280px***/
 @include mobile-xl {
-  
 }
 
 /***1536px***/

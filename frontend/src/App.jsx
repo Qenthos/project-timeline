@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Page404 from "./pages/Page404";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Ranking from "./pages/Ranking";
 
 
 function App() {
@@ -13,8 +14,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login/>}></Route>
           <Route path="/register" element={<Register/>}></Route>
-          {/* <Route path="/prepare-expo" element={<ExpoComposer />}></Route>
-          <Route path="/my-expo" element={<MyExpo />}></Route> */}
+          <Route path="/ranking" element={<Ranking/>}></Route>
           <Route path="*" element={<Page404 />}></Route>
         </Routes>
       </BrowserRouter>

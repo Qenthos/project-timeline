@@ -1,32 +1,56 @@
+import { useState } from "react";
 import { NavLink } from "react-router";
-import './Header.scss'
-
-// const navItems = [
-//     { to: "/", label: "Accueil", bgColor: "bg-slate-600" },
-//     { to: "/prepare-expo", label: "Préparer mon expo", bgColor: "bg-emerald-600" },
-//     { to: "/my-expo", label: "Voir mon expo", bgColor: "bg-indigo-600" },
-//     { to: "/admin", label: "Administrer", bgColor: "bg-rose-600" },
-// ];
-
+import "./Header.scss";
 
 const Header = () => {
-    return (
-        <header className="">
-            <h1 className="">Timeline</h1>
-            <nav className="" aria-label="Navigation principale">
-{/* 
-                {
-                    navItems.map((item, index) =>
-                        <NavLink key={index} to={item.to} className={({ isActive }) =>
-                        `text-white px-4 py-2 rounded-lg ${item.bgColor} ${isActive ? "shadow-lg shadow-black/50" : ""}`
-                      }>
-                            {item.label}
-                        </NavLink>
-                    )
-                } */}
-            </nav>
+  const [menuOpen, setMenuOpen] = useState(false);
 
-        </header >
-    );
-}
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  return (
+    <header className="header">
+      <nav className="header__nav" aria-label="Navigation principale">
+        <NavLink to="/" className="header__nav-item header__nav-item--home">
+          Timeline
+        </NavLink>
+
+        <div className="header__nav-group">
+          <NavLink to="/ranking" className="header__nav-item header__nav-item--ranking">
+            Classement
+          </NavLink>
+
+          <li className="header__nav-avatar">
+            <img
+              src="./../../public/media/bg-home.webp"
+              alt="Mon profil"
+              className="header__nav-avatar-img"
+              onClick={toggleMenu}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && toggleMenu()}
+            />
+
+            {menuOpen && (
+              <ul className="header__nav-dropdown">
+                <li className="header__nav-dropdown-item">
+                  <NavLink to="/profil" className="header__nav-dropdown-link">
+                    Voir profil
+                  </NavLink>
+                </li>
+                <li className="header__nav-dropdown-item">
+                  <NavLink to="/deconnexion" className="header__nav-dropdown-link">
+                    Se déconnecter
+                  </NavLink>
+                </li>
+              </ul>
+            )}
+          </li>
+        </div>
+      </nav>
+    </header>
+  );
+};
+
 export default Header;

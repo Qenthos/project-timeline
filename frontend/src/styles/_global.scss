@@ -29,7 +29,10 @@ html,
 }
 
 body {
-  background-color: $bg-primary;
+  background-image: url("./../../public/media/bg-home.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -39,6 +42,10 @@ main {
   flex-direction: column;
   flex: 1;
   margin: 20px 20px 0 20px;
+}
+
+header {
+  margin: 20px;
 }
 
 h1,
@@ -55,6 +62,10 @@ summary {
 span {
   font-family: $font-text;
   font-weight: 400;
+}
+
+h1 {
+ font-size: 3.5rem;
 }
 
 h3 {
@@ -76,7 +87,11 @@ label {
 
 a,
 label {
-  color: white;
+  color: black;
+}
+
+input[type="submit"], input[type="reset"] {
+  cursor: pointer;
 }
 
 button,
@@ -103,8 +118,16 @@ textarea {
 /***Ecran à partir de 1024px***/
 @include mobile-lg {
   main {
+    margin: 15px 0 15px 0;
+  }
+
+  header {
     margin: 15px 25px 0 25px;
   }
+
+  h1 {
+    font-size: 4rem;
+   }
 }
 
 /***Ecran à partir de 1280px***/

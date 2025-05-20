@@ -5,6 +5,96 @@
 
 /***0px***/
 
+.register {
+  &__form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__fieldset {
+    padding: 44px;
+    border-radius: 10px;
+    border: 2px solid black;
+  }
+
+  &__legend {
+    font-size: 1.5rem;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    margin: -25px 0 0 0;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem 0;
+    width: 100%;
+    position: relative;
+  }
+
+  &__label,
+  &__input {
+    font-size: 1.2rem;
+  }
+
+  &__input {
+    border-radius: 5px;
+    height: 3rem;
+    padding: 0 47px 0 15px;
+    margin: 0.2rem 0 0 0;
+  }
+
+  #password {
+    padding: 0 47px 0 15px;
+  }
+
+  &__show-password, &__confirm-show-password {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 50%;
+    right: 0.75rem;
+    cursor: pointer;
+    background-image: url("/media/hide-password.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &.is-visible, &__confirm-show-password {
+      background-image: url("/media/show-password.svg");
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.3rem 0 0 0;
+  }
+
+  &__button--submit {
+    background-color: white;
+    padding: 10px 15px;
+    border: 4px solid $color-red;
+    border-radius: 10px;
+    font-size: 1.2rem;
+  }
+
+  &__button--reset {
+    background-color: white;
+    padding: 10px 15px;
+    border: 4px solid $color-purple;
+    border-radius: 10px;
+    font-size: 1.2rem;
+  }
+
+
+}
 
 /***640px***/
 @include mobile-sm {
@@ -16,12 +106,36 @@
 
 /***1024px***/
 @include mobile-lg {
+  .register {
+    &__title {
+      position: relative;
+      text-align: center;
 
+      &::before {
+        position: absolute;
+        content: "";
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        border-bottom: 2px solid black;
+      }
+
+      &::after {
+        position: absolute;
+        content: "";
+        clip-path: circle(50% at 50% 50%);
+        bottom: -12px;
+        left: -20px;
+        background-color: $color-red;
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
 }
 
 /***1280px***/
 @include mobile-xl {
-  
 }
 
 /***1536px***/
