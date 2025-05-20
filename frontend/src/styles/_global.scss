@@ -1,0 +1,116 @@
+@use "./_mixins" as *;
+@use "./_variables" as *;
+
+/* Chrome, Edge, Safari et Opera */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: $bg-primary;
+}
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(233, 229, 229);
+}
+
+::selection {
+  background-color: black;
+  color: white;
+}
+
+html,
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: $bg-primary;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 20px 20px 0 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+legend,
+summary {
+  font-family: $font-text;
+  font-weight: 500;
+  color: $color-text;
+}
+span {
+  font-family: $font-text;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+p {
+  color: black;
+}
+
+p,
+input,
+button,
+a,
+label {
+  font-family: $font-text;
+  font-weight: 400;
+}
+
+a,
+label {
+  color: white;
+}
+
+button,
+summary,
+a {
+  cursor: pointer;
+}
+
+textarea {
+  outline: none;
+  font-family: $font-text;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/***Ecran à partir de 640px***/
+@include mobile-sm {
+}
+
+/***Ecran à partir de 768px***/
+@include mobile-md {
+}
+
+/***Ecran à partir de 1024px***/
+@include mobile-lg {
+  main {
+    margin: 15px 25px 0 25px;
+  }
+}
+
+/***Ecran à partir de 1280px***/
+@include mobile-xl {
+}
+
+/***Ecran à partir de 1536px***/
+@include mobile-2xl {
+}

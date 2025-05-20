@@ -1,0 +1,48 @@
+
+@use "./_variables" as *;
+
+/**************Ecran supérieur à 640px**************/
+
+@mixin mobile-sm {
+  @media (min-width: 640px) {
+    @content;
+  }
+}
+
+/**************Ecran supérieur à 768px**************/
+@mixin mobile-md {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+/**************Ecran supérieur à 1024px**************/
+@mixin mobile-lg {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+/**************Ecran supérieur à 1280px**************/
+@mixin mobile-xl {
+  @media (min-width: 1280px) {
+    @content;
+  }
+}
+
+/**************Ecran supérieur à 1536px**************/
+@mixin mobile-2xl {
+  @media (min-width: 1536px) {
+    @content;
+  }
+}
+
+/*****POSITIONNEMENT FLEX******/
+@mixin center-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/******ANIMATIONS******/
+

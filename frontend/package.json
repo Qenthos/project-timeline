@@ -18,7 +18,8 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dnd-touch-backend": "^16.0.1",
     "react-dom": "^19.1.0",
-    "react-router": "^7.6.0"
+    "react-router": "^7.6.0",
+    "sass": "^1.89.0"
   },
   "devDependencies": {
     "@babel/core": "^7.27.1",

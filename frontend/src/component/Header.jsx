@@ -1,4 +1,5 @@
 import { NavLink } from "react-router";
+import './Header.scss'
 
 // const navItems = [
 //     { to: "/", label: "Accueil", bgColor: "bg-slate-600" },

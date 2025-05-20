@@ -1,4 +1,5 @@
 import Header from "../component/Header";
+import './Home.scss'
 
 const Home = () => {
 

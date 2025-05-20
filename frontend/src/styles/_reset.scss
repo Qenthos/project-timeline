@@ -1,0 +1,38 @@
+/**********DEFAULT STYLES**********/
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style-type: none;
+}
+
+button,
+input {
+  border: none;
+}
+
+input {
+  outline: none;
+}
+
+button {
+  background: transparent;
+}
+
+a {
+  text-decoration: none;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+fieldset {
+  border: none;
+}
