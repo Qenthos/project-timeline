@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "pseudo": "Yazerthan",
+        "mdp": "fpizhfpihzfihzfihzfihzei",
+        "mail": "yather@gmail.com",
+        "profil_picture": "/path/file.img",
+        "profil_banner": "/path/file.img",
+        "score": 500,
+        "played_games": 12,
+         "elo": 2000
+    },
+    {
+        "id": 2,
+        "pseudo": "Quentinator",
+        "mdp": "azertyuiopmlkjhgfdsqwxcvbn,",
+        "mail": "quentinator@gmail.com",
+        "profil_picture": "/path/file.img",
+        "profil_banner": "/path/file.img",
+        "score": 1400,
+        "played_games": 40,
+        "elo": 1790
+    }
+]
