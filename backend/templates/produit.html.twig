@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+		<link rel="stylesheet" id="jplayer-css" href="{{ asset('js/jplayer-2.9.2/skin/blue.monday/css/jplayer.blue.monday.css') }}" type="text/css" />
+{% endblock %}
+{% block body %}
+				<header id="header" class="col-full">
+					<div id="logo">
+						<h1 class="site-title">Site web marchand</h1>
+					</div>
+					<nav id="site-navigation" class="main-navigation" role="navigation">
+						<button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false">
+							<span>Menu</span>
+						</button>
+						<div class="menu">
+							<ul class="nav-menu" style="display: flex">
+								<li class="page_item page-item-1 current_page_item focus">
+									<a href="afficheRecherche">Rechercher
+										un article</a>
+								</li>
+								<li class="page_item page-item-2" style="display: flex; ">
+									<a href="accederAuPanier">Panier</a>
+									{% if qtePanier is defined %}
+										<p style="height: fit-content; margin: 0; align-self: center; color: white; font-weight: bold; background-color: darkgray; padding: 0px 8px; border: solid 0; border-radius: 50px">{{qtePanier}}</p>
+									{% endif %}
+
+								</li>
+							</ul>
+						</div>
+					</nav>
+				</header>
+				<div id="content" class="site-content" tabindex="-1">
+					<div class="col-full">
+						<div id="primary">
+							<main id="main" class="site-main" role="main">
+								<header class="woocommerce-products-header">
+									<h1 class="woocommerce-products-header__title page-title">Produit : {{article.titre}}</h1>
+								</header>
+								<div style="display: flex; flex-direction: row; justify-content: space-around; column-gap: 20px;">
+									<img style="width: 40%; object-fit: contain"
+										src="{{ asset(article.image) }}"
+										class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="poster_2_up"
+									/>
+
+								<div class="cart-collaterals" style= "width: 60%; align-self: flex-end">
+									<div class="cross-sells"></div>
+									<div class="cart_totals ">
+										<h2>Prix du produit</h2>
+										<table cellspacing="0">
+											<tbody>
+												<tr class="shipping">
+													<th>Frais de port</th>
+													<td>Gratuit</td>
+												</tr>
+												<tr class="order-total">
+													<th>Total</th>
+													<td><strong> <span class="amount">{{ article.prix }}€</span>
+													</strong></td>
+												</tr>
+											</tbody>
+										</table>
+										<div class="wc-proceed-to-checkout">
+											<a
+												href="ajouterLigne?id={{ article.id }}" style="background-color: lightgray"
+												class="checkout-button button alt wc-forward">Ajouter au panier</a>
+										</div>
+									</div>
+								</div>
+								</div>
+									
+                            
+
+								
+							</main>
+						</div>
+					</div><!-- .col-full -->
+				</div><!-- #content -->
+{% endblock %}
+{% block javascripts %}
+				<script type="text/javascript" src="{{ asset('js/jplayer-2.9.2/jplayer/jquery.jplayer.min.js') }}"></script>
+				<script type="text/javascript" src="{{ asset('js/jplayer-2.9.2/add-on/jplayer.playlist.min.js') }}"></script>
+				<script type="text/javascript" src="{{ asset('js/audio.js') }}"></script>
+{% endblock %}

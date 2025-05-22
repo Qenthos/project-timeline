@@ -1,0 +1,11 @@
+<h2>Liste des {{ type }}</h2>
+<a href="{{ path('admin_add', {'type': type}) }}">Ajouter un nouvel élément</a>
+<ul>
+    {% for article in articles %}
+        <li>
+            {{ article.titre }} -
+            <a href="{{ path('admin_edit', {'type': type, 'id': article.id}) }}">Modifier</a> |
+            <a href="{{ path('admin_delete', {'type': type, 'id': article.id}) }}" onclick="return confirm('Confirmer la suppression ?');">Supprimer</a>
+        </li>
+    {% endfor %}
+</ul>

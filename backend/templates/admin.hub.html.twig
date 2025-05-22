@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Panel d'administration</h1>
+
+    <ul>
+        <li><a href="{{ path('adminLivres') }}">📚 Gérer les Livres</a></li>
+        <li><a href="{{ path('adminMusiques') }}">🎵 Gérer les Musiques</a></li>
+        <li><a href="{{ path('admin_logout') }}">🚪 Se déconnecter</a></li>
+    </ul>
+{% endblock %}

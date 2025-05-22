@@ -1,0 +1,166 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+		<link rel="stylesheet" id="jplayer-css" href="{{ asset('js/jplayer-2.9.2/skin/blue.monday/css/jplayer.blue.monday.css') }}" type="text/css" />
+{% endblock %}
+{% block body %}
+				<header id="header" class="col-full">
+					<div id="logo">
+						<h1 class="site-title">Site web marchand</h1>
+					</div>
+					<nav id="site-navigation" class="main-navigation" role="navigation">
+						<button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false">
+							<span>Menu</span>
+						</button>
+						<div class="menu">
+							<ul class="nav-menu" style="display: flex">
+								<li class="page_item page-item-1 current_page_item focus">
+									<a href="afficheRecherche">Rechercher
+										un article</a>
+								</li>
+								<li class="page_item page-item-2" style="display: flex; ">
+									<a href="accederAuPanier">Panier</a>
+									{% if qtePanier is defined %}
+										<p style="height: fit-content; margin: 0; align-self: center; color: white; font-weight: bold; background-color: darkgray; padding: 0px 8px; border: solid 0; border-radius: 50px">{{qtePanier}}</p>
+									{% endif %}
+
+								</li>
+							</ul>
+						</div>
+					</nav>
+					<div style="width:80%; display:flex; flex-direction:column;">
+                        <form action="rechercheArticles" method="get" class="form-search" style="width: 100%">
+                            <label class="label-search-product" for="name">Rechercher un produit</label>
+                            <div style="display: flex; width: 600px; border:solid 0; border-radius:100px;">
+								<select name="categorie" id="categorie-select">
+									<option value="all">Toutes nos catégories</option>
+									<option value="Animalerie">Animalerie</option>
+									<option value="Auto">Auto</option>
+									<option value="Bijoux-montres">Bijoux et montres</option>
+									<option value="Bricolage">Bricolage</option>
+									<option value="CDs">CDs</option>
+									<option value="Dvd-cinema">DVD - cinéma</option>
+									<option value="Informatique">Informatique</option>
+									<option value="Jeux-video">Jeux vidéo - console</option>
+									<option value="Livres">Livres</option>							
+									<option value="Loisirs">Loisirs</option>						
+									<option value="Sante-hygiene">Santé et hygiène</option>					
+								</select>
+                                <input type="text" id="name" name="name" style="width:80%"/>
+                                <input class="submit-search-bar" type="submit" value="Rechercher"/>
+                            <div>
+                        </form>
+						<script>
+						const select = document.querySelector("#categorie-select");
+						const params = new URLSearchParams(window.location.search);
+						const categorie = params.get('categorie');							
+						document.querySelector(`select option[value=${categorie}]`).selected = true; //On affiche l'option qui a été selectionné selon le param dans l'URL
+						</script>
+                    </div>
+			
+				</header>
+				<div id="content" class="site-content" tabindex="-1">
+					<div class="col-full">
+						<div id="primary">
+							<main id="main" class="site-main" role="main">
+								{% if articles %}
+								<header class="woocommerce-products-header">
+									<h1 class="woocommerce-products-header__title page-title">Résultats de la recherche pour {{keyword}}</h1>
+								</header>
+								{% endif %}
+
+								<h2>Produit</h2>
+									{# {% if articles %} #}
+										{# {% for article in articles %}
+										 {%  if article.category == "Bijoux"  %}
+										 <p>coucou</p>
+										 {% endif %}
+									{% endfor %} #}
+								{# {% endif %} #}
+
+								
+									
+								<ul class="products">
+									{% if id is defined and product is defined and product != " " %}
+
+										<div style="z-index: 1000; transition: ease-in 300ms; background-color: #3CCE59; max-width: 320px; padding: 15px 15px; border: solid 0; border-radius: 5px; display:flex; max-height: fit-content; justify-content: center; align-items: center; position:fixed; top:35px; right: 25px">
+										<p style="color: white; font-size: 14px; margin: 0; text-align: center; z-index: 100000">{{product}} vient d'être ajouté</p>
+										</div>
+
+									{% endif %}
+
+									{% for article in articles %}
+
+										
+
+												{% if loop.index0 is divisible by(3) %}
+									<li class="product type-product first">
+										{% else %}
+											{% if loop.index is divisible by(3) %}
+									<li class="product type-product last">
+											{% else %}
+									<li class="product type-product">
+											{% endif %}
+										{% endif %}
+									<a class="woocommerce-LoopProduct-link woocommerce-loop-product__link"
+										href="afficherProduit?id={{ article.id }}"> <img
+											src="{{ asset(article.image) }}"
+											class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="poster_2_up"
+											/>
+											<h3>{{ article.titre }}</h3> <span class="price"><ins>
+													<span class="amount">{{ article.prix }} €</span>
+												</ins></span>
+
+									</a> 
+									{% if id == article.id %}<p style="color: green">vient d'être ajouté</p>{% endif %}
+									<a
+										href="ajouterArticle?id={{ article.id }}&categorie={{categorie}}&name={{keyword}}&nbRes={{nbRes}}"
+										class="button product_type_simple add_to_cart_button">Mettre
+											dans le panier</a>
+										{% if article.pistes is defined %}
+											{% if article.pistes|length > 0 %}
+										<div id="jquery_jplayer_{{ article.id }}" class="jp-jplayer" data-idArticle="{{ article.id }}"  data-pistes="{{ article.pistes|json_encode() }}"></div>
+										<div id="jp_container_{{ article.id }}" class="jp-audio" role="application">
+											<div class="jp-type-playlist">
+												<div class="jp-gui jp-interface">
+													<div class="jp-controls-holder">
+														<div class="jp-controls">
+															<button class="jp-previous" role="button" tabindex="0">previous</button>
+															<button class="jp-play" role="button" tabindex="0">play</button>
+															<button class="jp-stop" role="button" tabindex="0">stop</button>
+															<button class="jp-next" role="button" tabindex="0">next</button>
+														</div>
+													</div>
+												</div>
+												<div class="jp-playlist">
+													<ul>
+													</ul>
+												</div>
+												<div class="jp-no-solution">
+													<span>Update Required</span> To play the media you will need to
+													either update your browser to a recent version or update your <a
+														href="http://get.adobe.com/flashplayer/" target="_blank">Flash
+														plugin</a>.
+												</div>
+											</div>
+										</div> 
+											{% endif %}
+										{% endif %}
+
+									</li>
+									{% endfor %}
+								</ul>
+								{% if articles and categorie is defined %}
+								<div style="display: flex; width: 100%; justify-content: center;">
+									<a href="rechercheArticles?categorie={{categorie}}&name={{keyword}}&nbRes={{nbRes + 6}}"> Voir plus </a>
+								</div>
+								{% endif %}
+							</main>
+						</div>
+					</div><!-- .col-full -->
+				</div><!-- #content -->
+{% endblock %}
+{% block javascripts %}
+				<script type="text/javascript" src="{{ asset('js/jplayer-2.9.2/jplayer/jquery.jplayer.min.js') }}"></script>
+				<script type="text/javascript" src="{{ asset('js/jplayer-2.9.2/add-on/jplayer.playlist.min.js') }}"></script>
+				<script type="text/javascript" src="{{ asset('js/audio.js') }}"></script>
+{% endblock %}
