@@ -1,7 +1,8 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import Instruments from "./Instruments";
 
-const API_URL = "https://682de731746f8ca4a47b1b3a.mockapi.io/instruments/instruments";
+const API_URL =
+  "https://682de731746f8ca4a47b1b3a.mockapi.io/instruments/instruments";
 export default class InstrumentsStore {
   _instruments = [];
   _isLoaded = false;
@@ -17,13 +18,12 @@ export default class InstrumentsStore {
   async loadInstruments() {
     try {
       const response = await fetch(API_URL);
-      this._instruments = await response.json();
+      const data = await response.json();
 
       runInAction(() => {
-        this._instruments = this._instruments.map(
+        this._instruments = data.map(
           (instrument) => new Instruments(instrument)
         );
-        console.log(this._instruments)
         this._isLoaded = true;
       });
     } catch (error) {

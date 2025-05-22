@@ -1,38 +1,38 @@
 import { makeAutoObservable } from "mobx";
+
 export default class Instruments {
   _id;
   _name;
   _image;
   _category;
-  _dateCreation;
-  _origin;
+  _year;
+  _weight;
+  _height;
   _description;
-  _culturalFamily;
-  _anecdote;
 
   constructor({
     id,
     name,
     image,
     category,
-    dateCreation,
-    origin,
+    year,
+    weight,
+    height,
     description,
-    culturalFamily,
-    anecdote,
   }) {
     this._id = id;
     this._name = name;
     this._image = image;
     this._category = category;
-    this._dateCreation = dateCreation;
-    this._origin = origin;
+    this._year = year;
+    this._weight = weight;
+    this._height = height;
     this._description = description;
-    this._culturalFamily = culturalFamily;
-    this._anecdote = anecdote;
+
     makeAutoObservable(this);
   }
 
+  // Getters
   get id() {
     return this._id;
   }
@@ -49,26 +49,23 @@ export default class Instruments {
     return this._category;
   }
 
-  get dateCreation() {
-    return this._dateCreation;
+  get year() {
+    return this._year;
   }
 
-  get origin() {
-    return this._origin;
+  get weight() {
+    return this._weight;
+  }
+
+  get height() {
+    return this._height;
   }
 
   get description() {
     return this._description;
   }
 
-  get culturalFamily() {
-    return this._culturalFamily;
-  }
-
-  get anecdote() {
-    return this._anecdote;
-  }
-
+  // Setters
   set name(value) {
     if (typeof value === "string" && value.trim().length > 0) {
       this._name = value.trim();
@@ -88,7 +85,6 @@ export default class Instruments {
       throw new Error(`URL d'image invalide : ${value}`);
     }
   }
-  
 
   set category(value) {
     if (typeof value === "string" && value.trim().length > 0) {
@@ -98,22 +94,33 @@ export default class Instruments {
     }
   }
 
-  set dateCreation(value) {
+  set year(value) {
+    const currentYear = new Date().getFullYear();
     if (
-      typeof value !== "number" ||
-      !Number.isInteger(value) ||
-      value > new Date().getFullYear()
+      typeof value === "number" &&
+      Number.isInteger(value) &&
+      value > 0 &&
+      value <= currentYear
     ) {
+      this._year = value;
+    } else {
       throw new Error(`Année invalide : ${value}`);
     }
-    this._dateCreation = value;
   }
 
-  set origin(value) {
-    if (typeof value === "string" && value.trim().length > 0) {
-      this._origin = value.trim();
+  set weight(value) {
+    if (typeof value === "number" && value >= 0) {
+      this._weight = value;
     } else {
-      throw new Error(`Origine invalide : ${value}`);
+      throw new Error(`Poids invalide : ${value}`);
+    }
+  }
+
+  set height(value) {
+    if (typeof value === "number" && value >= 0) {
+      this._height = value;
+    } else {
+      throw new Error(`Hauteur invalide : ${value}`);
     }
   }
 
@@ -121,23 +128,7 @@ export default class Instruments {
     if (typeof value === "string" && value.trim().length > 0) {
       this._description = value.trim();
     } else {
-      throw new Error(`Origine invalide : ${value}`);
-    }
-  }
-
-  set culturalFamily(value) {
-    if (typeof value === "string" && value.trim().length > 0) {
-      this._culturalFamily = value.trim();
-    } else {
-      throw new Error(`Famille culturelle invalide : ${value}`);
-    }
-  }
-
-  set anecdote(value) {
-    if (typeof value === "string" && value.trim().length > 0) {
-      this._anecdote = value.trim();
-    } else {
-      throw new Error(`Anecdote invalide : ${value}`);
+      throw new Error(`Description invalide : ${value}`);
     }
   }
 }

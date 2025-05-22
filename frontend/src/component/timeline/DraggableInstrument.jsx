@@ -29,6 +29,7 @@ const DraggableInstrument = ({ instrument }) => {
         draggable="false"
         className="draggable-instrument__image"
       />
+      <h2 className="draggable-instrument__name">{instrument.name}</h2>
     </div>
   );
 };

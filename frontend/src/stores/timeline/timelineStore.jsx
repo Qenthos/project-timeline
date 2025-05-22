@@ -1,86 +1,67 @@
 import { makeAutoObservable } from "mobx";
 
-export default class timelineStore {
+export default class TimelineStore {
   _instrumentsStore;
   _idsTimeline;
 
   constructor(instrumentsStore) {
     this._instrumentsStore = instrumentsStore;
-    this._idsTimeline = [
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-    ];
-      // this._idsTimeline = Array(10).fill(null);
+    this._idsTimeline = Array(5).fill(null);
     this.getTabIds();
     makeAutoObservable(this);
   }
 
   get instrumentsTimeline() {
-    return this._idsExpo
+    return this._idsTimeline
       .filter((id) => id !== null)
       .map((id) => this._instrumentsStore.getInstrumentsById(id));
   }
 
   get instrumentsTimelineBySlot() {
-    return this._idsExpo.map((id) =>
+    return this._idsTimeline.map((id) =>
       id ? this._instrumentsStore.getInstrumentsById(id) : null
     );
+  }
+
+  setSizeTimeline(size) {
+    return this._idsTimeline = Array(size).fill(null);
   }
 
   existsInTimeline(instrumentOrId) {
     const instrumentId =
       typeof instrumentOrId === "object" ? instrumentOrId.id : instrumentOrId;
 
-    return this._idsExpo.includes(instrumentId);
+    return this._idsTimeline.includes(instrumentId);
   }
 
-  setInstrumentsAt(emplacement, idInstrument) {
+  setInstrumentAt(emplacement, idInstrument) {
     if (emplacement < 0 || emplacement > 9) {
       throw new Error("L'emplacement doit être compris entre 0 et 9");
     }
 
-    if (this._idsExpo[emplacement] !== null) {
-      return;
-    }
+    // if (this._idsTimeline[emplacement] !== null) {
+    //   return;
+    // }
 
-    this._idsExpo[emplacement] = idInstrument;
+    this._idsTimeline[emplacement] = idInstrument;
     this.saveTabIds();
   }
 
   reset() {
-    this._idsExpo.fill(null);
+    this._idsTimeline.fill(null);
     localStorage.removeItem("tabIds");
   }
 
   saveTabIds() {
-    localStorage.setItem("tabIds", JSON.stringify(this._idsExpo));
+    localStorage.setItem("tabIds", JSON.stringify(this._idsTimeline));
   }
 
   getTabIds() {
     const storedTabIds = localStorage.getItem("tabIds");
     if (storedTabIds) {
-      this._idsExpo = JSON.parse(storedTabIds);
+      this._idsTimeline = JSON.parse(storedTabIds);
     } else {
-      this._idsExpo = [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-      ];
+      this._idsTimeline = Array(this._idsTimeline.length).fill(null);
     }
   }
 }

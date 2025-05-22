@@ -1,31 +1,37 @@
 import { useState } from "react";
 import "./SettingsGame.scss";
 import Header from "../component/Header";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const SettingsGame = () => {
   const [cards, setCards] = useState(5);
   const [timer, setTimer] = useState(0);
   const [round, setRound] = useState(1);
+  const [difficulty, setDifficulty] = useState("Easy");
+  const [modeGame, setModeGame] = useState("Annee");
   const [isUnlimited, setIsUnlimited] = useState(false);
-  const [categoryGame, setCategoryGame] = useState("all");
+  // const [categoryGame, setCategoryGame] = useState("all");
   const [timeTimer, setTimeTimer] = useState(30);
 
   let navigate = useNavigate();
 
   const startParty = () => {
+    localStorage.removeItem("tabIds");
     navigate("/timeline-composer", {
       state: {
         timer: timer,
         cards: cards,
         round: round,
         isUnlimited: isUnlimited,
+        difficulty: difficulty,
+        modeGame: modeGame
       }
     });    
   }
 
   const handleParametersDifficulty = (evt) => {
     const difficulty = evt.currentTarget.dataset.difficulty;
+    setDifficulty(difficulty);
 
     const tabDifficulty = {
       easy: { cards: 10, timer: 200, round: 2 },
@@ -41,7 +47,7 @@ const SettingsGame = () => {
       setTimeTimer(values.timer);
     }
 
-    setCategoryGame(values);
+    
   };
 
   const updateTimer = () => {
@@ -64,6 +70,7 @@ const SettingsGame = () => {
               {["Annee", "Poids", "Taille"].map((mode, index) => (
                 <li className="settings__instrument-item" key={index}>
                   <button
+                  onClick={() => setModeGame(mode)}
                     className={`settings__instrument-button settings__instrument-button--${mode.toLowerCase()}`}
                   >
                     {mode}
@@ -141,7 +148,6 @@ const SettingsGame = () => {
                       disabled={isUnlimited}
                     />
                     <span
-                      onChange={updateTimer}
                       className="settings__time-range-timer"
                     >
                       {timeTimer}s

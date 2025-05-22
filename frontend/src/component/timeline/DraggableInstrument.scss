@@ -8,14 +8,21 @@
 .draggable-instrument {
   overflow: hidden;
   border-radius: 0.5rem;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
+  border: 2px solid $color-red;
 
   &__image {
     width: 100%;
     aspect-ratio: 1 / 1;
     object-fit: cover;
-    display: block;
-    pointer-events: none;
-    user-select: none;
+    // display: block;
+    // pointer-events: none;
+    // user-select: none;
+  }
+
+  &__name {
+    background-color: $color-red;
+    text-align: center;
   }
 }
 
