@@ -1,0 +1,44 @@
+@use "../../styles/_mixins" as *;
+@use "../../styles/_variables" as *;
+@use "../../styles/_reset" as *;
+@use "../../styles/_global" as *;
+
+/***0px***/
+
+.list__filter-title {
+  text-align: center;
+}
+
+.list__filter-instrument {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.list__instruments {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/***640px***/
+@include mobile-sm {
+}
+
+/*** 768px***/
+@include mobile-md {
+}
+
+/***1024px***/
+@include mobile-lg {
+}
+
+/***1280px***/
+@include mobile-xl {
+}
+
+/***1536px***/
+@include mobile-2xl {
+}

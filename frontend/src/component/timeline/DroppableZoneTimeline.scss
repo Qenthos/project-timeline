@@ -1,0 +1,67 @@
+@use "../../styles/_mixins" as *;
+@use "../../styles/_variables" as *;
+@use "../../styles/_reset" as *;
+@use "../../styles/_global" as *;
+
+/***0px***/
+
+.droppable-zone {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border: 1px solid black;
+  background-color: white;
+  cursor: pointer;
+
+  &--over {
+    background-color: #e5e7eb;
+  }
+
+  &--ready {
+    background-color: lightblue;
+  }
+
+  &--disabled {
+    pointer-events: none;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__index {
+    position: absolute;
+    top: 0.25rem;
+    left: 0.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+}
+
+/***640px***/
+@include mobile-sm {
+}
+
+/*** 768px***/
+@include mobile-md {
+}
+
+/***1024px***/
+@include mobile-lg {
+}
+
+/***1280px***/
+@include mobile-xl {
+}
+
+/***1536px***/
+@include mobile-2xl {
+}

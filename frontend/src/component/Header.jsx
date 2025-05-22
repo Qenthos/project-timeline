@@ -17,7 +17,10 @@ const Header = () => {
         </NavLink>
 
         <div className="header__nav-group">
-          <NavLink to="/ranking" className="header__nav-item header__nav-item--ranking">
+          <NavLink
+            to="/ranking"
+            className="header__nav-item header__nav-item--ranking"
+          >
             Classement
           </NavLink>
 
@@ -40,7 +43,10 @@ const Header = () => {
                   </NavLink>
                 </li>
                 <li className="header__nav-dropdown-item">
-                  <NavLink to="/deconnexion" className="header__nav-dropdown-link">
+                  <NavLink
+                    to="/deconnexion"
+                    className="header__nav-dropdown-link"
+                  >
                     Se déconnecter
                   </NavLink>
                 </li>

@@ -1,0 +1,40 @@
+@use "../../styles/_mixins" as *;
+@use "../../styles/_variables" as *;
+@use "../../styles/_reset" as *;
+@use "../../styles/_global" as *;
+
+/***0px***/
+
+.draggable-instrument {
+  overflow: hidden;
+  border-radius: 0.5rem;
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
+/***640px***/
+@include mobile-sm {
+}
+
+/*** 768px***/
+@include mobile-md {
+}
+
+/***1024px***/
+@include mobile-lg {
+}
+
+/***1280px***/
+@include mobile-xl {
+}
+
+/***1536px***/
+@include mobile-2xl {
+}

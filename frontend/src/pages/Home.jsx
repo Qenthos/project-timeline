@@ -12,12 +12,12 @@ const Home = () => {
 
           <ul className="home__list home__list--primary-actions">
             <li className="home__item home__item--first-list home__item--play">
-            <Link to="/TimelineComposer" className="home__link">
+            <Link to="/settings-game" className="home__link">
                 Jouer au jeu
               </Link>
             </li>
             <li className="home__item home__item--first-list home__item--instruments">
-              <Link to="/instruments" className="home__link">
+              <Link to="/my-instruments" className="home__link">
                 Découvir les instruments
               </Link>
             </li>
