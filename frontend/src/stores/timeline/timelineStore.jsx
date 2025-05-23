@@ -7,8 +7,8 @@ export default class TimelineStore {
   constructor(instrumentsStore) {
     this._instrumentsStore = instrumentsStore;
     this._idsTimeline = Array(5).fill(null);
-    this.getTabIds();
     makeAutoObservable(this);
+    this.getTabIds();
   }
 
   get instrumentsTimeline() {
@@ -24,12 +24,12 @@ export default class TimelineStore {
   }
 
   setSizeTimeline(size) {
-    return (this._idsTimeline = Array(size).fill(null));
+    this._idsTimeline = Array(size).fill(null);
+    this.saveTabIds();
   }
 
   setDefaultCard(card) {
-    this._idsTimeline.unshift(card.id);
-    this._idsTimeline.pop();
+    this._idsTimeline[0] = card.id;
     this.saveTabIds();
   }
 
@@ -41,7 +41,7 @@ export default class TimelineStore {
   }
 
   setInstrumentAt(emplacement, idInstrument) {
-    if (emplacement < 0 || emplacement > 9) {
+    if (emplacement < 0 || emplacement > this._idsTimeline.length) {
       throw new Error("L'emplacement doit être compris entre 0 et 9");
     }
 

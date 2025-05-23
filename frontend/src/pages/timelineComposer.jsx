@@ -21,45 +21,51 @@ const TimelineComposer = observer(() => {
   const [selectedInstruments, setSelectedInstruments] = useState([]);
   const [endGame, setEndGame] = useState(false);
   const [win, setWin] = useState(false);
-  const [nbBadResponse, setNbBadResponse] = useState("");
-  const [nbGoodResponse, setNbGoodResponse] = useState("");
+  const [nbBadResponse, setNbBadResponse] = useState(0);
+  const [nbGoodResponse, setNbGoodResponse] = useState(0);
   const [timerGame, setTimerGame] = useState(timer);
-  
+
   //Supprimer le local storage si nouvelle partie
   useEffect(() => {
+    // Reset store si pas de sauvegarde
     const sauvegarde = localStorage.getItem("tabIds");
     if (!sauvegarde) {
       instruStore.reset();
     }
-       //définit le nombres de zone à créer
-    instruStore.setSizeTimeline(cards);
-
-    //cartespar défaut
+    // Taille timeline
+    instruStore.setSizeTimeline(cards + 1);
+  
+    // Carte par défaut aléatoire
     const allInstruments = instruStore._instrumentsStore.instruments;
-    const randomInstrument = allInstruments[Math.floor(Math.random() * allInstruments.length)];
+    const randomInstrument =
+      allInstruments[Math.floor(Math.random() * allInstruments.length)];
     instruStore.setDefaultCard(randomInstrument);
   
-    //Timer
-    let timeGame = timer;
-
-    const time = setInterval(() => {
-      timeGame--;
-      setTimerGame(timeGame);
-      if (timeGame == 0) {
-        clearInterval(time);
-        // setEndGame(true);
-      }
-    }, 1000);
-
- 
- 
-
-
-    const random = [...allInstruments].sort(() => Math.random() - 0.5); //trie random
-    const selection = random.slice(0, cards); //définit le nombre de cartes à afficher
-
+    // Sélection aléatoire des instruments
+    const random = [...allInstruments].sort(() => Math.random() - 0.5);
+    const selection = random.slice(0, cards);
     setSelectedInstruments(selection);
+  
+    // Initialisation timer
+    // setTimerGame(timer);
   }, [cards, instruStore]);
+  
+  useEffect(() => {
+    if (timerGame <= 0) {
+      setEndGame(true);
+      return;
+    }
+    if (endGame) {
+      return; 
+    }
+  
+    const interval = setInterval(() => {
+      setTimerGame((prev) => prev - 1);
+    }, 1000);
+  
+    return () => clearInterval(interval);
+  }, [timerGame, endGame]);
+  
 
   const instrumentsNotInExpo = selectedInstruments
     .filter((instrument) => !instruStore.existsInTimeline(instrument.id))
@@ -220,7 +226,13 @@ const TimelineComposer = observer(() => {
                 win={win}
                 error={nbBadResponse}
                 good={nbGoodResponse}
-                onClose={() => {}}
+                onClose={() => {
+                  setEndGame(false);
+                  setWin(false);
+                  setNbBadResponse(0);
+                  setNbGoodResponse(0);
+                  instruStore.reset();
+                }}
               ></EndGame>
             )}
           </section>
