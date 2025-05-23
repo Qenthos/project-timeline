@@ -6,23 +6,27 @@
 /***0px***/
 
 .draggable-instrument {
-  overflow: hidden;
+  position: absolute;
+  top: 0; 
+  width: 150px;
+  transition: transform 0.2s;
   border-radius: 0.5rem;
-  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.05);
   border: 2px solid $color-red;
 
   &__image {
     width: 100%;
     aspect-ratio: 1 / 1;
     object-fit: cover;
-    // display: block;
-    // pointer-events: none;
-    // user-select: none;
+    border-radius: 0.5rem;
   }
 
   &__name {
     background-color: $color-red;
     text-align: center;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem;
   }
 }
 

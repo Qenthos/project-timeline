@@ -10,7 +10,6 @@
   margin: 0 auto;
   margin-inline: auto;
   max-width: 1280px;
-  
 
   &__section {
     display: grid;
@@ -36,12 +35,12 @@
   }
 
   &__instruments {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(8rem, max-content));
-    padding: 30px 25px;
-    box-shadow: 0px 0px 16px -4px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 13rem;
   }
 
   &__dropzones {
@@ -77,8 +76,8 @@
     border-radius: 0.375rem;
 
     &:hover {
-        background-color: rgb(34, 67, 255);
-      }
+      background-color: rgb(34, 67, 255);
+    }
   }
 }
 

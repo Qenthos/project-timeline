@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { useEffect, useRef } from "react";
 import "./EndGame.scss";
 
-const EndGame = ({ endgame, onClose }) => {
+const EndGame = ({ win, error, good, onClose }) => {
   const dialogRef = useRef(null);
 
   useEffect(() => {
@@ -43,6 +43,11 @@ const EndGame = ({ endgame, onClose }) => {
           className="endgame-detail__close"
           aria-label="Fermer"
         ></button>
+        <div>
+          {win ? <p>Gagné !</p> : <p>Perdu !</p>}
+          <p>Nb erreurs : {error}</p>
+          <p>Nb bonnes : {good}</p>
+        </div>
 
         {/* <div className="endgame-detail__content">
           <h2 id="popup-title" className="endgame-detail__title">

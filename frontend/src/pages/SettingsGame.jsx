@@ -7,7 +7,7 @@ const SettingsGame = () => {
   const [cards, setCards] = useState(5);
   const [timer, setTimer] = useState(0);
   const [round, setRound] = useState(1);
-  const [difficulty, setDifficulty] = useState("Easy");
+  const [difficulty, setDifficulty] = useState("easy");
   const [modeGame, setModeGame] = useState("Annee");
   const [isUnlimited, setIsUnlimited] = useState(false);
   // const [categoryGame, setCategoryGame] = useState("all");
@@ -24,10 +24,10 @@ const SettingsGame = () => {
         round: round,
         isUnlimited: isUnlimited,
         difficulty: difficulty,
-        modeGame: modeGame
-      }
-    });    
-  }
+        modeGame: modeGame.toLowerCase(),
+      },
+    });
+  };
 
   const handleParametersDifficulty = (evt) => {
     const difficulty = evt.currentTarget.dataset.difficulty;
@@ -46,8 +46,6 @@ const SettingsGame = () => {
       setRound(values.round);
       setTimeTimer(values.timer);
     }
-
-    
   };
 
   const updateTimer = () => {
@@ -70,7 +68,7 @@ const SettingsGame = () => {
               {["Annee", "Poids", "Taille"].map((mode, index) => (
                 <li className="settings__instrument-item" key={index}>
                   <button
-                  onClick={() => setModeGame(mode)}
+                    onClick={() => setModeGame(mode)}
                     className={`settings__instrument-button settings__instrument-button--${mode.toLowerCase()}`}
                   >
                     {mode}
@@ -147,9 +145,7 @@ const SettingsGame = () => {
                       onChange={(e) => setTimer(Number(e.target.value))}
                       disabled={isUnlimited}
                     />
-                    <span
-                      className="settings__time-range-timer"
-                    >
+                    <span className="settings__time-range-timer">
                       {timeTimer}s
                     </span>
                     <label
@@ -196,10 +192,7 @@ const SettingsGame = () => {
                   </div>
                 </li>
               </ul>
-              <button
-                onClick={startParty}
-                className="settings__start-button"
-              >
+              <button onClick={startParty} className="settings__start-button">
                 Commencer la partie
               </button>
             </div>

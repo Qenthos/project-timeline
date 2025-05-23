@@ -1,8 +1,9 @@
-import PropTypes from "prop-types";
 import { useDrop } from "react-dnd";
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import "./DroppableZoneTimeline.scss";
 
-const DroppableZoneTimeline = ({ index, instrumentDrop, onDrop }) => {
+const DroppableZoneTimeline = ({ index, instrumentDrop, gamemode, onDrop }) => {
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: "instrument",
     drop: (item) => {
@@ -14,6 +15,20 @@ const DroppableZoneTimeline = ({ index, instrumentDrop, onDrop }) => {
     }),
   }));
 
+  const [modeGame, setModeGame] = useState("");
+
+  useEffect(() => {
+    if (!instrumentDrop) return;  
+
+    if (gamemode === "annee") {
+      setModeGame(instrumentDrop.year);
+    } else if (gamemode === "taille") {
+      setModeGame(instrumentDrop.height);
+    } else {
+      setModeGame(instrumentDrop.weight);
+    }
+  }, [gamemode, instrumentDrop]);
+
   return (
     <div
       className={`droppable-zone ${
@@ -24,11 +39,14 @@ const DroppableZoneTimeline = ({ index, instrumentDrop, onDrop }) => {
       ref={drop}
     >
       {instrumentDrop && (
-        <img
-          src={instrumentDrop.image}
-          alt={instrumentDrop.title}
-          className="droppable-zone__image"
-        />
+        <>
+          <img
+            src={instrumentDrop.image}
+            alt={instrumentDrop.title}
+            className="droppable-zone__image"
+          />
+          <p>{modeGame}</p>
+        </>
       )}
 
       <p className="droppable-zone__index">{index + 1}</p>
@@ -39,6 +57,7 @@ const DroppableZoneTimeline = ({ index, instrumentDrop, onDrop }) => {
 DroppableZoneTimeline.propTypes = {
   index: PropTypes.number.isRequired,
   instrumentDrop: PropTypes.object,
+  gamemode: PropTypes.string.isRequired,
   onDrop: PropTypes.func.isRequired,
 };
 

@@ -24,7 +24,13 @@ export default class TimelineStore {
   }
 
   setSizeTimeline(size) {
-    return this._idsTimeline = Array(size).fill(null);
+    return (this._idsTimeline = Array(size).fill(null));
+  }
+
+  setDefaultCard(card) {
+    this._idsTimeline.unshift(card.id);
+    this._idsTimeline.pop();
+    this.saveTabIds();
   }
 
   existsInTimeline(instrumentOrId) {
@@ -39,9 +45,9 @@ export default class TimelineStore {
       throw new Error("L'emplacement doit être compris entre 0 et 9");
     }
 
-    // if (this._idsTimeline[emplacement] !== null) {
-    //   return;
-    // }
+    if (this._idsTimeline[emplacement] !== null) {
+      return;
+    }
 
     this._idsTimeline[emplacement] = idInstrument;
     this.saveTabIds();

@@ -6,7 +6,7 @@ const DraggableInstrument = ({ instrument }) => {
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: "instrument",
-      item: { id: instrument.id },
+      item: { id: instrument.id, },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),

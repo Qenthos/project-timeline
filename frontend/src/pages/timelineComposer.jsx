@@ -20,18 +20,41 @@ const TimelineComposer = observer(() => {
 
   const [selectedInstruments, setSelectedInstruments] = useState([]);
   const [endGame, setEndGame] = useState(false);
-
+  const [win, setWin] = useState(false);
+  const [nbBadResponse, setNbBadResponse] = useState("");
+  const [nbGoodResponse, setNbGoodResponse] = useState("");
+  const [timerGame, setTimerGame] = useState(timer);
+  
   //Supprimer le local storage si nouvelle partie
   useEffect(() => {
     const sauvegarde = localStorage.getItem("tabIds");
     if (!sauvegarde) {
       instruStore.reset();
     }
-
-    //définit le nombres de zone à créer
+       //définit le nombres de zone à créer
     instruStore.setSizeTimeline(cards);
 
+    //cartespar défaut
     const allInstruments = instruStore._instrumentsStore.instruments;
+    const randomInstrument = allInstruments[Math.floor(Math.random() * allInstruments.length)];
+    instruStore.setDefaultCard(randomInstrument);
+  
+    //Timer
+    let timeGame = timer;
+
+    const time = setInterval(() => {
+      timeGame--;
+      setTimerGame(timeGame);
+      if (timeGame == 0) {
+        clearInterval(time);
+        // setEndGame(true);
+      }
+    }, 1000);
+
+ 
+ 
+
+
     const random = [...allInstruments].sort(() => Math.random() - 0.5); //trie random
     const selection = random.slice(0, cards); //définit le nombre de cartes à afficher
 
@@ -43,24 +66,77 @@ const TimelineComposer = observer(() => {
     .slice(0, cards);
 
   const instrumentExpoSlot = instruStore.instrumentsTimelineBySlot;
+  // console.log(instrumentExpoSlot);
 
   const isToucheDevice = window.matchMedia("(pointer: coarse)").matches;
 
   const backend = isToucheDevice ? TouchBackend : HTML5Backend;
 
+  /**
+   *
+   */
   const handleGame = () => {
+    // On traduit le mode de jeu en nom de propriété
+    let gamemode =
+      modeGame === "annee"
+        ? "year"
+        : modeGame === "taille"
+        ? "height"
+        : "weight";
+
+    // Création des données du joueur avec la bonne propriété
     let data = instrumentExpoSlot.map((instru) => ({
       id: instru?.id,
-      year: instru?.year,
+      gamemode: instru?.[gamemode],
     }));
+    console.log(data);
 
-    let orderUser = data.map((item) => item.year);
+    let orderUser = data.map((item) => item.gamemode);
     console.log(orderUser);
 
+    // Même principe ici : on trie les vraies valeurs selon le bon champ
     let correctOrder = instrumentExpoSlot
-      .map((instru) => instru.year)
+      .map((instru) => instru?.[gamemode])
       .sort((a, b) => a - b);
     console.log(correctOrder);
+
+    const same = [];
+    const different = [];
+
+    const compare =
+      correctOrder.length === orderUser.length &&
+      correctOrder.every((val, i) => val === orderUser[i]);
+
+    if (compare) {
+      setWin(true);
+    } else {
+      for (
+        let i = 0;
+        i < Math.max(orderUser.length, correctOrder.length);
+        i++
+      ) {
+        if (orderUser[i] === correctOrder[i]) {
+          same.push(orderUser[i]);
+        } else {
+          different.push(orderUser[i]);
+        }
+      }
+    }
+
+    setNbBadResponse(different.length);
+    setNbGoodResponse(same.length);
+
+    // Ici aussi on adapte les filtres
+    const badResponseInstrument = data.filter((item) =>
+      different.includes(item.gamemode)
+    );
+    const goodResponseInstrument = data.filter(
+      (item) => !different.includes(item.gamemode)
+    );
+
+    console.log(badResponseInstrument);
+    console.log(goodResponseInstrument);
+    setEndGame(true);
   };
 
   return (
@@ -88,7 +164,7 @@ const TimelineComposer = observer(() => {
               </li>
               <li className="timeline__list-parameters-item ">
                 <p className="timeline__list-parameters-text timeline__list-parameters-text--timer">
-                  Timer : {timer}
+                  Timer : {timerGame}
                 </p>
               </li>
               <li className="timeline__list-parameters-item">
@@ -114,6 +190,7 @@ const TimelineComposer = observer(() => {
                   key={id}
                   index={id}
                   instrumentDrop={instrument}
+                  gamemode={modeGame}
                   onDrop={(idInstrument) =>
                     instruStore.setInstrumentAt(id, idInstrument)
                   }
@@ -138,7 +215,14 @@ const TimelineComposer = observer(() => {
                 </button>
               </li>
             </ul>
-            {endGame && <EndGame endgame=""></EndGame>}
+            {endGame && (
+              <EndGame
+                win={win}
+                error={nbBadResponse}
+                good={nbGoodResponse}
+                onClose={() => {}}
+              ></EndGame>
+            )}
           </section>
         </main>
       </DndProvider>
