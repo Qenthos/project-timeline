@@ -44,9 +44,12 @@
   }
 
   &__dropzones {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    display: flex;
+    overflow: scroll;
+    height: 16rem;
+    // display: grid;
+    // gap: 1rem;
+    // grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   }
 
   &__list-buttons {

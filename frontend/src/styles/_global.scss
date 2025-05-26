@@ -10,12 +10,12 @@
   background: $bg-primary;
 }
 ::-webkit-scrollbar-thumb {
-  background: white;
+  background: $color-red;
   border-radius: 10px;
   cursor: pointer;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(233, 229, 229);
+  background: rgb(255, 186, 186);
 }
 
 ::selection {

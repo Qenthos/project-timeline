@@ -5,10 +5,10 @@ import { useNavigate } from "react-router";
 
 const SettingsGame = () => {
   const [cards, setCards] = useState(5);
-  const [timer, setTimer] = useState(0);
+  const [timer, setTimer] = useState(30);
   const [round, setRound] = useState(1);
   const [difficulty, setDifficulty] = useState("easy");
-  const [modeGame, setModeGame] = useState("Annee");
+  const [modeGame, setModeGame] = useState("annee");
   const [isUnlimited, setIsUnlimited] = useState(false);
   // const [categoryGame, setCategoryGame] = useState("all");
   const [timeTimer, setTimeTimer] = useState(30);
