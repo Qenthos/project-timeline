@@ -9,12 +9,13 @@ import Ranking from "./pages/Ranking";
 import MyInstruments from "./pages/MyInstruments";
 import TimelineComposer from "./pages/timelineComposer";
 import SettingsGame from "./pages/SettingsGame.jsx";
+import LoadingScreen from "./component/LoadingScreen.jsx";
 
 const App = observer(() => {
   const { isLoaded } = useInstrumentsStore();
 
   return !isLoaded ? (
-    <p>Chargement...</p>
+    <LoadingScreen />
   ) : (
     <BrowserRouter>
       <Routes>

@@ -1,21 +1,24 @@
+import { Link } from "react-router";
+import { useState } from "react";
 import Header from "../component/Header";
 import "./Login.scss";
-import { Link } from "react-router";
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  /**
+   * Hide / show password
+   */
   const toggleShowPassword = () => {
-    const inputPassword = document.querySelector("#password");
-    const toggleButton = document.querySelector(".login__show-password");
+    setShowPassword((prev) => !prev);
+  };
 
-    inputPassword.type = inputPassword.type === "text" ? "password" : "text";
-
-    const isVisible = inputPassword.type === "text";
-    toggleButton.classList.toggle("is-visible", isVisible);
-
-    toggleButton.setAttribute(
-      "aria-label",
-      isVisible ? "Afficher le mot de passe" : "Masquer le mot de passe"
-    );
+  /**
+   * Form
+   * @param {*} e
+   */ 
+  const handleSubmit = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -23,10 +26,9 @@ const Login = () => {
       <Header />
       <main className="login">
         <h1 className="login__title">Se connecter</h1>
-        <form className="login__form" action="" method="get">
+        <form className="login__form" method="get" onSubmit={handleSubmit}>
           <fieldset className="login__fieldset">
             <legend className="login__legend">Formulaire de connexion</legend>
-
             <ul className="login__list">
               <li className="login__item">
                 <label className="login__label" htmlFor="mail">
@@ -48,20 +50,27 @@ const Login = () => {
                 <input
                   className="login__input login__input--password"
                   id="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Mot de passe"
                   required
+                  aria-describedby="togglePasswordLabel"
                 />
                 <button
                   type="button"
-                  className="login__show-password"
+                  className={`login__show-password ${
+                    showPassword ? "is-visible" : ""
+                  }`}
                   onClick={toggleShowPassword}
-                  aria-label="Afficher ou masquer le mot de passe"
+                  aria-label={
+                    showPassword
+                      ? "Masquer le mot de passe"
+                      : "Afficher le mot de passe"
+                  }
+                  id="togglePasswordLabel"
                 ></button>
               </li>
             </ul>
-
             <ul className="login__buttons">
               <li className="login__button-item">
                 <input
@@ -78,7 +87,9 @@ const Login = () => {
                 />
               </li>
             </ul>
-            <Link to="/register" className="login__link-register">Créer un compte</Link>
+            <Link to="/register" className="login__link-register">
+              Créer mon compte
+            </Link>
           </fieldset>
         </form>
       </main>

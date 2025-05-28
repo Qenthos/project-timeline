@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import "./SettingsGame.scss";
 import Header from "../component/Header";
-import { useNavigate } from "react-router";
 
 const SettingsGame = () => {
   const [cards, setCards] = useState(5);
@@ -12,9 +12,13 @@ const SettingsGame = () => {
   const [isUnlimited, setIsUnlimited] = useState(false);
   // const [categoryGame, setCategoryGame] = useState("all");
   const [timeTimer, setTimeTimer] = useState(30);
+  const [nbLives, setNbLives] = useState(3);
 
   let navigate = useNavigate();
 
+  /**
+   * change page and send data settings
+   */
   const startParty = () => {
     localStorage.removeItem("tabIds");
     navigate("/timeline-composer", {
@@ -25,18 +29,24 @@ const SettingsGame = () => {
         isUnlimited: isUnlimited,
         difficulty: difficulty,
         modeGame: modeGame.toLowerCase(),
+        nbLives: nbLives,
       },
     });
   };
 
+  /**
+   * Settings defaults depending on difficulty
+   * @param {*} evt
+   */
   const handleParametersDifficulty = (evt) => {
     const difficulty = evt.currentTarget.dataset.difficulty;
     setDifficulty(difficulty);
 
     const tabDifficulty = {
-      easy: { cards: 10, timer: 200, round: 2 },
+      easy: { cards: 10, timer: 20, round: 2 },
       normal: { cards: 15, timer: 150, round: 3 },
       hard: { cards: 20, timer: 120, round: 5 },
+      survival: { cards: 50, timer: "", round: 1 },
     };
 
     const values = tabDifficulty[difficulty];
@@ -48,9 +58,16 @@ const SettingsGame = () => {
     }
   };
 
-  const updateTimer = () => {
-    setTimeTimer(timer);
-  };
+  //Tab of different game mode
+  const tabGameMode = ["Annee", "Poids", "Taille"];
+
+  ///tab of different difficulty
+  const difficulties = [
+    { key: "easy", label: "Facile" },
+    { key: "normal", label: "Normal" },
+    { key: "hard", label: "Difficile" },
+    { key: "survival", label: "Survie" },
+  ];
 
   return (
     <>
@@ -59,13 +76,12 @@ const SettingsGame = () => {
         <section className="settings__section">
           <h1 className="settings__title">Paramètres de la partie</h1>
           <div className="settings__content">
-            {/* Mode de jeux */}
             <ul className="settings__instrument-list">
               <li>
                 <h2 className="settings__instrument-title">Mode de jeux</h2>
               </li>
               {/* boutons des instruments */}
-              {["Annee", "Poids", "Taille"].map((mode, index) => (
+              {tabGameMode.map((mode, index) => (
                 <li className="settings__instrument-item" key={index}>
                   <button
                     onClick={() => setModeGame(mode)}
@@ -81,18 +97,14 @@ const SettingsGame = () => {
             <div className="settings__options">
               <h3 className="settings__options-title">Difficulté</h3>
               <ul className="settings__difficulty-list">
-                {["easy", "normal", "hard"].map((diff) => (
-                  <li className="settings__difficulty-item" key={diff}>
+                {difficulties.map(({ key, label }) => (
+                  <li className="settings__difficulty-item" key={key}>
                     <button
-                      data-difficulty={diff}
+                      data-difficulty={key}
                       onClick={handleParametersDifficulty}
-                      className={`settings__difficulty-button settings__difficulty-button--${diff}`}
+                      className={`settings__difficulty-button settings__difficulty-button--${key}`}
                     >
-                      {diff === "easy"
-                        ? "Facile"
-                        : diff === "normal"
-                        ? "Normal"
-                        : "Difficile"}
+                      {label}
                     </button>
                   </li>
                 ))}

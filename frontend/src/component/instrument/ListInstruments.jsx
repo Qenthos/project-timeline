@@ -10,19 +10,30 @@ const ListInstruments = ({
   onEdit = () => {},
 }) => {
   const [selectedInstrument, setSelectedInstrument] = useState(null);
-  const [filterInstrument, setFilterInstrument] = useState(instruments)
+  const [filterInstrument, setFilterInstrument] = useState(instruments);
 
+  /**
+   * Open popup
+   * @param {*} instrument
+   */
   const handleViewDetail = (instrument) => {
     setSelectedInstrument(instrument);
   };
 
+  /**
+   *Close popup
+   */
   const handleCloseDetail = () => {
     setSelectedInstrument(null);
   };
 
+  /**
+   * Filter by category of instruments
+   * @param {*} evt
+   */
   const handleCategory = (evt) => {
     const selectedCategory = evt.currentTarget.dataset.category;
-  
+
     if (selectedCategory === "all") {
       setFilterInstrument(instruments);
     } else {
@@ -32,25 +43,46 @@ const ListInstruments = ({
       setFilterInstrument(filtered);
     }
   };
-  
 
   return (
     <>
       <h3 className="list__filter-title">Mode de trie</h3>
       <ul className="list__filter-instrument">
-        <li className="filter-instrument__item">  
-          <button onClick={handleCategory} className="filter-instrument__button filter-instrument__button--active" data-category="all">
+        <li className="filter-instrument__item">
+          <button
+            onClick={handleCategory}
+            className="filter-instrument__button filter-instrument__button--active"
+            data-category="all"
+          >
             Tout
           </button>
         </li>
         <li className="filter-instrument__item">
-          <button onClick={handleCategory} className="filter-instrument__button" data-category="percussion">Percussions</button>
+          <button
+            onClick={handleCategory}
+            className="filter-instrument__button"
+            data-category="percussion"
+          >
+            Percussions
+          </button>
         </li>
         <li className="filter-instrument__item">
-          <button onClick={handleCategory} className="filter-instrument__button" data-category="vent">Vents</button>
+          <button
+            onClick={handleCategory}
+            className="filter-instrument__button"
+            data-category="vent"
+          >
+            Vents
+          </button>
         </li>
         <li className="filter-instrument__item">
-          <button onClick={handleCategory} className="filter-instrument__button" data-category="corde">Cordes</button>
+          <button
+            onClick={handleCategory}
+            className="filter-instrument__button"
+            data-category="corde"
+          >
+            Cordes
+          </button>
         </li>
       </ul>
       <ul className="list__instruments">

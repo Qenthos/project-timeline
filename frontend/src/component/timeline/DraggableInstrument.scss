@@ -1,18 +1,15 @@
 @use "../../styles/_mixins" as *;
 @use "../../styles/_variables" as *;
-@use "../../styles/_reset" as *;
-@use "../../styles/_global" as *;
 
 /***0px***/
 
 .draggable-instrument {
-  position: absolute;
-  top: 0; 
   width: 150px;
   transition: transform 0.2s;
   border-radius: 0.5rem;
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.05);
   border: 2px solid $color-red;
+  cursor: pointer;
 
   &__image {
     width: 100%;

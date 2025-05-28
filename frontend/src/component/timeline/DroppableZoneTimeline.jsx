@@ -20,10 +20,7 @@ const DroppableZoneTimeline = ({ index, onDrop }) => {
       className="droppable-zone"
       ref={drop}
       style={{
-        border: isOver ? "2px dashed green" : "2px dashed gray",
-        minWidth: "50px",
-        minHeight: "100px",
-        margin: "0 4px",
+        border: isOver ? "3px dashed green" : "3px dashed gray",
       }}
     ></div>
   );

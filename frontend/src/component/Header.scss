@@ -1,7 +1,5 @@
 @use "../styles/_mixins" as *;
 @use "../styles/_variables" as *;
-@use "../styles/_reset" as *;
-@use "../styles/_global" as *;
 
 /***0px***/
 
@@ -11,14 +9,14 @@
   align-items: center;
   font-size: 1.5rem;
 
-  &-group {
+  &__group {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
   }
 
-  &-avatar {
+  &__avatar {
     position: relative;
 
     &-img {
@@ -30,14 +28,14 @@
     }
   }
 
-  &-item--ranking {
+  &__item--ranking {
     background-color: white;
     padding: 10px 15px;
     border: 4px solid $color-red;
     border-radius: 10px;
   }
 
-  &-dropdown {
+  &__dropdown {
     position: absolute;
     top: 110%;
     right: 0;

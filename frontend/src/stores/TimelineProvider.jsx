@@ -1,6 +1,6 @@
 import InstrumentsStore from "./instruments/InstrumentsStore";
+import TimelineStore from "./timeline/TimelineStore";
 import { TimelineContext } from "./TimelineContext";
-import TimelineStore from "./timeline/timelineStore";
 
 const instrumentsStore = new InstrumentsStore();
 const instruStore = new TimelineStore(instrumentsStore);

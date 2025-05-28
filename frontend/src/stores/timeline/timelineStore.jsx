@@ -5,7 +5,6 @@ export default class TimelineStore {
   _idsTimeline;
   _size = 5;
   _highlightStatus;
-  // _isSorting = false;
   _nbBadResponse = 0;
   _nbGoodResponse = 0;
 
@@ -13,16 +12,11 @@ export default class TimelineStore {
     this._instrumentsStore = instrumentsStore;
     this._idsTimeline = Array(this._size).fill(null);
     this._highlightStatus = {};
-    this._size = this._idsTimeline.length;
-    this._nbBadResponse = this._nbBadResponse;
-    this._nbGoodResponse = this._nbGoodResponse;
+    this._nbBadResponse = 0;
+    this._nbGoodResponse = 0;
     makeAutoObservable(this);
     this.getTabIds();
   }
-
-  // get isSorting() {
-  //   return this._isSorting;
-  // }
 
   get highlightStatus() {
     return this._highlightStatus;
@@ -80,7 +74,7 @@ export default class TimelineStore {
   }
 
   setInstrumentAt(emplacement, idInstrument) {
-    if (emplacement < 0 || emplacement > this._idsTimeline.length) {
+    if (emplacement < 0 || emplacement >= this._idsTimeline.length) {
       throw new Error("L'emplacement doit être compris entre 0 et 9");
     }
 
@@ -106,10 +100,11 @@ export default class TimelineStore {
 
   getTabIds() {
     const storedTabIds = localStorage.getItem("tabIds");
+    
     if (storedTabIds) {
       this._idsTimeline = JSON.parse(storedTabIds);
     } else {
-      this._idsTimeline = Array(this._idsTimeline.length).fill(null);
+      this._idsTimeline = Array(this._size).fill(null);
     }
   }
 
@@ -180,6 +175,6 @@ export default class TimelineStore {
       }
 
       this.saveTabIds();
-    }, 1200);
+    }, 1000);
   }
 }

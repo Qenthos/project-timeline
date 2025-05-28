@@ -1,7 +1,5 @@
 @use "../styles/_mixins" as *;
 @use "../styles/_variables" as *;
-@use "../styles/_reset" as *;
-@use "../styles/_global" as *;
 
 /***0px***/
 
@@ -45,11 +43,19 @@
 
   &__dropzones {
     display: flex;
-    overflow: scroll;
-    height: 16rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 18rem;
+    padding: 30px;
+    box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.18);
+    border-radius: 1rem 1rem 0 0;
     // display: grid;
     // gap: 1rem;
     // grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+
+    &::-webkit-scrollbar {
+      height: 8px;
+    }
   }
 
   &__list-buttons {
@@ -81,6 +87,12 @@
     &:hover {
       background-color: rgb(34, 67, 255);
     }
+  }
+
+  &__list-parameters-item--timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 

@@ -1,37 +1,61 @@
+import { useState } from "react";
 import Header from "../component/Header";
 import "./Register.scss";
 
 const Register = () => {
-  const toggleShowPassword = () => {
-    const inputPassword = document.querySelector("#password");
-    const toggleButton = document.querySelector(".register__show-password");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-    inputPassword.type = inputPassword.type === "text" ? "password" : "text";
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
-    const isVisible = inputPassword.type === "text";
-    toggleButton.classList.toggle("is-visible", isVisible);
-
-    toggleButton.setAttribute(
-      "aria-label",
-      isVisible ? "Afficher le mot de passe" : "Masquer le mot de passe"
-    );
+  /**
+   * Get password from first input
+   */
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    validatePasswords(value, confirmPassword);
   };
 
-  const toggleConfirmShowPassword = () => {
-    const inputPassword = document.querySelector("#confirm_password");
-    const toggleButton = document.querySelector(
-      ".register__confirm-show-password"
-    );
+  /**
+   * Get password from second input
+   * @param {*} e
+   */
+  const handleConfirmPasswordChange = (e) => {
+    const value = e.target.value;
+    setConfirmPassword(value);
+    validatePasswords(password, value);
+  };
 
-    inputPassword.type = inputPassword.type === "text" ? "password" : "text";
+  /**
+   * Compare password one and two
+   * @param {String} password1 : password on the first input
+   * @param {String} password2 : password on the second input
+   */
+  const validatePasswords = (password1, password2) => {
+    if (password1 && password2 && password1 !== password2) {
+      setPasswordError("Les deux champs doivent être identiques !");
+    } else {
+      setPasswordError("");
+    }
+  };
 
-    const isVisible = inputPassword.type === "text";
-    toggleButton.classList.toggle("is-visible", isVisible);
+  /**
+   *Show / hide password
+   * @param {*} setter
+   */
+  const toggleVisibility = (setterVisiblePassword) => {
+    setterVisiblePassword((prev) => !prev);
+  };
 
-    toggleButton.setAttribute(
-      "aria-label",
-      isVisible ? "Afficher le mot de passe" : "Masquer le mot de passe"
-    );
+  /**
+   * Send form
+   * @param {*} e 
+   */
+  const handleSubmit = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -40,7 +64,11 @@ const Register = () => {
       <main className="register">
         <section className="register__section">
           <h1 className="register__title">Créer un profil</h1>
-          <form className="register__form" action="" method="post">
+          <form
+            className="register__form"
+            method="post"
+            onSubmit={handleSubmit}
+          >
             <fieldset className="register__fieldset">
               <legend className="register__legend">
                 Formulaire de création
@@ -52,12 +80,13 @@ const Register = () => {
                   </label>
                   <input
                     className="register__input"
-                    type="text"
+                    type="email"
                     name="mail"
                     placeholder="exemple@domaine.com"
                     required
                   />
                 </li>
+
                 <li className="register__item">
                   <label className="register__label" htmlFor="pseudo">
                     Pseudo
@@ -70,47 +99,70 @@ const Register = () => {
                     required
                   />
                 </li>
+
                 <li className="register__item">
                   <label className="register__label" htmlFor="password">
                     Mot de passe
                   </label>
-                  <input
-                    className="register__input"
-                    type="password"
-                    name="password"
-                    id="password"
-                    pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$"
-                    required
-                  />
-                  <button
-                    type="button"
-                    className="register__show-password"
-                    onClick={toggleShowPassword}
-                    aria-label="Afficher ou masquer le mot de passe"
-                  ></button>
+                  <div className="register__password-container">
+                    <input
+                      className="register__input"
+                      type={passwordVisible ? "text" : "password"}
+                      name="password"
+                      id="password"
+                      pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$"
+                      value={password}
+                      onChange={handlePasswordChange}
+                      required
+                    />
+                    <button
+                      type="button"
+                      className={`register__show-password ${
+                        passwordVisible ? "is-visible" : ""
+                      }`}
+                      onClick={() => toggleVisibility(setPasswordVisible)}
+                      aria-label={
+                        passwordVisible
+                          ? "Masquer le mot de passe"
+                          : "Afficher le mot de passe"
+                      }
+                    ></button>
+                  </div>
                 </li>
+
                 <li className="register__item">
                   <label className="register__label" htmlFor="confirm_password">
                     Confirmer le mot de passe
                   </label>
-                  <input
-                    className="register__input"
-                    type="password"
-                    name="confirm_password"
-                    id="confirm_password"
-                    pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$"
-                    required
-                  />
-                  {/* <span>
-                    Minimum 8 caractères, une majuscule, un chiffre, un
-                    caractère spécial
-                  </span> */}
-                  <button
-                    type="button"
-                    className="register__confirm-show-password"
-                    onClick={toggleConfirmShowPassword}
-                    aria-label="Afficher ou masquer le mot de passe"
-                  ></button>
+                  <div className="register__password-container">
+                    <input
+                      className="register__input"
+                      type={confirmPasswordVisible ? "text" : "password"}
+                      name="confirm_password"
+                      id="confirm_password"
+                      pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$"
+                      value={confirmPassword}
+                      onChange={handleConfirmPasswordChange}
+                      required
+                    />
+                    <button
+                      type="button"
+                      className={`register__confirm-show-password ${
+                        confirmPasswordVisible ? "is-visible" : ""
+                      }`}
+                      onClick={() =>
+                        toggleVisibility(setConfirmPasswordVisible)
+                      }
+                      aria-label={
+                        confirmPasswordVisible
+                          ? "Masquer le mot de passe"
+                          : "Afficher le mot de passe"
+                      }
+                    ></button>
+                  </div>
+                  {passwordError && (
+                    <p className="register__error">{passwordError}</p>
+                  )}
                 </li>
               </ul>
 
@@ -127,6 +179,7 @@ const Register = () => {
                     className="register__button register__button--submit"
                     type="submit"
                     value="Créer un compte"
+                    disabled={passwordError}
                   />
                 </li>
               </ul>

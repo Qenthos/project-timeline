@@ -9,7 +9,6 @@ const InstrumentPreview = ({
 }) => {
   const headingId = `instrument-title-${instrument.id}`;
   const buttonId = `instrument-button-${instrument.id}`;
-  console.log(instrument)
 
   return (
     <article className="instrument-card">
