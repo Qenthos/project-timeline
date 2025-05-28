@@ -16,31 +16,28 @@ const TimelineComposer = observer(() => {
   const location = useLocation();
   if (!location.state) return <Navigate to="/settings-game" />;
 
-  const { timer, cards, round, isUnlimited, difficulty, modeGame, nbLives } =
+  const { timer, cards, isUnlimited, difficulty, modeGame, nbLives } =
     location.state || {};
 
-  const { instruStore } = useContext(TimelineContext);
-  
+  const { gameStore, instruStore } = useContext(TimelineContext);
 
-  const [selectedInstruments, setSelectedInstruments] = useState([]);
-  const [endGame, setEndGame] = useState(false);
-  const [finalTime, setFinalTime] = useState(timer);
-  const [finishTimer, setFinishTimer] = useState(false);
-  const [win, setWin] = useState(false);
-  const [timerGame, setTimerGame] = useState(timer);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [score, setScore] = useState(100);
-  const [roundFinish, setRoundFinish] = useState(1);
+  // const [selectedInstruments, setSelectedInstruments] = useState([]);
   const [showDragCard, setShowDragCard] = useState(true);
-  const [pauseGame, setPauseGame] = useState(false);
+
+  useEffect(() => {
+    gameStore.timer = timer;
+    gameStore.timerGame = timer;
+    gameStore.isUnlimited = isUnlimited;
+    gameStore.score = 100;
+    gameStore.roundFinish = 1;
+  }, []);
 
   const instrumentExpoSlot = instruStore.instrumentsTimelineBySlot;
-  const instrumentsNotInExpo = selectedInstruments
+  const instrumentsNotInExpo = gameStore.selectedInstruments
     .filter((instrument) => !instruStore.existsInTimeline(instrument.id))
     .slice(0, cards);
-  const allInstruments = instruStore._instrumentsStore.instruments;
 
-  console.log(instrumentsNotInExpo.length);
+  const allInstruments = instruStore._instrumentsStore.instruments;
 
   //Compatibily device and mobile
   const isToucheDevice = window.matchMedia("(pointer: coarse)").matches;
@@ -54,16 +51,11 @@ const TimelineComposer = observer(() => {
     if (!sauvegarde) {
       instruStore.reset();
     }
-  }, []);
 
-  /**
-   *Size timeline
-   */
-  useEffect(() => {
     //Size timeline
     instruStore.setSizeTimeline(cards + 1);
 
-    // Select instruments random
+    gameStore.startNewRound();
     setRandomDefaultCard();
   }, [cards, instruStore]);
 
@@ -71,41 +63,12 @@ const TimelineComposer = observer(() => {
    *Select random draggable card
    */
   const setRandomDefaultCard = () => {
-    // Random default card
     const randomInstrument =
       allInstruments[Math.floor(Math.random() * allInstruments.length)];
     instruStore.setDefaultCard(randomInstrument);
 
-    const random = [...allInstruments].sort(() => Math.random() - 0.5);
-
-    const selection = random.slice(0, cards);
-    setSelectedInstruments(selection);
+    gameStore.setRandomSelectedInstruments(allInstruments, cards);
   };
-
-  /**
-   * Handle timer
-   */
-  useEffect(() => {
-    //endgame
-    if (endGame) {
-      return;
-    }
-    //timer finish
-    if (timerGame <= 0) {
-      setEndGame(true);
-      setWin(false);
-      setFinishTimer(true);
-      return;
-    }
-    let interval = null;
-    if (!pauseGame) {
-      interval = setInterval(() => {
-        setTimerGame((prev) => prev - 1);
-      }, 1000);
-    }
-
-    return () => clearInterval(interval);
-  }, [timerGame, endGame, pauseGame]);
 
   /**
    *Show the next draggable card
@@ -113,7 +76,7 @@ const TimelineComposer = observer(() => {
   const handleDrop = () => {
     setShowDragCard(false);
     setTimeout(() => {
-      setCurrentIndex((prev) => prev + 1);
+      gameStore.handleDrop();
       setShowDragCard(true);
     }, 1000);
   };
@@ -136,51 +99,23 @@ const TimelineComposer = observer(() => {
    * - all cards have been placed
    */
   useEffect(() => {
-    if (selectedInstruments.length === 0) return;
-    const noMoreCards = currentIndex >= selectedInstruments.length;
-    if (finishTimer || noMoreCards) {
-      setEndGame(true);
-      calculateTimeRemaining();
-      calculateScore();
+    const noMoreCards =
+      gameStore.currentIndex >= gameStore.selectedInstruments.length;
+    if (gameStore.timerGame <= 0 || noMoreCards) {
+      gameStore.finishGame(
+        instruStore.nbBadResponse,
+        instruStore.nbGoodResponse
+      );
       localStorage.removeItem("tabIds");
-      setRoundFinish((prev) => prev + 1);
     }
-  }, [currentIndex, finishTimer, selectedInstruments.length]);
-
-  /**
-   * Calculate the time to finish the game
-   */
-  const calculateTimeRemaining = () => {
-    const timeGame = timer;
-    const finishTime = timerGame;
-    let remaining = timeGame - finishTime;
-    setFinalTime(remaining);
-  };
-
-  /**
-   * Calculcate score of game
-   */
-  const calculateScore = () => {
-    let nbErrors = instruStore.nbBadResponse;
-    let nbGoods = instruStore.nbGoodResponse;
-    let newScore = score;
-    newScore -= nbErrors * 10;
-    newScore += nbGoods * 15;
-    newScore = Math.max(0, Math.ceil(newScore));
-    setScore(newScore);
-  };
+  }, [gameStore.currentIndex, gameStore.timerGame]);
 
   /**
    * Reset game : states by defaults
    */
   const resetGame = () => {
-    setCurrentIndex(0);
     instruStore.reset();
-    setTimerGame(timer);
-    setEndGame(false);
-    setWin(false);
-    setFinishTimer(false);
-    setPauseGame(false);
+    gameStore.startNewRound();
     setRandomDefaultCard();
   };
 
@@ -211,38 +146,35 @@ const TimelineComposer = observer(() => {
                 {isUnlimited
                   ? "Illimité"
                   : `Timer : ${
-                      timerGame >= 60 ? `${Math.floor(timerGame / 60)}min ` : ""
-                    }${timerGame % 60}s`}
+                      gameStore.timerGame >= 60
+                        ? `${Math.floor(gameStore.timerGame / 60)}min `
+                        : ""
+                    }${gameStore.timerGame % 60}s`}
               </p>
               <button
-                onClick={() =>
-                  pauseGame ? setPauseGame(false) : setPauseGame(true)
-                }
+                onClick={() => (gameStore.isPaused = !gameStore.isPaused)}
               >
-                {pauseGame ? "Play" : "Pause"}
+                {gameStore.isPaused ? "Play" : "Pause"}
               </button>
             </li>
-            <li className="timeline__list-parameters-item">
-              <p className="timeline__list-parameters-text timeline__list-parameters-text--rounds">
-                Nombre de manches : {roundFinish > round ? round : roundFinish}/
-                {round}
-              </p>
-            </li>
             <li>
-              <p>Score : {score}</p>
+              <p>Score : {gameStore.score}</p>
             </li>
           </ul>
           <div className="timeline__instruments">
-            {currentIndex >= selectedInstruments.length || finishTimer ? (
+            {gameStore.currentIndex >= gameStore.selectedInstruments.length ||
+            gameStore.timerGame <= 0 ? (
               <ul>
                 <li>
                   <p>
-                    {win ? "Gagné ! Vous avez fait aucune faute." : "Perdu !"}
+                    {gameStore.win
+                      ? "Gagné ! Vous avez fait aucune faute."
+                      : "Perdu !"}
                   </p>
                 </li>
-                {finishTimer && (
+                {gameStore.timerGame <= 0 && (
                   <li>
-                    <p>Le temps de {timer} secondes est écoulé !</p>
+                    <p>Le temps de {gameStore.timer} secondes est écoulé !</p>
                   </li>
                 )}
                 <li>
@@ -254,27 +186,18 @@ const TimelineComposer = observer(() => {
                   </p>
                 </li>
                 <li>
-                  <p>Score : {score}</p>
+                  <p>Score : {gameStore.score}</p>
                 </li>
                 <li>
-                  <p>Terminé en {finalTime} s</p>
+                  <p>Terminé en {gameStore.timeRemaining} s</p>
                 </li>
+
                 <li>
-                  {round === 1 ? (
-                    <>
-                      <button onClick={resetGame}>
-                        Recommencer une partie
-                      </button>
-                      <Link to="/settings-game">
-                        Modifier les paramètres d'une partie
-                      </Link>
-                      <Link to="/">Revenir à l'accueil</Link>
-                    </>
-                  ) : (
-                    <button onClick={resetGame}>
-                      Démarrer la nouvelle manche ({roundFinish}/{round})
-                    </button>
-                  )}
+                  <button onClick={resetGame}>Recommencer une partie</button>
+                  <Link to="/settings-game">
+                    Modifier les paramètres d'une partie
+                  </Link>
+                  <Link to="/">Revenir à l'accueil</Link>
                 </li>
               </ul>
             ) : (
@@ -296,7 +219,9 @@ const TimelineComposer = observer(() => {
                 )}
                 {showDragCard && (
                   <DraggableInstrument
-                    instrument={selectedInstruments[currentIndex]}
+                    instrument={
+                      gameStore.selectedInstruments[gameStore.currentIndex]
+                    }
                   />
                 )}
               </div>
@@ -317,9 +242,10 @@ const TimelineComposer = observer(() => {
                         idInstrument,
                         modeGame
                       );
-                      handleDrop();
+                      handleDrop(); // on appelle ta version locale
                     }}
                   />
+
                   <Instrument
                     instrumentDrop={instrument}
                     key={`carte-${zoneIndex}`}

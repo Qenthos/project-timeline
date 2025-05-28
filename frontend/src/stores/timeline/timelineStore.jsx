@@ -12,6 +12,7 @@ export default class TimelineStore {
     this._instrumentsStore = instrumentsStore;
     this._idsTimeline = Array(this._size).fill(null);
     this._highlightStatus = {};
+    this._size = this._idsTimeline.length;
     this._nbBadResponse = 0;
     this._nbGoodResponse = 0;
     makeAutoObservable(this);

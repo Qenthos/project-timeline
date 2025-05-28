@@ -21,3 +21,9 @@ export const useExpoStore = () => {
   const timelineStore = useTimelineStore();
   return timelineStore.instruStore; 
 };
+
+// export const useGameStore = () => {
+//   const timelineStore = useTimelineStore();
+//   return timelineStore.instruStore; 
+// };
+

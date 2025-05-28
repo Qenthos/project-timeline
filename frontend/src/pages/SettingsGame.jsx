@@ -6,7 +6,6 @@ import Header from "../component/Header";
 const SettingsGame = () => {
   const [cards, setCards] = useState(5);
   const [timer, setTimer] = useState(30);
-  const [round, setRound] = useState(1);
   const [difficulty, setDifficulty] = useState("easy");
   const [modeGame, setModeGame] = useState("annee");
   const [isUnlimited, setIsUnlimited] = useState(false);
@@ -25,7 +24,6 @@ const SettingsGame = () => {
       state: {
         timer: timer,
         cards: cards,
-        round: round,
         isUnlimited: isUnlimited,
         difficulty: difficulty,
         modeGame: modeGame.toLowerCase(),
@@ -43,17 +41,16 @@ const SettingsGame = () => {
     setDifficulty(difficulty);
 
     const tabDifficulty = {
-      easy: { cards: 10, timer: 20, round: 2 },
-      normal: { cards: 15, timer: 150, round: 3 },
-      hard: { cards: 20, timer: 120, round: 5 },
-      survival: { cards: 50, timer: "", round: 1 },
+      easy: { cards: 10, timer: 20 },
+      normal: { cards: 15, timer: 150 },
+      hard: { cards: 20, timer: 120 },
+      survival: { cards: 50, timer: "" },
     };
 
     const values = tabDifficulty[difficulty];
     if (values) {
       setCards(values.cards);
       setTimer(values.timer);
-      setRound(values.round);
       setTimeTimer(values.timer);
     }
   };
@@ -172,34 +169,6 @@ const SettingsGame = () => {
                       id="unlimited-timer"
                       checked={isUnlimited}
                       onChange={(e) => setIsUnlimited(e.target.checked)}
-                    />
-                  </div>
-                </li>
-
-                {/* Nombre de manches */}
-                <li className="settings__parameter-item">
-                  <label htmlFor="round-count" className="settings__label">
-                    Nombre de manches
-                  </label>
-                  <div className="settings__input-group">
-                    <input
-                      className="settings__range"
-                      type="range"
-                      id="round-count"
-                      min="1"
-                      max="5"
-                      step="1"
-                      value={round}
-                      onChange={(e) => setRound(Number(e.target.value))}
-                    />
-                    <input
-                      className="settings__number"
-                      type="number"
-                      value={round}
-                      min="1"
-                      max="5"
-                      step="1"
-                      onChange={(e) => setRound(Number(e.target.value))}
                     />
                   </div>
                 </li>
