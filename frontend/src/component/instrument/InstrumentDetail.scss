@@ -19,11 +19,11 @@
   z-index: 100;
 
   &__container {
-    background-color: #fff;
+    background-color: white;
     width: 100%;
     padding: 1.5rem;
     position: relative;
-    overflow: auto;
+    overflow: hidden;
     max-height: 100vh;
   }
 
@@ -70,7 +70,7 @@
   }
 
   &__image {
-    max-height: 35rem;
+    max-height: 25rem;
     object-fit: contain;
     border-radius: 0.5rem;
   }

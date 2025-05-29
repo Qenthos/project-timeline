@@ -26,7 +26,7 @@ const Login = () => {
       <Header />
       <main className="login">
         <h1 className="login__title">Se connecter</h1>
-        <form className="login__form" method="get" onSubmit={handleSubmit}>
+        <form className="login__form" onSubmit={handleSubmit}>
           <fieldset className="login__fieldset">
             <legend className="login__legend">Formulaire de connexion</legend>
             <ul className="login__list">

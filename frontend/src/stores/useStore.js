@@ -16,14 +16,19 @@ export const useInstrumentsStore = () => {
   return timelineStore.instrumentsStore;
 };
 
-// Hook pour accéder au sous-store expo
-export const useExpoStore = () => {
+export const useUsersStore = () => {
   const timelineStore = useTimelineStore();
-  return timelineStore.instruStore; 
+  return timelineStore.usersStore;
 };
 
-// export const useGameStore = () => {
+// // Hook pour accéder au sous-store expo
+// export const useExpoStore = () => {
 //   const timelineStore = useTimelineStore();
 //   return timelineStore.instruStore; 
 // };
 
+// // Hook pour accéder au sous-store jeu (commenté, à activer si besoin)
+export const useGameStore = () => {
+  const timelineStore = useTimelineStore();
+  return timelineStore.gameStore;  // à adapter selon ta structure
+};

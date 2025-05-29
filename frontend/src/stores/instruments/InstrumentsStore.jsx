@@ -46,4 +46,64 @@ export default class InstrumentsStore {
   getInstrumentsById(id) {
     return this._instruments.find((instrument) => instrument.id === id) || null;
   }
+
+  updateInstrument(id, name, category, year, weight, height, description) {
+    fetch(`${API_URL}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        category: category,
+        year: year,
+        weight: weight,
+        height: height,
+        description: description,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Erreur : ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        runInAction(() => {
+          const instrumentToUpdate = this.getInstrumentsById(id);
+          if (instrumentToUpdate) {
+            Object.assign(instrumentToUpdate, {
+              name,
+              category,
+              year,
+              weight,
+              height,
+              description,
+            });
+          }
+        });
+        
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la mise à jour :", error);
+      });
+  }
+
+  deleteInstrument(userId) {
+    fetch(`${API_URL}/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Erreur lors de la suppression");
+      }
+     alert("Instrument supprimé");
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+  }
 }

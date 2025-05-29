@@ -38,8 +38,8 @@ body {
   min-height: 100vh;
 }
 main {
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   flex: 1;
   margin: 20px 20px 0 20px;
 }
@@ -83,6 +83,7 @@ a,
 label {
   font-family: $font-text;
   font-weight: 400;
+  font-size: 1.1rem;
 }
 
 a,

@@ -63,7 +63,7 @@ const SettingsGame = () => {
     { key: "easy", label: "Facile" },
     { key: "normal", label: "Normal" },
     { key: "hard", label: "Difficile" },
-    { key: "survival", label: "Survie" },
+    { key: "survival", label: "Personnaliser" },
   ];
 
   return (
@@ -73,35 +73,43 @@ const SettingsGame = () => {
         <section className="settings__section">
           <h1 className="settings__title">Paramètres de la partie</h1>
           <div className="settings__content">
-            <ul className="settings__instrument-list">
-              <li>
-                <h2 className="settings__instrument-title">Mode de jeux</h2>
-              </li>
-              {/* boutons des instruments */}
+            <h2 className="settings__instrument-title">Mode de jeux</h2>
+            <div className="settings__instrument-fieldset">
               {tabGameMode.map((mode, index) => (
-                <li className="settings__instrument-item" key={index}>
-                  <button
-                    onClick={() => setModeGame(mode)}
-                    className={`settings__instrument-button settings__instrument-button--${mode.toLowerCase()}`}
-                  >
-                    {mode}
-                  </button>
-                </li>
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => setModeGame(mode)}
+                  className={`settings__instrument-card settings__instrument-card--${mode}`}
+                >
+                  <p className="settings__instrument-content">
+                    Trier par {mode.toLowerCase()}
+                  </p>
+                </button>
               ))}
-            </ul>
+            </div>
 
             {/* Difficulté */}
             <div className="settings__options">
-              <h3 className="settings__options-title">Difficulté</h3>
+              <h2 className="settings__options-title">Difficulté</h2>
               <ul className="settings__difficulty-list">
                 {difficulties.map(({ key, label }) => (
-                  <li className="settings__difficulty-item" key={key}>
+                  <li className={`settings__difficulty-item`} key={key}>
                     <button
-                      data-difficulty={key}
+                      type="button"
                       onClick={handleParametersDifficulty}
+                      data-difficulty={key}
                       className={`settings__difficulty-button settings__difficulty-button--${key}`}
                     >
-                      {label}
+                      <p className="settings__difficulty-label">{label}</p>
+                      <ul className="settings__difficulty-details">
+                        <li className="settings__difficulty-detail">
+                          20 cartes
+                        </li>
+                        <li className="settings__difficulty-detail">
+                          120 secondes
+                        </li>
+                      </ul>
                     </button>
                   </li>
                 ))}

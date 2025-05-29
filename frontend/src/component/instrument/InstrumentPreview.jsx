@@ -43,7 +43,7 @@ const InstrumentPreview = ({
         {editable && (
           <button
             onClick={() => onEdit(instrument.id)}
-            aria-labelledby={instrument.title}
+            aria-labelledby={instrument.name}
             className="instrument-card__button instrument-card__button--secondary"
           >
             Modifier
@@ -60,7 +60,7 @@ InstrumentPreview.propTypes = {
     name: PropTypes.string.isRequired,
   }).isRequired,
   onViewDetail: PropTypes.func,
-  editable: PropTypes.boolean,
+  editable: PropTypes.bool,
   onEdit: PropTypes.func,
 };
 
