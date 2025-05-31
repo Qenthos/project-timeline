@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useUsersStore } from "../stores/useStore";
+import { useNavigate } from "react-router";
 import Header from "../component/Header";
 import "./Register.scss";
 
@@ -9,6 +11,13 @@ const Register = () => {
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [pseudo, setPseudo] = useState("");
+
+  let navigate = useNavigate();
+
+  const userStore = useUsersStore();
 
   /**
    * Get password from first input
@@ -51,11 +60,15 @@ const Register = () => {
   };
 
   /**
-   * Send form
-   * @param {*} e 
+   * Send form and create account
+   * @param {*} e
    */
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!passwordError) {
+      userStore.createAccount(email, pseudo, password);
+      navigate("/profil")
+    }
   };
 
   return (
@@ -83,6 +96,7 @@ const Register = () => {
                     type="email"
                     name="mail"
                     placeholder="exemple@domaine.com"
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </li>
@@ -96,6 +110,7 @@ const Register = () => {
                     type="text"
                     name="pseudo"
                     placeholder="Albator"
+                    onChange={(e) => setPseudo(e.target.value)}
                     required
                   />
                 </li>

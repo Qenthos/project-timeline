@@ -1,0 +1,90 @@
+@use "../styles/_mixins" as *;
+@use "../styles/_variables" as *;
+
+/***0px***/
+
+.confirm-dialog {
+  all: unset;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+
+  &__container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 450px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    animation: fadeInPopup 0.3s ease-in-out;
+  }
+
+  &__title {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+  }
+
+  &__message {
+    margin: 0 0 1.5rem 0;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &__button {
+    padding: 0.6rem 1.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &--cancel {
+      background-color: #cccccc;
+      color: gray;
+    }
+
+    &--confirm {
+      background-color: #e74c3c;
+      color: white;
+    }
+  }
+}
+
+@keyframes fadeInPopup {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/***640px***/
+@include mobile-sm {
+}
+
+/*** 768px***/
+@include mobile-md {
+}
+
+/***1024px***/
+@include mobile-lg {
+}
+
+/***1280px***/
+@include mobile-xl {
+}
+
+/***1536px***/
+@include mobile-2xl {
+}

@@ -3,7 +3,6 @@ import "./UserPreview.scss";
 
 const UserPreview = ({ user, editable = false, onEdit = () => {} }) => {
   const headingId = `user-title-${user.id}`;
-  console.log(user);
 
   return (
     <article className="user-card">
@@ -28,7 +27,7 @@ const UserPreview = ({ user, editable = false, onEdit = () => {} }) => {
             </h2>
           </li>
           <li>
-            <span>Mail : {user.mail}</span>
+            <span>Mail : {user.email}</span>
           </li>
           <li>
             <span>Rôle : {user.role}</span>

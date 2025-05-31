@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
-import { useInstrumentsStore } from "./stores/useStore.js";
+import { useInstrumentsStore, useUsersStore } from "./stores/useStore.js";
 import Home from "./pages/Home";
 import Page404 from "./pages/Page404";
 import Login from "./pages/Login";
@@ -17,9 +17,11 @@ import EditInstrument from "./pages/EditInstruments.jsx";
 import EditUser from "./pages/EditUser.jsx";
 import AdminManageInstrument from "./pages/AdminManageInstrument.jsx";
 import AdminManageUser from "./pages/AdminManageUser.jsx";
+import ProtectedRoute from "./component/ProtectedRoute.jsx";
 
 const App = observer(() => {
   const { isLoaded } = useInstrumentsStore();
+  const usersStore = useUsersStore();
 
   return !isLoaded ? (
     <LoadingScreen />
@@ -35,6 +37,28 @@ const App = observer(() => {
         <Route path="/timeline-composer" element={<TimelineComposer />}></Route>
         <Route path="/profil" element={<Profil />}></Route>
         <Route path="/admin" element={<LoginAdmin />}></Route>
+        {/* <Route
+          path="/hub-admin"
+          element={
+            <ProtectedRoute user={usersStore.currentUser}>
+              <HubAdmin />
+            </ProtectedRoute>
+          }
+        >
+          <Route
+            index
+            element={<Navigate to="admin-manage-instrument" replace />}
+          />
+          <Route
+            path="admin-manage-instrument"
+            element={<AdminManageInstrument />}
+          >
+            <Route path="edit/:instruId" element={<EditInstrument />} />
+          </Route>
+          <Route path="admin-manage-user" element={<AdminManageUser />}>
+            <Route path="edit/:userId" element={<EditUser />} />
+          </Route>
+        </Route> */}
         <Route path="/hub-admin" element={<HubAdmin />}>
           <Route
             index

@@ -5,6 +5,7 @@ import { TimelineContext } from "../stores/TimelineContext";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
+import { useUsersStore } from "./../stores/useStore";
 import React from "react";
 import Header from "../component/Header";
 import DroppableZoneTimeline from "../component/timeline/DroppableZoneTimeline";
@@ -20,6 +21,7 @@ const TimelineComposer = observer(() => {
     location.state || {};
 
   const { gameStore, instruStore } = useContext(TimelineContext);
+  const usersStore = useUsersStore();
 
   // const [selectedInstruments, setSelectedInstruments] = useState([]);
   const [showDragCard, setShowDragCard] = useState(true);
@@ -106,6 +108,7 @@ const TimelineComposer = observer(() => {
         instruStore.nbBadResponse,
         instruStore.nbGoodResponse
       );
+      usersStore.updateScore((usersStore.currentUser.score += gameStore.score));
       localStorage.removeItem("tabIds");
     }
   }, [gameStore.currentIndex, gameStore.timerGame]);
@@ -125,7 +128,7 @@ const TimelineComposer = observer(() => {
       <main className="timeline">
         <section className="timeline__section">
           <h2 className="timeline__title">
-            A vous de jouer !
+            A vous de jouer {usersStore.currentUser.username} !
             <span className="timeline__subtitle">
               (Vous avez {cards} à placer {subtitleText})
             </span>
@@ -158,7 +161,7 @@ const TimelineComposer = observer(() => {
               </button>
             </li>
             <li>
-              <p>Score : {gameStore.score}</p>
+              <p>Score : {usersStore.currentUser.score}</p>
             </li>
           </ul>
           <div className="timeline__instruments">
@@ -186,7 +189,7 @@ const TimelineComposer = observer(() => {
                   </p>
                 </li>
                 <li>
-                  <p>Score : {gameStore.score}</p>
+                  <p>Score : +{gameStore.score}</p>
                 </li>
                 <li>
                   <p>Terminé en {gameStore.timeRemaining} s</p>

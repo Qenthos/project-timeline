@@ -1,14 +1,41 @@
+import { useState } from "react";
 import Header from "../component/Header";
+import { useUsersStore } from "./../stores/useStore";
+import ConfirmDialog from "../component/ConfirmDialog";
 import "./Profil.scss";
 
 const Profil = () => {
+  const usersStore = useUsersStore();
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
+  if (!usersStore.currentUser) {
+    return <p>Chargement du profil...</p>;
+  }
+
+  /**
+   * Delete user and close popup
+   */
+  const handleDelete = () => {
+    usersStore.deleteUser();
+    setShowConfirmDialog(false);
+  };
+
+  /**
+   * Close popup
+   */
+  const handleCancelDelete = () => {
+    setShowConfirmDialog(false);
+  };
+
   return (
     <>
       <Header />
       <main className="profile">
         <section className="profile__section">
           <div className="profile__banner-wrapper">
-            <p className="profile__score">Score</p>
+            <p className="profile__score">
+              Score : {usersStore.currentUser.score}
+            </p>
             <img
               src="./../../public/media/bg-home.webp"
               alt="Image de couverture"
@@ -24,7 +51,7 @@ const Profil = () => {
           <form className="profile__form">
             <ul className="profile__fields">
               <li className="profile__field">
-                <label for="username" className="profile__label">
+                <label htmlFor="username" className="profile__label">
                   Nom utilisateur
                 </label>
                 <input
@@ -32,12 +59,13 @@ const Profil = () => {
                   id="username"
                   name="username"
                   className="profile__input"
-                  value="Jean Dupont"
+                  value={usersStore.currentUser.username}
+                  readOnly
                 />
               </li>
 
               <li className="profile__field">
-                <label for="email" className="profile__label">
+                <label htmlFor="email" className="profile__label">
                   Adresse mail
                 </label>
                 <input
@@ -45,12 +73,13 @@ const Profil = () => {
                   id="email"
                   name="email"
                   className="profile__input"
-                  value="jean.dupont@mail.com"
+                  value={usersStore.currentUser.email}
+                  readOnly
                 />
               </li>
 
               <li className="profile__field">
-                <label for="password" className="profile__label">
+                <label htmlFor="password" className="profile__label">
                   Mot de passe
                 </label>
                 <input
@@ -58,6 +87,9 @@ const Profil = () => {
                   id="password"
                   name="password"
                   className="profile__input"
+                  value=""
+                  placeholder="••••••••"
+                  readOnly
                 />
               </li>
 
@@ -66,9 +98,27 @@ const Profil = () => {
                   Inscrit depuis le 28 mai 2025
                 </p>
               </li>
+
+              <li className="profile__field">
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmDialog(true)}
+                  className="profile__delete-account"
+                >
+                  Supprimer mon compte
+                </button>
+              </li>
             </ul>
           </form>
         </section>
+
+        {showConfirmDialog && (
+          <ConfirmDialog
+            message="Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible."
+            onConfirm={handleDelete}
+            onCancel={handleCancelDelete}
+          />
+        )}
       </main>
     </>
   );

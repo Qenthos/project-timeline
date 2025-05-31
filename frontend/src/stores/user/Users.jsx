@@ -9,16 +9,18 @@ export default class Users {
   _profilePicture;
   _bannerImage;
   _createdAt;
+  _isConnected;
 
   constructor({
     id,
     username,
     email,
-    score,
+    score = 0,
     role,
     profilePicture,
     bannerImage,
     createdAt,
+    isConnected = false,
   }) {
     this._id = id;
     this._username = username;
@@ -28,6 +30,7 @@ export default class Users {
     this._profilePicture = profilePicture || "";
     this._bannerImage = bannerImage || "";
     this._createdAt = createdAt ? new Date(createdAt) : new Date();
+    this._isConnected = isConnected;
 
     makeAutoObservable(this);
   }
@@ -62,6 +65,10 @@ export default class Users {
 
   get createdAt() {
     return this._createdAt;
+  }
+
+  get isConnected() {
+    return this._isConnected;
   }
 
   set username(value) {
@@ -125,6 +132,14 @@ export default class Users {
       this._createdAt = date;
     } else {
       throw new Error(`Date invalide: ${value}`);
+    }
+  }
+
+  set isConnected(value) {
+    if (typeof value === "boolean") {
+      this._isConnected = value;
+    } else {
+      throw new Error(`Valeur de connexion invalide: ${value}`);
     }
   }
 }

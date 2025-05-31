@@ -31,7 +31,7 @@ const AdminManageUser = () => {
         ) : (
           <ListUsers
             users={userStore.users}
-            editable
+            editable={true}
             onEdit={(id) => navigate(`edit/${id}`)}
           />
         )}

@@ -1,10 +1,26 @@
 import { Link } from "react-router";
-import { useState } from "react";
+import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
+import { useUsersStore } from "./../stores/useStore";
 import Header from "../component/Header";
 import "./Login.scss";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const usersStore = useUsersStore();
+  let navigate = useNavigate();
+
+  /**
+   * Auto redirection if user is already connected
+   */
+  useEffect(() => {
+    if (usersStore.currentUser) {
+      navigate("/profil");
+    }
+  }, [usersStore.currentUser, navigate]);
 
   /**
    * Hide / show password
@@ -16,9 +32,11 @@ const Login = () => {
   /**
    * Form
    * @param {*} e
-   */ 
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
+    usersStore.login(email, password);
+    navigate("/profil");
   };
 
   return (
@@ -40,6 +58,7 @@ const Login = () => {
                   type="text"
                   name="mail"
                   placeholder="exemple@domaine.com"
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </li>
@@ -53,6 +72,7 @@ const Login = () => {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Mot de passe"
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   aria-describedby="togglePasswordLabel"
                 />
