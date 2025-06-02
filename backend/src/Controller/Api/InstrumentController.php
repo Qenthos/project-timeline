@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use Symfony\Component\HttpFoundation\Response as Reponse;
 use ApiPlatform\OpenApi\Model\Response;
 use App\Entity\Instrument;
 use App\Repository\InstrumentRepository;
@@ -22,6 +23,21 @@ class InstrumentController extends AbstractController
     {
         $this->entityManager = $entityManager;
         $this->loggerInterface = $logger;
+    }
+
+    #[Route(
+        path: '/{path}',
+        name: 'options_preflight',
+        methods: ['OPTIONS'],
+        requirements: ['path' => '.+']
+    )]
+    public function optionsPreflight(): Reponse
+    {
+        return new Reponse('', 204, [
+            'Access-Control-Allow-Origin' => 'http://localhost:5173',
+            'Access-Control-Allow-Methods' => 'GET, POST, PUT, DELETE, OPTIONS',
+            'Access-Control-Allow-Headers' => 'Content-Type, Authorization',
+        ]);
     }
 
     #[Route('api/instruments', name: "listInstruments", methods: ['GET'])]

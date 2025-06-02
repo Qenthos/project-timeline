@@ -9,7 +9,7 @@ const EditInstrument = () => {
   let navigate = useNavigate();
 
   const instruStore = useInstrumentsStore();
-  const instrument = instruStore.getInstrumentsById(instruId);
+  const instrument = instruStore.getInstrumentsById(Number(instruId));
 
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
