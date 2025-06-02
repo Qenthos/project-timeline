@@ -42,7 +42,8 @@ class GameRepository extends ServiceEntityRepository
     public function findAllGamesByUser(int $userId): array
     {
         return $this->createQueryBuilder('g')
-            ->select('g.game_id', 'g.score', 'g.complete', 'g.nb_try', 'g.mode', 'g.finished')
+            ->leftJoin('g.categorie', 'c') // Jointure explicite
+            ->addSelect('partial g.{id, score, complete, nb_try}', 'partial c.{id, name}') // Sélections partielles
             ->andWhere('g.player = :userId')
             ->setParameter('userId', $userId)
             ->getQuery()
@@ -84,6 +85,25 @@ class GameRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
+    /**
+     * Récupère les 10 meilleures parties d'un utilisateur, classées par score décroissant.
+     *
+     * @param int $userId
+     * @return Game[]
+     */
+    public function findTopGames(int $userId): array
+    {
+        return $this->createQueryBuilder('g')
+            ->andWhere('g.player = :userId')
+            ->setParameter('userId', $userId)
+            ->orderBy('g.score', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
 
     /**
      * Compte le nombre total de parties d'un utilisateur.

@@ -1,4 +1,4 @@
-[
+  [
   {
     "id": 1,
     "name": "Violon",
@@ -32,7 +32,7 @@
     "weight_kg": 300,
     "height_cm": 100,
     "origine": "Italie",
-    "description": "Instrument à clavier où des marteaux frappent des cordes. Il est l’un des piliers de la musique occidentale.",
+    "description": "Instrument à clavier où des marteaux frappent des cordes. Il est l un des piliers de la musique occidentale.",
     "anecdote": "Franz Liszt jouait si puissamment qu'on remplaçait les cordes du piano après ses concerts !"
   },
   {
@@ -224,7 +224,7 @@
     "weight_kg": 3,
     "height_cm": 90,
     "origine": "Écosse",
-    "description": "Instrument à vent avec réservoir d’air, emblème sonore des Highlands.",
+    "description": "Instrument à vent avec réservoir d air, emblème sonore des Highlands.",
     "anecdote": "La cornemuse a été utilisée comme arme psychologique par les armées écossaises."
   },
   {

@@ -24,4 +24,42 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getCosmeticsByUser($id): ?User
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.profilePicture', 'pp') // ou join si c'est obligatoire
+            ->addSelect('pp')
+            ->leftJoin('c.profileBanner', 'pb')
+            ->addSelect('pb')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+    public function getAllUsers(): array
+    {
+        return $this->findAll();
+    }
+
+    public function isAdmin($id)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.admin')
+            ->setParameter('id', $id)
+            ->andWhere('u.id = :id')
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+    public function getAllAdmins(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->select("u.id, u.pseudo, u.email, u.password")
+            ->andWhere('u.admin = :isAdmin')
+            ->setParameter('isAdmin', true)
+            ->getQuery()
+            ->getResult();
+    }
 }

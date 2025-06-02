@@ -1,0 +1,112 @@
+[
+  {
+    "pseudo": "ShadowWolf",
+    "password": "hashed_password_1",
+    "email": "shadowwolf@example.com",
+    "score": 845,
+    "profilePicture": "shadowwolf.png",
+    "admin": false,
+    "profileBanner": "banner1.jpg",
+    "playedGames": 32,
+    "elo": 1420
+  },
+  {
+    "pseudo": "PixelNinja",
+    "password": "hashed_password_2",
+    "email": "pixelninja@example.com",
+    "score": 672,
+    "profilePicture": "pixelninja.jpg",
+    "admin": false,
+    "profileBanner": "banner2.jpg",
+    "playedGames": 17,
+    "elo": 1295
+  },
+  {
+    "pseudo": "GamerQueen",
+    "password": "hashed_password_3",
+    "email": "gamerqueen@example.com",
+    "score": 923,
+    "profilePicture": "gamerqueen.png",
+    "admin": true,
+    "profileBanner": "banner3.jpg",
+    "playedGames": 48,
+    "elo": 1890
+  },
+  {
+    "pseudo": "ArcadeDruid",
+    "password": "hashed_password_4",
+    "email": "arcadedruid@example.com",
+    "score": 305,
+    "profilePicture": "arcadedruid.png",
+    "admin": false,
+    "profileBanner": "banner4.jpg",
+    "playedGames": 10,
+    "elo": 1020
+  },
+  {
+    "pseudo": "CyberKnight",
+    "password": "hashed_password_5",
+    "email": "cyberknight@example.com",
+    "score": 510,
+    "profilePicture": "cyberknight.png",
+    "admin": false,
+    "profileBanner": "banner5.jpg",
+    "playedGames": 20,
+    "elo": 1155
+  },
+  {
+    "pseudo": "SilentArrow",
+    "password": "hashed_password_6",
+    "email": "silentarrow@example.com",
+    "score": 777,
+    "profilePicture": "silentarrow.jpg",
+    "admin": true,
+    "profileBanner": "banner6.jpg",
+    "playedGames": 39,
+    "elo": 1740
+  },
+  {
+    "pseudo": "MadAlchemist",
+    "password": "hashed_password_7",
+    "email": "madalchemist@example.com",
+    "score": 114,
+    "profilePicture": "madalchemist.png",
+    "admin": false,
+    "profileBanner": "banner7.jpg",
+    "playedGames": 5,
+    "elo": 880
+  },
+  {
+    "pseudo": "NeonSwords",
+    "password": "hashed_password_8",
+    "email": "neonswords@example.com",
+    "score": 456,
+    "profilePicture": "neonswords.jpg",
+    "admin": false,
+    "profileBanner": "banner8.jpg",
+    "playedGames": 14,
+    "elo": 1310
+  },
+  {
+    "pseudo": "EchoLancer",
+    "password": "hashed_password_9",
+    "email": "echolancer@example.com",
+    "score": 982,
+    "profilePicture": "echolancer.png",
+    "admin": false,
+    "profileBanner": "banner9.jpg",
+    "playedGames": 47,
+    "elo": 2005
+  },
+  {
+    "pseudo": "CaptainZeta",
+    "password": "hashed_password_10",
+    "email": "captainzeta@example.com",
+    "score": 789,
+    "profilePicture": "captainzeta.jpg",
+    "admin": false,
+    "profileBanner": "banner10.jpg",
+    "playedGames": 29,
+    "elo": 1600
+  }
+]
