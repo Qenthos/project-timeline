@@ -14,7 +14,7 @@ const Instrument = ({ instrumentDrop, modeGame, status }) => {
     if (!instrumentDrop) return;
 
     if (modeGame === "annee") {
-      setModeGame(instrumentDrop.year);
+      setModeGame(instrumentDrop.created);
     } else if (modeGame === "taille") {
       setModeGame(instrumentDrop.height);
     } else {

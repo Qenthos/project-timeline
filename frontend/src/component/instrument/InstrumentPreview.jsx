@@ -28,7 +28,7 @@ const InstrumentPreview = ({
           </li>
           <li>
             <span className="instrument-card__year">
-              Année de création : {instrument.year}
+              Année de création : {instrument.created}
             </span>
           </li>
         </ul>

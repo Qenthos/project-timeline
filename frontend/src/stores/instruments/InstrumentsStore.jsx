@@ -1,8 +1,13 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import Instruments from "./Instruments";
 
+// const API_URL =
+//   "https://682de731746f8ca4a47b1b3a.mockapi.io/instruments/instruments";
+
 const API_URL =
-  "https://682de731746f8ca4a47b1b3a.mockapi.io/instruments/instruments";
+  "http://localhost:8000/api/instruments";
+  
+
 export default class InstrumentsStore {
   _instruments = [];
   _isLoaded = false;
@@ -47,7 +52,7 @@ export default class InstrumentsStore {
     return this._instruments.find((instrument) => instrument.id === id) || null;
   }
 
-  updateInstrument(id, name, category, year, weight, height, description) {
+  updateInstrument(id, name, category, created, weight, height, description) {
     fetch(`${API_URL}/${id}`, {
       method: "PUT",
       headers: {
@@ -56,7 +61,7 @@ export default class InstrumentsStore {
       body: JSON.stringify({
         name: name,
         category: category,
-        year: year,
+        created: created,
         weight: weight,
         height: height,
         description: description,
@@ -75,7 +80,7 @@ export default class InstrumentsStore {
             Object.assign(instrumentToUpdate, {
               name,
               category,
-              year,
+              created,
               weight,
               height,
               description,

@@ -138,7 +138,7 @@ export default class TimelineStore {
 
     // Tri selon le mode
     instruments.sort((a, b) => {
-      if (mode === "annee") return a.year - b.year;
+      if (mode === "annee") return a.created - b.created;
       if (mode === "taille") return a.height - b.height;
       return a.weight - b.weight;
     });

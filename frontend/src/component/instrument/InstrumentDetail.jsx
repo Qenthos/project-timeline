@@ -74,7 +74,7 @@ const InstrumentDetail = ({ instrument, onClose }) => {
 
           <p className="instrument-detail__description">{instrument.description}</p>
           <p className="instrument-detail__year">
-            Année de création: {instrument.year}
+            Année de création: {instrument.created}
           </p>
         </div>
       </div>
@@ -87,7 +87,7 @@ InstrumentDetail.propTypes = {
     name: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    year: PropTypes.number.isRequired,
+    created: PropTypes.number.isRequired,
   }).isRequired,
   onClose: PropTypes.func.isRequired,
 };

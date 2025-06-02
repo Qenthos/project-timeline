@@ -5,7 +5,7 @@ export default class Instruments {
   _name;
   _image;
   _category;
-  _year;
+  _created;
   _weight;
   _height;
   _description;
@@ -15,7 +15,7 @@ export default class Instruments {
     name,
     image,
     category,
-    year,
+    created,
     weight,
     height,
     description,
@@ -24,7 +24,7 @@ export default class Instruments {
     this._name = name;
     this._image = image;
     this._category = category;
-    this._year = year;
+    this._created = created;
     this._weight = weight;
     this._height = height;
     this._description = description;
@@ -49,8 +49,8 @@ export default class Instruments {
     return this._category;
   }
 
-  get year() {
-    return this._year;
+  get created() {
+    return this._created;
   }
 
   get weight() {
@@ -94,7 +94,7 @@ export default class Instruments {
     }
   }
 
-  set year(value) {
+  set created(value) {
     const currentYear = new Date().getFullYear();
     if (
       typeof value === "number" &&
@@ -102,7 +102,7 @@ export default class Instruments {
       value > 0 &&
       value <= currentYear
     ) {
-      this._year = value;
+      this._created = value;
     } else {
       throw new Error(`Année invalide : ${value}`);
     }

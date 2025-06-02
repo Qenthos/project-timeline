@@ -13,7 +13,7 @@ const EditInstrument = () => {
 
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
-  const [year, setYear] = useState("");
+  const [created, setYear] = useState("");
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [description, setDescription] = useState("");
@@ -25,7 +25,7 @@ const EditInstrument = () => {
     if (instrument) {
       setName(instrument.name);
       setCategory(instrument.category);
-      setYear(instrument.year);
+      setYear(instrument.created);
       setWeight(instrument.weight);
       setHeight(instrument.height);
       setDescription(instrument.description);
@@ -42,7 +42,7 @@ const EditInstrument = () => {
       const data = {
         name: name,
         category: category,
-        year: parseInt(year),
+        created: parseInt(created),
         weight: parseFloat(weight),
         height: parseFloat(height),
         description: description,
@@ -52,7 +52,7 @@ const EditInstrument = () => {
           instruId,
           data.name,
           data.category,
-          data.year,
+          data.created,
           data.weight,
           data.height,
           data.description
@@ -128,15 +128,15 @@ const EditInstrument = () => {
           </li>
 
           <li className="instrument-edit__item">
-            <label htmlFor="year" className="instrument-edit__label">
+            <label htmlFor="created" className="instrument-edit__label">
               Année de création
             </label>
             <input
               type="number"
-              name="year"
+              name="created"
               className="instrument-edit__input"
               max={new Date().getFullYear()}
-              value={year}
+              value={created}
               onChange={(e) => setYear(e.target.value)}
             />
           </li>
