@@ -27,7 +27,7 @@ export default class Users {
     this._email = email;
     this._score = score;
     this._admin = admin;
-    this._profilePicture = profilePicture || "/media/profile-pictures/pdp-deux";
+    this._profilePicture = profilePicture || "/media/profile-pictures/pdp-deux.png";
     this._bannerImage = bannerImage || "/media/banner-images/wallpaper-un.jpg";
     this._createdAt = createdAt ? new Date(createdAt * 1000) : new Date();
     this._isConnected = isConnected;
