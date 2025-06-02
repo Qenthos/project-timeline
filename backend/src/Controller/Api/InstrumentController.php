@@ -42,7 +42,7 @@ class InstrumentController extends AbstractController
                 'origine' => $instrument->getOrigine(),
                 'description' => $instrument->getDescription(),
                 'anecdote' => $instrument->getAnecdote(),
-                'categorie' => $instrument->getCategorie()->getName(),
+                'category' => $instrument->getCategorie()->getName(),
             ];
         }
 
