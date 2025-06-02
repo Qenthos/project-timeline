@@ -4,7 +4,7 @@
 /***0px***/
 
 .card {
-  min-width: 200px;
+  min-width: 170px;
   position: relative;
   transform-style: preserve-3d;
   perspective: 1000px;
@@ -12,12 +12,12 @@
   border-radius: 10px;
   margin: 0 1rem;
   cursor: pointer;
-  
+
   &--disabled {
     cursor: none;
     pointer-events: none;
   }
-  
+
   &__face {
     position: absolute;
     width: 100%;
@@ -29,16 +29,15 @@
     justify-content: center;
     overflow: hidden;
 
-    
-
     &--back {
       display: flex;
       flex-direction: column;
-      // background-color: rgb(247, 207, 199);
+      gap: 0.5rem;
       transform: rotateY(180deg);
       background-repeat: no-repeat;
-      background-size: cover;
+      background-size: contain;
       position: relative;
+      padding: 1rem;
 
       &::before {
         content: "";
@@ -56,37 +55,35 @@
         background-color: rgba(154, 59, 255, 0.256);
         z-index: -1;
       }
-
     }
-
   }
 
   &__droppable-zone {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 150px;
+    gap: 0.8rem 0;
 
     &--hidden {
       display: none;
     }
-
   }
 
   &__image {
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
   }
 
   &__data-mode {
-    text-align: center;
     padding: 0.5rem;
     border: 2px solid;
     border-radius: 0.25rem;
   }
 
-  &__info {
-    padding: 0.5rem;
-    text-align: center;
+  &__text {
+    font-size: 0.9rem;
   }
 }
 

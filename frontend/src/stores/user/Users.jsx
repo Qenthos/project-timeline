@@ -5,7 +5,7 @@ export default class Users {
   _username;
   _email;
   _score;
-  _role;
+  _admin;
   _profilePicture;
   _bannerImage;
   _createdAt;
@@ -16,7 +16,7 @@ export default class Users {
     username,
     email,
     score = 0,
-    role,
+    admin,
     profilePicture,
     bannerImage,
     createdAt,
@@ -26,10 +26,10 @@ export default class Users {
     this._username = username;
     this._email = email;
     this._score = score;
-    this._role = role;
-    this._profilePicture = profilePicture || "";
-    this._bannerImage = bannerImage || "";
-    this._createdAt = createdAt ? new Date(createdAt) : new Date();
+    this._admin = admin;
+    this._profilePicture = profilePicture || "/media/profile-pictures/pdp-deux";
+    this._bannerImage = bannerImage || "/media/banner-images/wallpaper-un.jpg";
+    this._createdAt = createdAt ? new Date(createdAt * 1000) : new Date();
     this._isConnected = isConnected;
 
     makeAutoObservable(this);
@@ -51,8 +51,8 @@ export default class Users {
     return this._score;
   }
 
-  get role() {
-    return this._role;
+  get admin() {
+    return this._admin;
   }
 
   get profilePicture() {
@@ -96,9 +96,9 @@ export default class Users {
     }
   }
 
-  set role(value) {
-    if (typeof value === "string" && value.trim().length > 0) {
-      this._role = value.trim();
+  set admin(value) {
+    if (typeof value === "boolean") {
+      this._admin = value.trim();
     } else {
       throw new Error(`Rôle invalide : ${value}`);
     }

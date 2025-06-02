@@ -2,7 +2,7 @@
 import { Navigate } from "react-router";
 
 const ProtectedRoute = ({ user, children }) => {
-  if (!user || user.role !== "admin") {
+  if (!user || !user.role) {
     return <Navigate to="/" replace />;
   }
 

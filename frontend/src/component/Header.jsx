@@ -44,8 +44,7 @@ const Header = () => {
             <li className="header__nav__avatar">
               <img
                 src={
-                  usersStore.currentUser.profilePicture &&
-                  "./../../public/media/piano-bg.jpg"
+                  usersStore.currentUser.profilePicture
                 }
                 alt="Mon profil"
                 className="header__nav__avatar-img"

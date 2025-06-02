@@ -65,7 +65,7 @@ span {
 }
 
 h1 {
- font-size: 3.5rem;
+  font-size: 3.5rem;
 }
 
 h3 {
@@ -91,7 +91,8 @@ label {
   color: black;
 }
 
-input[type="submit"], input[type="reset"] {
+input[type="submit"],
+input[type="reset"] {
   cursor: pointer;
 }
 
@@ -128,7 +129,7 @@ textarea {
 
   h1 {
     font-size: 4rem;
-   }
+  }
 }
 
 /***Ecran à partir de 1280px***/

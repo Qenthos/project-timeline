@@ -60,6 +60,8 @@ UserPreview.propTypes = {
     profilePicture: PropTypes.string.isRequired,
     bannerImage: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
+    email: PropTypes.string,
+    role: PropTypes.string,
     score: PropTypes.number,
     createdAt: PropTypes.instanceOf(Date),
   }).isRequired,

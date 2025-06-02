@@ -1,0 +1,68 @@
+@use "../../styles/_mixins" as *;
+@use "../../styles/_variables" as *;
+
+/***0px***/
+
+.ranking-user-card__index {
+  font-size: 3rem;
+  font-weight: bold;
+  width: 2rem;
+  text-align: center;
+}
+
+.podium--first {
+  color: gold;
+}
+
+.podium--second {
+  color: silver;
+}
+
+.podium--third {
+  color: #cd7f32;
+}
+
+.ranking-user-card__profile-picture {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid black;
+  background-color: white;
+}
+
+.ranking-user-card__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ranking-user-card__name {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.ranking-user-card__score {
+  font-size: 1.1rem;
+  margin: 0.2rem 0 0;
+}
+
+/***640px***/
+@include mobile-sm {
+}
+
+/*** 768px***/
+@include mobile-md {
+}
+
+/***1024px***/
+@include mobile-lg {
+}
+
+/***1280px***/
+@include mobile-xl {
+}
+
+/***1536px***/
+@include mobile-2xl {
+}

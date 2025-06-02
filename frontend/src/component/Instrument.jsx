@@ -71,13 +71,13 @@ const Instrument = ({ instrumentDrop, modeGame, status }) => {
           }}
         >
           <li className="card__info">
-            <p>{instrumentDrop.name}</p>
+            <p className="card__text">{instrumentDrop.name}</p>
           </li>
           <li className="card__info">
-            <p>{instrumentDrop.description}</p>
+            <p className="card__text">{instrumentDrop.description}</p>
           </li>
           <li className="card__info">
-            <p>Année de création : {mode}</p>
+            <p className="card__text">Année de création : {mode}</p>
           </li>
         </ul>
       )}

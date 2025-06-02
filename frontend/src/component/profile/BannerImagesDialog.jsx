@@ -1,0 +1,98 @@
+import PropTypes from "prop-types";
+import React, { useEffect, useRef } from "react";
+import "./BannerImagesDialog.scss";
+
+const BannerImagesDialog = ({ onSelected, onCancel }) => {
+  const dialogRef = useRef(null);
+
+  const imageNames = ["wallpaper-un.jpg", "wallpaper-deux.jpg"];
+
+  useEffect(() => {
+    if (dialogRef.current) {
+      dialogRef.current.showModal();
+    }
+
+    const handleClickOutside = (event) => {
+      if (dialogRef.current && event.target === dialogRef.current) {
+        dialogRef.current.close();
+        onCancel();
+      }
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        dialogRef.current.close();
+        onCancel();
+      }
+    };
+
+    const dialog = dialogRef.current;
+    dialog.addEventListener("click", handleClickOutside);
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      dialog.removeEventListener("click", handleClickOutside);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onCancel]);
+
+  const handleClose = () => {
+    dialogRef.current.close();
+    onCancel();
+  };
+
+  const handleImageSelect = (name) => {
+    dialogRef.current.close();
+    const imagePath = `/media/banner-images/${name}`;
+    onSelected(imagePath);
+  };
+
+  return (
+    <dialog
+      ref={dialogRef}
+      onClose={handleClose}
+      className="banner-dialog"
+      aria-labelledby="banner-dialog__title"
+    >
+      <div className="banner-dialog__container">
+        <h2 id="banner-dialog__title" className="banner-dialog__title">
+          Sélection photo de profil
+        </h2>
+        <ul className="banner-dialog__gallery" role="list">
+          {imageNames.map((name, index) => (
+            <li key={name}>
+              <button
+                type="button"
+                onClick={() => handleImageSelect(name)}
+                className="banner-dialog__image-btn"
+                aria-label={`Sélectionner l’image ${index + 1}`}
+              >
+                <img
+                  src={`/media/banner-images/${name}`}
+                  alt={`Image ${index + 1}`}
+                  className="banner-dialog__image"
+                />
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <div className="banner-dialog__actions">
+          <button
+            onClick={handleClose}
+            className="banner-dialog__button banner-dialog__button--cancel"
+          >
+            Annuler
+          </button>
+        </div>
+      </div>
+    </dialog>
+  );
+};
+
+BannerImagesDialog.propTypes = {
+  onSelected: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+};
+
+export default BannerImagesDialog;

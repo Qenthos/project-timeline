@@ -108,12 +108,12 @@
     &__title {
       position: relative;
       text-align: center;
+      margin: 0 0 1rem 0;
 
       &::before {
         position: absolute;
         content: "";
         bottom: 0;
-        left: 0;
         width: 100%;
         border-bottom: 2px solid black;
       }

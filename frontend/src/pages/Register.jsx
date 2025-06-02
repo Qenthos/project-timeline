@@ -13,7 +13,7 @@ const Register = () => {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const [email, setEmail] = useState("");
-  const [pseudo, setPseudo] = useState("");
+  const [username, setUsername] = useState("");
 
   let navigate = useNavigate();
 
@@ -66,7 +66,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!passwordError) {
-      userStore.createAccount(email, pseudo, password);
+      userStore.createAccount(email, username, password);
       navigate("/profil")
     }
   };
@@ -102,15 +102,15 @@ const Register = () => {
                 </li>
 
                 <li className="register__item">
-                  <label className="register__label" htmlFor="pseudo">
+                  <label className="register__label" htmlFor="username">
                     Pseudo
                   </label>
                   <input
                     className="register__input"
                     type="text"
-                    name="pseudo"
+                    name="username"
                     placeholder="Albator"
-                    onChange={(e) => setPseudo(e.target.value)}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                   />
                 </li>

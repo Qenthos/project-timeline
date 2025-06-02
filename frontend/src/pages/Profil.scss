@@ -15,13 +15,6 @@
     width: 100%;
   }
 
-  &__banner {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-  }
-
   &__score {
     position: absolute;
     transform: translateX(-50%);
@@ -33,17 +26,83 @@
     border-radius: 0.5rem;
   }
 
+  &__banner-container {
+    position: relative;
+  }
+
+  &__banner-edit-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 1);
+    }
+  }
+
+  &__banner {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+  }
+
   &__avatar {
     width: 135px;
     height: 135px;
-    border-radius: 50%;
+    border-radius: 100%;
     border: 4px solid #fff;
     position: absolute;
     bottom: -60px;
     left: 50%;
     transform: translateX(-50%);
-    object-fit: cover;
-    background-color: #fff;
+    background-color: white;
+    cursor: pointer;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0);
+      transition: background-color 0.3s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    &:hover::before {
+      background-color: rgba(0, 0, 0, 0.175);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("/media/icones/icon-edit.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    &:hover::after {
+      opacity: 1;
+    }
   }
 
   &__form {
@@ -65,6 +124,7 @@
   &__field {
     display: flex;
     flex-direction: column;
+    position: relative;
   }
 
   &__label {
@@ -78,6 +138,23 @@
     border: 1px solid #ccc;
     border-radius: 0.4rem;
     font-size: 1rem;
+  }
+
+  &__show-password {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 50%;
+    right: 0.75rem;
+    cursor: pointer;
+    background-image: url("/media/hide-password.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &.is-visible,
+    &__confirm-show-password {
+      background-image: url("/media/show-password.svg");
+    }
   }
 
   .profile__delete-account {
@@ -96,6 +173,26 @@
 
     &:active {
       transform: scale(0.98);
+    }
+  }
+
+  &__edit-btn,
+  &__save-btn,
+  &__cancel-btn {
+    background-color: #0055ff;
+    color: white;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    margin: 0 0 0.7rem 0;
+    transition: background-color 0.3s ease;
+  }
+
+  &__cancel-btn {
+    background-color: #ccc;
+    color: #333;
+
+    &:hover {
+      background-color: #aaa;
     }
   }
 }
