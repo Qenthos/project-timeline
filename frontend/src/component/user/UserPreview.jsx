@@ -30,7 +30,7 @@ const UserPreview = ({ user, editable = false, onEdit = () => {} }) => {
             <span>Mail : {user.email}</span>
           </li>
           <li>
-            <span>Rôle : {user.role}</span>
+            <span>Rôle : {user.role ? "administrateur" : "utilisateur"}</span>
           </li>
           <li>
             <span>Score : {user.score}</span>
