@@ -14,7 +14,7 @@
   {
     "id": 2,
     "name": "Djembe",
-    "category": "percussions",
+    "category": "percussion",
     "image": "/images/djembe.webp",
     "created": "1300",
     "weight_kg": 5,
@@ -74,7 +74,7 @@
   {
     "id": 7,
     "name": "Batterie",
-    "category": "percussions",
+    "category": "percussion",
     "image": "/images/batterie.webp",
     "created": "1900",
     "weight_kg": 50,
@@ -182,7 +182,7 @@
   {
     "id": 16,
     "name": "Marimba",
-    "category": "percussions",
+    "category": "percussion",
     "image": "/images/marimba.webp",
     "created": "Guatemala antique",
     "weight_kg": 50,
@@ -206,7 +206,7 @@
   {
     "id": 18,
     "name": "Hang",
-    "category": "percussions",
+    "category": "percussion",
     "image": "/images/hang.webp",
     "created": "2000",
     "weight_kg": 4,
@@ -230,7 +230,7 @@
   {
     "id": 20,
     "name": "Kalimba",
-    "category": "percussions",
+    "category": "percussion",
     "image": "/images/kalimba.webp",
     "created": "XIVe siècle",
     "weight_kg": 0.5,
