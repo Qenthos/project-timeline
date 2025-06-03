@@ -4,6 +4,8 @@ import "./UserPreview.scss";
 const UserPreview = ({ user, editable = false, onEdit = () => {} }) => {
   const headingId = `user-title-${user.id}`;
 
+  console.log(user)
+
   return (
     <article className="user-card">
       <div className="user-card__images-container">
