@@ -2,8 +2,8 @@ import { makeAutoObservable } from "mobx";
 
 export default class GameStore {
   _timer;
-  _timerGame;
-  _timeRemaining;
+  _timerRemaining;
+  _timeElapsed;
   _score;
   _isPaused;
   _isUnlimited;
@@ -14,6 +14,7 @@ export default class GameStore {
   _selectedInstruments = [];
   _nbBadResponse = 0;
   _nbGoodResponse = 0;
+  _difficulty;
 
   constructor() {
     this._timer = 30;
@@ -23,12 +24,13 @@ export default class GameStore {
     this._endGame = false;
     this._win = false;
     this._currentIndex = 0;
-    this._timerGame = 30;
-    this._timeRemaining = 0;
+    this._timerRemaining = 30;
+    this._timeElapsed = 0;
     this._timerInterval = null;
     this._selectedInstruments = [];
     this._nbBadResponse = 0;
     this._nbGoodResponse = 0;
+    this._difficulty = "easy";
 
     makeAutoObservable(this);
   }
@@ -41,7 +43,15 @@ export default class GameStore {
     this._selectedInstruments = value;
   }
 
-  get timer() {
+  get difficulty() {
+    return this._difficulty;
+  }
+
+  set difficulty(value) {
+    this._difficulty = value;
+  }
+
+  get timerGame() {
     return this._timer;
   }
 
@@ -65,12 +75,11 @@ export default class GameStore {
     return this._win;
   }
 
-
   get currentIndex() {
     return this._currentIndex;
   }
 
-  set timer(value) {
+  set timerGame(value) {
     this._timer = value;
   }
 
@@ -94,20 +103,23 @@ export default class GameStore {
     this._win = value;
   }
 
-  
   set currentIndex(value) {
     this._currentIndex = value;
   }
 
-  get timerGame() {
-    return this._timerGame;
+  get timerRemaining() {
+    return this._timerRemaining;
   }
-  set timerGame(value) {
-    this._timerGame = value;
+  set timerRemaining(value) {
+    this._timerRemaining = value;
   }
 
-  get timeRemaining() {
-    return this._timeRemaining;
+  get timeElapsed() {
+    return this._timeElapsed;
+  }
+
+  set timeElapsed(value) {
+    this._timeElapsed = value;
   }
 
   resetGame() {
@@ -128,9 +140,9 @@ export default class GameStore {
 
   calculateTimeRemaining() {
     const timeGame = this._timer;
-    const finishTime = this._timerGame;
+    const finishTime = this._timerRemaining;
     let remaining = timeGame - finishTime;
-    this._timeRemaining = remaining;
+    this._timeElapsed = remaining;
   }
 
   incrementCurrentIndex() {
@@ -149,7 +161,7 @@ export default class GameStore {
 
   startNewRound() {
     this._currentIndex = 0;
-    this._timerGame = this._timer;
+    this._timerRemaining = this._timer;
     this._endGame = false;
     this._win = false;
     this._isPaused = false;
@@ -165,15 +177,15 @@ export default class GameStore {
 
   tickTimer() {
     if (!this._isPaused && !this._endGame && !this._isUnlimited) {
-      this._timerGame -= 1;
-      if (this._timerGame <= 0) {
+      this._timerRemaining -= 1;
+      if (this._timerRemaining <= 0) {
         this._endGame = true;
       }
     }
   }
 
   startTimer() {
-    this._timerGame = this._timer;
+    this._timerRemaining = this._timer;
     this._endGame = false;
     if (this._timerInterval) {
       clearInterval(this._timerInterval);

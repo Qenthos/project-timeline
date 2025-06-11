@@ -10,6 +10,8 @@ export default class Users {
   _bannerImage;
   _createdAt;
   _isConnected;
+  _playedGames;
+  _elo;
 
   constructor({
     id,
@@ -21,16 +23,21 @@ export default class Users {
     bannerImage,
     createdAt,
     isConnected = false,
+    playedGames = 0,
+    elo = 1000,
   }) {
     this._id = id;
     this._username = username;
     this._email = email;
     this._score = score;
     this._admin = admin;
-    this._profilePicture = profilePicture || "/media/profile-pictures/pdp-deux.png";
+    this._profilePicture =
+      profilePicture || "/media/profile-pictures/pdp-deux.png";
     this._bannerImage = bannerImage || "/media/banner-images/wallpaper-un.jpg";
     this._createdAt = createdAt ? new Date(createdAt * 1000) : new Date();
     this._isConnected = isConnected;
+    this._playedGames = playedGames;
+    this._elo = elo;
 
     makeAutoObservable(this);
   }
@@ -71,6 +78,14 @@ export default class Users {
     return this._isConnected;
   }
 
+  get playedGames() {
+    return this._playedGames;
+  }
+
+  get elo() {
+    return this._elo;
+  }
+
   set username(value) {
     if (typeof value === "string" && value.trim().length > 0) {
       this._username = value.trim();
@@ -98,7 +113,7 @@ export default class Users {
 
   set admin(value) {
     if (typeof value === "boolean") {
-      this._admin = value.trim();
+      this._admin = value;
     } else {
       throw new Error(`Rôle invalide : ${value}`);
     }
@@ -140,6 +155,22 @@ export default class Users {
       this._isConnected = value;
     } else {
       throw new Error(`Valeur de connexion invalide: ${value}`);
+    }
+  }
+
+  set playedGames(value) {
+    if (Number.isInteger(value) && value >= 0) {
+      this._playedGames = value;
+    } else {
+      throw new Error(`Nombre de parties invalide : ${value}`);
+    }
+  }
+
+  set elo(value) {
+    if (Number.isInteger(value) && value >= 0) {
+      this._elo = value;
+    } else {
+      throw new Error(`Elo invalide : ${value}`);
     }
   }
 }

@@ -153,19 +153,22 @@ class InstrumentController extends AbstractController
         }
 
         if (isset($data['name'])) $instrument->setName($data['name']);
-        if (isset($data['created'])) $instrument->setCreated(new \DateTime($data['created']));
-        if (isset($data['weight'])) $instrument->setWeight($data['weight']);
+        if (isset($data['created'])) {
+            $timestamp = strtotime($data['created']);
+            $instrument->setCreated($timestamp);
+        }
+                if (isset($data['weight'])) $instrument->setWeight($data['weight']);
         if (isset($data['height'])) $instrument->setHeight($data['height']);
         if (isset($data['origine'])) $instrument->setOrigine($data['origine']);
         if (isset($data['description'])) $instrument->setDescription($data['description']);
         if (isset($data['anecdote'])) $instrument->setAnecdote($data['anecdote']);
 
-        if (isset($data['categorie_id'])) {
-            $categorie = $this->entityManager->getRepository(\App\Entity\Categorie::class)->find($data['categorie_id']);
-            if ($categorie) {
-                $instrument->setCategorie($categorie);
-            }
-        }
+        // if (isset($data['categorie_id'])) {
+        //     $categorie = $this->entityManager->getRepository(\App\Entity\Categorie::class)->find($data['categorie_id']);
+        //     if ($categorie) {
+        //         $instrument->setCategorie($categorie);
+        //     }
+        // }
 
         $this->entityManager->flush();
 

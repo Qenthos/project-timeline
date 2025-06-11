@@ -10,8 +10,8 @@ const SettingsGame = () => {
   const [modeGame, setModeGame] = useState("annee");
   const [isUnlimited, setIsUnlimited] = useState(false);
   // const [categoryGame, setCategoryGame] = useState("all");
-  const [timeTimer, setTimeTimer] = useState(30);
-  const [nbLives, setNbLives] = useState(3);
+  // const [timeTimer, setTimeTimer] = useState(30);
+  // const [nbLives, setNbLives] = useState(3);
 
   let navigate = useNavigate();
 
@@ -32,6 +32,12 @@ const SettingsGame = () => {
     });
   };
 
+  const tabDifficulty = {
+    easy: { cards: 10, timer: 20 },
+    normal: { cards: 15, timer: 150 },
+    hard: { cards: 20, timer: 120 },
+  };
+
   /**
    * Settings defaults depending on difficulty
    * @param {*} evt
@@ -40,18 +46,12 @@ const SettingsGame = () => {
     const difficulty = evt.currentTarget.dataset.difficulty;
     setDifficulty(difficulty);
 
-    const tabDifficulty = {
-      easy: { cards: 10, timer: 20 },
-      normal: { cards: 15, timer: 150 },
-      hard: { cards: 20, timer: 120 },
-      survival: { cards: 50, timer: "" },
-    };
-
     const values = tabDifficulty[difficulty];
     if (values) {
-      setCards(values.cards);
-      setTimer(values.timer);
-      setTimeTimer(values.timer);
+      const { cards, timer } = values;
+      setCards(cards);
+      setTimer(timer);
+      // setTimeTimer(timer);
     }
   };
 
@@ -63,7 +63,7 @@ const SettingsGame = () => {
     { key: "easy", label: "Facile" },
     { key: "normal", label: "Normal" },
     { key: "hard", label: "Difficile" },
-    { key: "survival", label: "Personnaliser" },
+    { key: "customize", label: "Personnaliser" },
   ];
 
   return (
@@ -80,8 +80,11 @@ const SettingsGame = () => {
                   key={index}
                   type="button"
                   onClick={() => setModeGame(mode)}
-                  className={`settings__instrument-card settings__instrument-card--${mode}`}
-                >
+                  className={`settings__instrument-card settings__instrument-card--${mode} ${
+                    modeGame === mode ? "settings__instrument-card--selected" : ""
+                  }`}
+                  
+                                  >
                   <p className="settings__instrument-content">
                     Trier par {mode.toLowerCase()}
                   </p>
@@ -99,15 +102,17 @@ const SettingsGame = () => {
                       type="button"
                       onClick={handleParametersDifficulty}
                       data-difficulty={key}
-                      className={`settings__difficulty-button settings__difficulty-button--${key}`}
+                      className={`settings__difficulty-button settings__difficulty-button--${key} ${
+                        key === difficulty ? "settings__difficulty-button--selected" : ""
+                      }`}
                     >
                       <p className="settings__difficulty-label">{label}</p>
                       <ul className="settings__difficulty-details">
                         <li className="settings__difficulty-detail">
-                          20 cartes
+                          {tabDifficulty[key]?.cards ?? "-"} cartes
                         </li>
                         <li className="settings__difficulty-detail">
-                          120 secondes
+                          {tabDifficulty[key]?.timer ?? "-"} secondes
                         </li>
                       </ul>
                     </button>
@@ -162,9 +167,7 @@ const SettingsGame = () => {
                       onChange={(e) => setTimer(Number(e.target.value))}
                       disabled={isUnlimited}
                     />
-                    <span className="settings__time-range-timer">
-                      {timeTimer}s
-                    </span>
+                    <span className="settings__time-range-timer">{timer}s</span>
                     <label
                       htmlFor="unlimited-timer"
                       className="settings__checkbox-label"
@@ -179,6 +182,24 @@ const SettingsGame = () => {
                       onChange={(e) => setIsUnlimited(e.target.checked)}
                     />
                   </div>
+                </li>
+              </ul>
+              <ul className="settings__list-recap">
+                <li>
+                  <p>Mode de jeu : {modeGame}</p>
+                </li>
+                <li>
+                  <p>
+                    Difficulté :{" "}
+                    {difficulties.find((diff) => diff.key === difficulty)
+                      ?.label || "Inconnue"}
+                  </p>
+                </li>
+                <li>
+                  <p>Nombre de cartes : {cards}</p>
+                </li>
+                <li>
+                <p>Temps : {isUnlimited ? "Illimité" : `${timer}s`}</p>
                 </li>
               </ul>
               <button onClick={startParty} className="settings__start-button">

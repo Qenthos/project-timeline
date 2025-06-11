@@ -8,7 +8,7 @@ const API_URL = "http://localhost:8000/api/users"
 export default class UsersStore {
   _users = [];
   _currentUser = null;
-
+  
   constructor() {
     makeAutoObservable(this);
     this.loadUsers();
@@ -148,7 +148,7 @@ export default class UsersStore {
    * @param {*} email
    */
   updateUser(id, username, email, password) {
-    fetch(`${API_URL}/${id}`, {
+    fetch(`http://localhost:8000/api/user/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -186,7 +186,7 @@ export default class UsersStore {
    * @param {*} userId
    */
   deleteUser(userId) {
-    fetch(`${API_URL}/${userId}`, {
+    fetch(`http://localhost:8000/api/user/${userId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -208,7 +208,7 @@ export default class UsersStore {
    * @param {*} score
    */
   updateScore(score) {
-    fetch(`${API_URL}/${this._currentUser.id}`, {
+    fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -242,7 +242,7 @@ export default class UsersStore {
    * @param {*} profilePicture
    */
   updateProfilPicture(profilePicture) {
-    fetch(`${API_URL}/${this._currentUser.id}`, {
+    fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -278,7 +278,7 @@ export default class UsersStore {
    * @param {*} bannerImage
    */
   updateBannerImage(bannerImage) {
-    fetch(`${API_URL}/${this._currentUser.id}`, {
+    fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
