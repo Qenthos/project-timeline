@@ -36,11 +36,11 @@ class UserController extends AbstractController
 
             $data[] = [
                 'id' => $user->getId(),
-                'pseudo' => $user->getPseudo(),
+                'username' => $user->getUsername(),
                 'email' => $user->getEmail(),
                 'password' => $user->getPassword(),
-                'pfp' => $user->getProfilePicture()->getId(),
-                'pfb' => $user->getProfileBanner()->getId(),
+                'profilePicture' => $user->getProfilePicture()->getId(),
+                'bannerImage' => $user->getProfileBanner()->getId(),
                 'score' => $user->getScore(),
                 'played_games' => $user->getPlayedGames(),
                 'elo' => $user->getElo()
@@ -57,7 +57,7 @@ class UserController extends AbstractController
 
         return $this->json([
             'id' => $user->getId(),
-            'pseudo' => $user->getPseudo(),
+            'pseudo' => $user->getUsername(),
             'profilePicture' => [
                 'id' => $user->getProfilePicture()->getId(),
                 'name' => $user->getProfilePicture()->getName(),
@@ -91,7 +91,7 @@ class UserController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         $user = new User();
-        $user->setPseudo($data['pseudo'] ?? null);
+        $user->setUsername($data['pseudo'] ?? null);
         $user->setEmail($data['email'] ?? null);
         $user->setPassword($data['password'] ?? null);
         $user->setScore($data['score'] ?? 0);
@@ -115,7 +115,7 @@ class UserController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         if (isset($data['pseudo'])) {
-            $user->setPseudo($data['pseudo']);
+            $user->setUsername($data['pseudo']);
         }
         if (isset($data['email'])) {
             $user->setEmail($data['email']);

@@ -4,10 +4,10 @@ namespace App\Controller\Api;
 
 use App\Entity\Game;
 use ApiPlatform\OpenApi\Model\Response;
-use App\Entity\Categorie;
+use App\Entity\Category;
 use App\Repository\GameRepository;
 use App\Repository\UserRepository;
-use App\Repository\CategorieRepository;
+use App\Repository\CategoryRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -55,7 +55,7 @@ class GameController extends AbstractController
     // AJOUT 
 
     #[Route('api/user/{id}/games', name: "addGameToUser", methods: ['POST'])]
-    public function addGameToUser(int $id, Request $request, UserRepository $userRepo, CategorieRepository $catRepo): JsonResponse
+    public function addGameToUser(int $id, Request $request, UserRepository $userRepo, CategoryRepository $catRepo): JsonResponse
     {
         $user = $userRepo->find($id);
 
@@ -64,7 +64,7 @@ class GameController extends AbstractController
         }
 
         $data = json_decode($request->getContent(), true);
-        $categorie = $catRepo->findOneByName($data["categorie"]) ?? new Categorie($data["categorie"]);
+        $categorie = $catRepo->findOneByName($data["categorie"]) ?? new Category($data["categorie"]);
 
         $game = new Game();
         $game->setPlayer($user);
@@ -77,7 +77,7 @@ class GameController extends AbstractController
     }
 
     #[Route('api/user/{id}/games/{idg}', name: "editGameOfUser", methods: ['PATCH'])]
-    public function editGameOfUser(int $id, int $idg, Request $request, UserRepository $userRepo, GameRepository $gameRepo, CategorieRepository $catRepo): JsonResponse
+    public function editGameOfUser(int $id, int $idg, Request $request, UserRepository $userRepo, GameRepository $gameRepo, CategoryRepository $catRepo): JsonResponse
     {
         $user = $userRepo->find($id);
         if (!$user) {
@@ -105,7 +105,7 @@ class GameController extends AbstractController
         }
 
         if (isset($data['categorie'])) {
-            $categorie = $catRepo->findOneByName($data["categorie"]["name"]) ?? new Categorie($data["categorie"]);
+            $categorie = $catRepo->findOneByName($data["categorie"]["name"]) ?? new Category($data["categorie"]);
             $game->setCategorie($categorie);
         }
 

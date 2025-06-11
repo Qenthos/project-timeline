@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity]
-class Categorie
+class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,10 +22,10 @@ class Categorie
     #[ORM\Column(type: 'string')]
     private $image;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Instrument::class)]
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Instrument::class)]
     private Collection $instruments;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Game::class)]
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Game::class)]
     private Collection $games;
 
     public function __construct(string $name) {

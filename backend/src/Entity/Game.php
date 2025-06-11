@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Categorie;
+use App\Entity\Category;
 use App\Repository\GameRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
@@ -23,10 +23,7 @@ class Game
     private int $score;
 
     #[ORM\Column(type: 'integer')]
-    private int $nb_try;
-
-    #[ORM\Column(type: 'integer')]
-    private int $nb_rounds;
+    private int $nb_bad;
 
     #[ORM\Column(type: 'integer')]
     private int $timer;
@@ -44,14 +41,14 @@ class Game
     #[ORM\JoinColumn(nullable: false)]
     private User $player;
 
-    #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'games')]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'games')]
     #[ORM\JoinColumn(nullable: false)]
-    private Categorie $categorie;
+    private Category $categorie;
 
     public function __construct() {
         $this->complete = false;
         $this->score = 0; 
-        $this->nb_try = 0;
+        $this->nb_bad = 0;
         $this->timer = 120;
         $this->nb_cards = 10;
         $this->difficulty = 2;
@@ -84,25 +81,14 @@ class Game
         return $this;
     }
 
-    public function getNbTry(): int
+    public function getNbBad(): int
     {
-        return $this->nb_try;
+        return $this->nb_bad;
     }
 
-    public function setNbTry(int $nb_try): self
+    public function setNbBad(int $nb_bad): self
     {
-        $this->nb_try = $nb_try;
-        return $this;
-    }
-
-    public function getNbRounds(): int
-    {
-        return $this->nb_rounds;
-    }
-
-    public function setNbRounds(int $nb_rounds): self
-    {
-        $this->nb_rounds = $nb_rounds;
+        $this->nb_bad = $nb_bad;
         return $this;
     }
 
@@ -161,12 +147,12 @@ class Game
         return $this;
     }
 
-    public function getCategorie(): Categorie
+    public function getCategorie(): Category
     {
         return $this->categorie;
     }
 
-    public function setCategorie(Categorie $categorie): self
+    public function setCategorie(Category $categorie): self
     {
         $this->categorie = $categorie;
         return $this;

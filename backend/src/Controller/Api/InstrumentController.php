@@ -130,7 +130,7 @@ class InstrumentController extends AbstractController
         $instrument->setDescription($data['description'] ?? '');
         $instrument->setAnecdote($data['anecdote'] ?? '');
 
-        $categorie = $this->entityManager->getRepository(\App\Entity\Categorie::class)->find($data['categorie_id']);
+        $categorie = $this->entityManager->getRepository(\App\Entity\Category::class)->find($data['categorie_id']);
         if (!$categorie) {
             return $this->json(['error' => 'Catégorie non trouvée'], 404);
         }
@@ -153,15 +153,15 @@ class InstrumentController extends AbstractController
         }
 
         if (isset($data['name'])) $instrument->setName($data['name']);
-        if (isset($data['created'])) $instrument->setCreated(new \DateTime($data['created']));
-        if (isset($data['weight'])) $instrument->setWeight($data['weight']);
-        if (isset($data['height'])) $instrument->setHeight($data['height']);
+        if (isset($data['created'])) $instrument->setCreated(intval($data['created']));
+        if (isset($data['weight'])) $instrument->setWeight(intval($data['weight']));
+        if (isset($data['height'])) $instrument->setHeight(intval($data['height']));
         if (isset($data['origine'])) $instrument->setOrigine($data['origine']);
         if (isset($data['description'])) $instrument->setDescription($data['description']);
         if (isset($data['anecdote'])) $instrument->setAnecdote($data['anecdote']);
 
         if (isset($data['categorie_id'])) {
-            $categorie = $this->entityManager->getRepository(\App\Entity\Categorie::class)->find($data['categorie_id']);
+            $categorie = $this->entityManager->getRepository(\App\Entity\Category::class)->find($data['categorie_id']);
             if ($categorie) {
                 $instrument->setCategorie($categorie);
             }

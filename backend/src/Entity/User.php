@@ -19,7 +19,7 @@ class User
     private int $id;
 
     #[ORM\Column(length: 100)]
-    private string $pseudo;
+    private string $username;
 
     #[ORM\Column(length: 255)]
     private string $password;
@@ -60,14 +60,14 @@ class User
         return $this->id;
     }
 
-    public function getPseudo(): string
+    public function getUsername(): string
     {
-        return $this->pseudo;
+        return $this->username;
     }
 
-    public function setPseudo(string $pseudo): self
+    public function setUsername(string $pseudo): self
     {
-        $this->pseudo = $pseudo;
+        $this->username = $pseudo;
         return $this;
     }
 

@@ -2,14 +2,14 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Categorie;
+use App\Entity\Category;
 use App\Entity\Instrument;
 use App\Entity\Game;
 use App\Entity\User;
 use App\Entity\ProfileBanner;
 use App\Entity\ProfilePicture;
 
-use App\Repository\CategorieRepository;
+use App\Repository\CategoryRepository;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -59,7 +59,7 @@ class AppFixtures extends Fixture
 
         // Création de 10 catégories
         for ($i = 1; $i <= 10; $i++) {
-            $categorie = new Categorie("Categorie$i");
+            $categorie = new Category("Categorie$i");
             $categorie
                 ->setDescription("Description fictive de la catégorie $i. C’est un genre d’instrument ou de jeu particulier, souvent utilisé dans les concours !")
                 ->setImage("image$i"); 
@@ -69,7 +69,7 @@ class AppFixtures extends Fixture
 
         foreach ($usersData as $index=>$data) {
             $user = new User();
-            $user->setPseudo($data["pseudo"])
+            $user->setUsername($data["pseudo"])
                  ->setPassword($data["password"])
                  ->setEmail($data["email"])
                  ->setScore($data["score"])
@@ -105,8 +105,7 @@ class AppFixtures extends Fixture
             $game = new Game();
             $game->setComplete((bool)rand(0, 1))
                 ->setScore(rand(100, 1000))
-                ->setNbTry(rand(1, 10))
-                ->setNbRounds(rand(1, 5))
+                ->setNbBad(rand(1, 10))
                 ->setTimer(rand(30, 300))
                 ->setNbCards(rand(8, 50))
                 ->setDifficulty(rand(1, 5))

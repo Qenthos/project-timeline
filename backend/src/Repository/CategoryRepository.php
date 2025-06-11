@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Categorie;
+use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,17 +15,17 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @method Categorie[]    findAll()
  * @method Categorie[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CategorieRepository extends ServiceEntityRepository
+class CategoryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Categorie::class);
+        parent::__construct($registry, Category::class);
     }
 
     /**
      * Retourne toutes les catégories triées par nom (ordre alphabétique)
      *
-     * @return Categorie[]
+     * @return Category[]
      */
     public function getAllCategories(): array
     {
@@ -39,7 +39,7 @@ class CategorieRepository extends ServiceEntityRepository
     /**
      * Retourne toutes les catégories triées par nom (ordre alphabétique)
      *
-     * @return Categorie[]
+     * @return Category[]
      */
     public function getAllCategoriesSortedByName(): array
     {
@@ -53,9 +53,9 @@ class CategorieRepository extends ServiceEntityRepository
      * Retourne une catégorie par son slug (ou autre identifiant unique)
      *
      * @param string $name
-     * @return Categorie|null
+     * @return Category|null
      */
-    public function findOneByName(string $name): ?Categorie
+    public function findOneByName(string $name): ?Category
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.name = :name')
@@ -67,7 +67,7 @@ class CategorieRepository extends ServiceEntityRepository
     /**
      * Retourne toutes les catégories visibles
      *
-     * @return Categorie[]
+     * @return Category[]
      */
     public function findVisibleCategories(): array
     {
@@ -82,7 +82,7 @@ class CategorieRepository extends ServiceEntityRepository
      * Recherche de catégories par mot-clé
      *
      * @param string $search
-     * @return Categorie[]
+     * @return Category[]
      */
     public function searchCategories(string $search): array
     {

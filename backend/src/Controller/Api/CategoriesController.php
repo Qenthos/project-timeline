@@ -3,8 +3,8 @@
 namespace App\Controller\Api;
 
 use ApiPlatform\OpenApi\Model\Response;
-use App\Entity\Categorie;
-use App\Repository\CategorieRepository;
+use App\Entity\Category;
+use App\Repository\CategoryRepository;
 use COM;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +26,7 @@ class CategoriesController extends AbstractController
     }
 
     #[Route('api/categories', name: "listCategories", methods: ['GET'])]
-    public function listCategories(CategorieRepository $categoriesRepository): JsonResponse
+    public function listCategories(CategoryRepository $categoriesRepository): JsonResponse
     {
         $categories = $categoriesRepository->getAllCategories();
         return $this->json($categories);

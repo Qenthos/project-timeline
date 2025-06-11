@@ -39,9 +39,9 @@ class Instrument
     #[ORM\Column(type: 'text')]
     private string $origine;
 
-    #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'instruments')]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'instruments')]
     #[ORM\JoinColumn(nullable: false)]
-    private Categorie $categorie;
+    private Category $categorie;
 
     public function getId(): int
     {
@@ -103,12 +103,12 @@ class Instrument
         return $this;
     }
 
-    public function getCategorie(): Categorie
+    public function getCategorie(): Category
     {
         return $this->categorie;
     }
 
-    public function setCategorie(Categorie $categorie): self
+    public function setCategorie(Category $categorie): self
     {
         $this->categorie = $categorie;
         return $this;

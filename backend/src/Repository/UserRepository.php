@@ -56,7 +56,7 @@ class UserRepository extends ServiceEntityRepository
     public function getAllAdmins(): array
     {
         return $this->createQueryBuilder('u')
-            ->select("u.id, u.pseudo, u.email, u.password")
+            ->select("u.id, u.username, u.email, u.password")
             ->andWhere('u.admin = :isAdmin')
             ->setParameter('isAdmin', true)
             ->getQuery()
