@@ -54,7 +54,7 @@ export default class InstrumentsStore {
 
   updateInstrument(id, name, category, created, weight, height, description) {
     fetch(`${API_URL}/${id}`, {
-      method: "PATCH",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
