@@ -1,7 +1,9 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import Users from "./Users";
 
-const API_URL = "https://683866862c55e01d184d280a.mockapi.io/player/users";
+// const API_URL = "https://683866862c55e01d184d280a.mockapi.io/player/users";
+
+const API_URL = "http://localhost:8000/api/users"
 
 export default class UsersStore {
   _users = [];
