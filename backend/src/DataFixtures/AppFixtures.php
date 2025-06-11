@@ -69,7 +69,7 @@ class AppFixtures extends Fixture
 
         foreach ($usersData as $index=>$data) {
             $user = new User();
-            $user->setPseudo($data["pseudo"])
+            $user->setPseudo($data["username"])
                  ->setPassword($data["password"])
                  ->setEmail($data["email"])
                  ->setScore($data["score"])

@@ -27,7 +27,6 @@ const SettingsGame = () => {
         isUnlimited: isUnlimited,
         difficulty: difficulty,
         modeGame: modeGame.toLowerCase(),
-        nbLives: nbLives,
       },
     });
   };

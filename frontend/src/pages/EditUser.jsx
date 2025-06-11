@@ -9,7 +9,8 @@ const EditUser = () => {
   let navigate = useNavigate();
 
   const usersStore = useUsersStore();
-  const user = usersStore.getUserById(userId);
+  const user = usersStore.getUserById(Number(userId));
+  console.log(user);
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");

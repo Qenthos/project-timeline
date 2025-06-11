@@ -17,7 +17,7 @@ const TimelineComposer = observer(() => {
   const location = useLocation();
   if (!location.state) return <Navigate to="/settings-game" />;
 
-  const { timer, cards, isUnlimited, difficulty, modeGame, nbLives } =
+  const { timer, cards, isUnlimited, difficulty, modeGame } =
     location.state || {};
 
   const { gameStore, instruStore } = useContext(TimelineContext);
@@ -25,6 +25,8 @@ const TimelineComposer = observer(() => {
 
   // const [selectedInstruments, setSelectedInstruments] = useState([]);
   const [showDragCard, setShowDragCard] = useState(true);
+
+  console.log(usersStore.currentUser)
 
   useEffect(() => {
     gameStore.difficulty = difficulty;

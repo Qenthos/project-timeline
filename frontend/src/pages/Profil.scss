@@ -138,9 +138,10 @@
     border: 1px solid #ccc;
     border-radius: 0.4rem;
     font-size: 1rem;
+    width: 100%;
   }
 
-  &__show-password {
+  &__show-password, &__confirm-show-password {
     position: absolute;
     width: 24px;
     height: 24px;
@@ -151,8 +152,7 @@
     background-repeat: no-repeat;
     background-position: center;
 
-    &.is-visible,
-    &__confirm-show-password {
+    &.is-visible, &__confirm-show-password {
       background-image: url("/media/show-password.svg");
     }
   }

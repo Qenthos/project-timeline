@@ -34,7 +34,7 @@ export default class Users {
     this._profilePicture =
       profilePicture || "/media/profile-pictures/pdp-deux.png";
     this._bannerImage = bannerImage || "/media/banner-images/wallpaper-un.jpg";
-    this._createdAt = createdAt ? new Date(createdAt * 1000) : new Date();
+    this._createdAt = createdAt ? new Date(createdAt) : new Date();
     this._isConnected = isConnected;
     this._playedGames = playedGames;
     this._elo = elo;

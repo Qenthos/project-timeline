@@ -99,23 +99,25 @@ export default class UsersStore {
    */
   async login(email, password) {
     try {
-      // const response = await fetch(
-      //   `${API_URL}?email=${encodeURIComponent(
-      //     email
-      //   )}&password=${encodeURIComponent(password)}`
-      // );
       const response = await fetch(API_URL);
+
       if (!response.ok) {
         throw new Error("Erreur réseau");
       }
+
       const users = await response.json();
-      if (users.length === 0) {
-        throw new Error("Identifiants incorrects");
+      const userByEmail = users.find((u) => u.email === email);
+
+      if (!userByEmail) {
+        throw new Error("Adresse mail introuvable");
+      }
+  
+      if (userByEmail.password !== password) {
+        throw new Error("Mot de passe incorrect");
       }
 
       runInAction(() => {
-        const userData = users[0];
-        const user = new Users({ ...userData, isConnected: true });
+        const user = new Users({ ...userByEmail, isConnected: true });
         this._currentUser = user;
 
         const exists = this._users.find((u) => u.id === user.id);
@@ -123,10 +125,11 @@ export default class UsersStore {
           this._users.push(user);
         }
 
-        localStorage.setItem("currentUser", JSON.stringify(userData));
+        localStorage.setItem("currentUser", JSON.stringify(userByEmail));
       });
     } catch (error) {
       console.error("Erreur lors de la connexion :", error);
+      throw error;
     }
   }
 
@@ -147,7 +150,7 @@ export default class UsersStore {
    * @param {*} username
    * @param {*} email
    */
-  updateUser(id, username, email, password) {
+  updateUser(id, username, email, score, password) {
     fetch(`http://localhost:8000/api/user/${id}`, {
       method: "PUT",
       headers: {
@@ -156,21 +159,26 @@ export default class UsersStore {
       body: JSON.stringify({
         username,
         email,
+        score,
         password,
       }),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Erreur : ${response.status}`);
-        }
-        return response.json();
-      })
+    .then((response) => {
+      if (!response.ok) {
+        return response.text().then((text) => {
+          throw new Error(`Erreur ${response.status} : ${text}`);
+        });
+      }
+      return response.json();
+    })
+    
       .then((data) => {
         runInAction(() => {
           const userToUpdate = this.getUserById(id);
           if (userToUpdate) {
             userToUpdate.username = username;
             userToUpdate.email = email;
+            userToUpdate.score = score;
             userToUpdate.password = password;
           }
         });
@@ -318,7 +326,7 @@ export default class UsersStore {
       return;
     }
     try {
-      const response = await fetch(`${API_URL}/${this._currentUser.id}`);
+      const response = await fetch(`http://localhost:8000/api/user/${this._currentUser.id}`);
       const data = await response.json();
       runInAction(() => {
         const updatedUser = new Users(data);

@@ -127,6 +127,12 @@ const Register = () => {
                       id="password"
                       pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$"
                       value={password}
+                      onInvalid={(e) =>
+                        e.target.setCustomValidity(
+                          "8 caractères min. avec une majuscule, un chiffre et un caractère spécial."
+                        )
+                      }
+                      onInput={(e) => e.target.setCustomValidity("")}
                       onChange={handlePasswordChange}
                       required
                     />
@@ -158,6 +164,12 @@ const Register = () => {
                       pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$"
                       value={confirmPassword}
                       onChange={handleConfirmPasswordChange}
+                      onInvalid={(e) =>
+                        e.target.setCustomValidity(
+                          "8 caractères min. avec une majuscule, un chiffre et un caractère spécial."
+                        )
+                      }
+                      onInput={(e) => e.target.setCustomValidity("")}
                       required
                     />
                     <button

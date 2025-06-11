@@ -1,6 +1,6 @@
 [
   {
-    "pseudo": "ShadowWolf",
+    "username": "ShadowWolf",
     "password": "hashed_password_1",
     "email": "shadowwolf@example.com",
     "score": 845,
@@ -11,7 +11,7 @@
     "elo": 1420
   },
   {
-    "pseudo": "PixelNinja",
+    "username": "PixelNinja",
     "password": "hashed_password_2",
     "email": "pixelninja@example.com",
     "score": 672,
@@ -22,7 +22,7 @@
     "elo": 1295
   },
   {
-    "pseudo": "GamerQueen",
+    "username": "GamerQueen",
     "password": "hashed_password_3",
     "email": "gamerqueen@example.com",
     "score": 923,
@@ -33,7 +33,7 @@
     "elo": 1890
   },
   {
-    "pseudo": "ArcadeDruid",
+    "username": "ArcadeDruid",
     "password": "hashed_password_4",
     "email": "arcadedruid@example.com",
     "score": 305,
@@ -44,7 +44,7 @@
     "elo": 1020
   },
   {
-    "pseudo": "CyberKnight",
+    "username": "CyberKnight",
     "password": "hashed_password_5",
     "email": "cyberknight@example.com",
     "score": 510,
@@ -55,7 +55,7 @@
     "elo": 1155
   },
   {
-    "pseudo": "SilentArrow",
+    "username": "SilentArrow",
     "password": "hashed_password_6",
     "email": "silentarrow@example.com",
     "score": 777,
@@ -66,7 +66,7 @@
     "elo": 1740
   },
   {
-    "pseudo": "MadAlchemist",
+    "username": "MadAlchemist",
     "password": "hashed_password_7",
     "email": "madalchemist@example.com",
     "score": 114,
@@ -77,7 +77,7 @@
     "elo": 880
   },
   {
-    "pseudo": "NeonSwords",
+    "username": "NeonSwords",
     "password": "hashed_password_8",
     "email": "neonswords@example.com",
     "score": 456,
@@ -88,7 +88,7 @@
     "elo": 1310
   },
   {
-    "pseudo": "EchoLancer",
+    "username": "EchoLancer",
     "password": "hashed_password_9",
     "email": "echolancer@example.com",
     "score": 982,
@@ -99,7 +99,7 @@
     "elo": 2005
   },
   {
-    "pseudo": "CaptainZeta",
+    "username": "CaptainZeta",
     "password": "hashed_password_10",
     "email": "captainzeta@example.com",
     "score": 789,
