@@ -5,13 +5,14 @@ import { TimelineContext } from "../stores/TimelineContext";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
-import { useUsersStore } from "./../stores/useStore";
+import { useUsersStore } from "../stores/useStore";
 import React from "react";
 import Header from "../component/Header";
 import DroppableZoneTimeline from "../component/timeline/DroppableZoneTimeline";
 import DraggableInstrument from "../component/timeline/DraggableInstrument";
 import Instrument from "../component/Instrument";
 import "./TimelineComposer.scss";
+
 
 const TimelineComposer = observer(() => {
   const location = useLocation();
@@ -106,7 +107,7 @@ const TimelineComposer = observer(() => {
    * - all cards have been placed
    */
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser && !gameStore.state.endGame) {
       const noMoreCards =
         gameStore.state.currentIndex >=
         gameStore.state.selectedInstruments.length;
@@ -123,6 +124,7 @@ const TimelineComposer = observer(() => {
   }, [
     gameStore.state.currentIndex,
     gameStore.state.timerRemaining,
+    gameStore.state.endGame,
     currentUser,
   ]);
 

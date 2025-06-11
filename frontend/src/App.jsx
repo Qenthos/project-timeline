@@ -7,7 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Ranking from "./pages/Ranking";
 import MyInstruments from "./pages/MyInstruments";
-import TimelineComposer from "./pages/timelineComposer";
+import TimelineComposer from "./pages/timelineComposer.jsx";
 import SettingsGame from "./pages/SettingsGame.jsx";
 import LoadingScreen from "./component/LoadingScreen.jsx";
 import Profil from "./pages/Profil.jsx";

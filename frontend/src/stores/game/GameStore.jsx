@@ -64,6 +64,9 @@ export default class GameStore {
   }
 
   finishGame(nbBadResponse, nbGoodResponse) {
+    if (this._gamesStore.endGame) {
+      return;
+    }
     this._gamesStore.endGame = true;
     this.calculateTimeRemaining();
     this.calculateScore(nbBadResponse, nbGoodResponse);
