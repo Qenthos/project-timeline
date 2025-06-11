@@ -37,7 +37,7 @@ class ProfilePictureController extends AbstractController
             $data[] = [
                 'id' => $pic->getId(),
                 'name' => $pic->getName(),
-                'image' => $pic->getImage()
+                'image' => '/media/profile-pictures/' . $pic->getImage()
             ];
         }
 

@@ -63,11 +63,15 @@ const Register = () => {
    * Send form and create account
    * @param {*} e
    */
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!passwordError) {
-      userStore.createAccount(email, username, password);
-      navigate("/profil")
+      try {
+        userStore.createAccount(email, username, password);
+        navigate("/profil");
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 

@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Game;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @extends ServiceEntityRepository<Game>
@@ -42,8 +41,7 @@ class GameRepository extends ServiceEntityRepository
     public function findAllGamesByUser(int $userId): array
     {
         return $this->createQueryBuilder('g')
-            ->leftJoin('g.categorie', 'c') // Jointure explicite
-            ->addSelect('partial g.{id, score, complete, nb_try}', 'partial c.{id, name}') // Sélections partielles
+            // Suppression de la jointure avec la catégorie
             ->andWhere('g.player = :userId')
             ->setParameter('userId', $userId)
             ->getQuery()
@@ -60,15 +58,14 @@ class GameRepository extends ServiceEntityRepository
     public function findGameByIdAndUser(int $gameId, int $userId): ?Game
     {
         return $this->createQueryBuilder('g')
-            ->andWhere('g.game_id = :gameId')
+            ->andWhere('g.id = :gameId')
             ->andWhere('g.player = :userId')
-            ->setParameters(new ArrayCollection([
-                'gameId' => $gameId,
-                'userId' => $userId,
-            ]))
+            ->setParameter('gameId', $gameId)
+            ->setParameter('userId', $userId)            
             ->getQuery()
             ->getOneOrNullResult();
     }
+    
 
     /**
      * Récupère les parties non terminées d'un utilisateur.
@@ -85,7 +82,6 @@ class GameRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
 
     /**
      * Récupère les 10 meilleures parties d'un utilisateur, classées par score décroissant.
@@ -104,7 +100,6 @@ class GameRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
     /**
      * Compte le nombre total de parties d'un utilisateur.
      *
@@ -114,7 +109,7 @@ class GameRepository extends ServiceEntityRepository
     public function countGamesByUser(int $userId): int
     {
         return (int) $this->createQueryBuilder('g')
-            ->select('COUNT(g.game_id)')
+            ->select('COUNT(g.id)') // Correction ici aussi
             ->andWhere('g.player = :userId')
             ->setParameter('userId', $userId)
             ->getQuery()

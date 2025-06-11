@@ -41,7 +41,7 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= 11; $i++) {
             $banner = new ProfileBanner();
             $banner->setName("Banner$i");
-            $banner->setImage("path$i");
+            $banner->setImage("wallpaper-$i.jpg");
 
             $manager->persist($banner);
             $profileBanners[] = $banner;
@@ -51,7 +51,7 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= 11; $i++) {
             $pp = new ProfilePicture();
             $pp->setName("PFP$i");
-            $pp->setImage("path$i");
+            $pp->setImage("pdp-$i.png");
 
             $manager->persist($pp);
             $profilePicture[] = $pp;
@@ -103,16 +103,13 @@ class AppFixtures extends Fixture
         // Création de 30 parties aléatoires
         for ($i = 1; $i <= 30; $i++) {
             $game = new Game();
-            $game->setComplete((bool)rand(0, 1))
+            $game->setWin((bool)rand(0, 1))
                 ->setScore(rand(100, 1000))
-                ->setNbTry(rand(1, 10))
-                ->setNbRounds(rand(1, 5))
                 ->setTimer(rand(30, 300))
                 ->setNbCards(rand(8, 50))
-                ->setDifficulty(rand(1, 5))
+                ->setDifficulty(['easy', 'normal', 'hard'][array_rand(['easy', 'normal', 'hard'])])
                 ->setTime(new \DateTime(sprintf('-%d days', rand(0, 100))))
-                ->setPlayer($users[array_rand($users)])
-                ->setCategorie($categories[array_rand($categories)]);
+                ->setPlayer($users[array_rand($users)]);
 
             $manager->persist($game);
         }

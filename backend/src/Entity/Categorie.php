@@ -93,7 +93,6 @@ class Categorie
     {
         if (!$this->games->contains($game)) {
             $this->games[] = $game;
-            $game->setCategorie($this);
         }
         return $this;
     }
