@@ -1,23 +1,27 @@
 import { observer } from "mobx-react-lite";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { useInstrumentsStore, useUsersStore } from "./stores/useStore.js";
-import Home from "./pages/Home";
-import Page404 from "./pages/Page404";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Ranking from "./pages/Ranking";
-import MyInstruments from "./pages/MyInstruments";
-import TimelineComposer from "./pages/timelineComposer.jsx";
-import SettingsGame from "./pages/SettingsGame.jsx";
-import LoadingScreen from "./component/LoadingScreen.jsx";
-import Profil from "./pages/Profil.jsx";
-import LoginAdmin from "./pages/LoginAdmin.jsx";
-import HubAdmin from "./pages/HubAdmin.jsx";
-import EditInstrument from "./pages/EditInstruments.jsx";
-import EditUser from "./pages/EditUser.jsx";
-import AdminManageInstrument from "./pages/AdminManageInstrument.jsx";
-import AdminManageUser from "./pages/AdminManageUser.jsx";
+import {
+  Home,
+  Login,
+  Register,
+  Page404,
+  Profil,
+  Ranking,
+  MyInstruments,
+  TimelineComposer,
+  SettingsGame,
+  LoginAdmin,
+  HubAdmin,
+  EditInstrument,
+  EditUser,
+  AdminManageInstrument,
+  AdminManageUser,
+} from "./pages";
+
 import ProtectedRoute from "./component/ProtectedRoute.jsx";
+import LoadingScreen from "./component/LoadingScreen.jsx";
+
 
 const App = observer(() => {
   const { isLoaded } = useInstrumentsStore();

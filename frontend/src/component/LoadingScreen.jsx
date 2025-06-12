@@ -1,31 +1,16 @@
 import React from "react";
+import "./LoadingScreen.scss";
 import { motion } from "framer-motion";
 
 const LoadingScreen = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        margin: "0 0 25px 0",
-        height: "100vh",
-      }}
-    >
-      <p style={{fontSize: '1.5rem'}}>En cours de chargement</p>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          gap: "14px",
-          alignItems: "center",
-        }}
-      >
+    <div className="loading-screen">
+      <p className="loading-screen__text">En cours de chargement</p>
+      <div className="loading-screen__dots">
         {[0, 1, 2].map((dot, index) => (
           <motion.div
             key={index}
+            className="loading-screen__dot"
             animate={{ y: [0, -10, 0] }}
             transition={{
               duration: 0.7,
@@ -33,12 +18,6 @@ const LoadingScreen = () => {
               repeatType: "loop",
               delay: index * 0.2,
               ease: "easeInOut",
-            }}
-            style={{
-              width: "20px",
-              height: "20px",
-              borderRadius: "50%",
-              background: "red",
             }}
           />
         ))}

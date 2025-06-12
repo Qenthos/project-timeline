@@ -1,0 +1,15 @@
+export { default as Home } from "./Home";
+export { default as Login } from "./Login";
+export { default as Register } from "./Register";
+export { default as Page404 } from "./Page404";
+export { default as Profil } from "./Profil";
+export { default as Ranking } from "./Ranking";
+export { default as MyInstruments } from "./MyInstruments";
+export { default as TimelineComposer } from "./timelineComposer";
+export { default as SettingsGame } from "./SettingsGame";
+export { default as LoginAdmin } from "./LoginAdmin";
+export { default as HubAdmin } from "./HubAdmin";
+export { default as EditInstrument } from "./EditInstruments";
+export { default as EditUser } from "./EditUser";
+export { default as AdminManageInstrument } from "./AdminManageInstrument";
+export { default as AdminManageUser } from "./AdminManageUser";

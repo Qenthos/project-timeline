@@ -13,7 +13,6 @@ import DraggableInstrument from "../component/timeline/DraggableInstrument";
 import Instrument from "../component/Instrument";
 import "./TimelineComposer.scss";
 
-
 const TimelineComposer = observer(() => {
   const location = useLocation();
   if (!location.state) return <Navigate to="/settings-game" />;
@@ -191,57 +190,81 @@ const TimelineComposer = observer(() => {
           </ul>
           <div className="timeline__instruments">
             {isGameFinished ? (
-              <ul>
-                <li>
-                  <p>
+              <ul className="timeline__instruments-list">
+                <li className="timeline__instruments-item">
+                  <p className="timeline__instruments-message">
                     {gameStore.state.win
                       ? "Gagné ! Vous avez fait aucune faute."
                       : "Perdu !"}
                   </p>
                 </li>
+
                 {gameStore.state.timerRemaining <= 0 && (
-                  <li>
-                    <p>
+                  <li className="timeline__instruments-item">
+                    <p className="timeline__instruments-message">
                       Le temps de {gameStore.state.timerGame} secondes est
                       écoulé !
                     </p>
                   </li>
                 )}
-                <li>
-                  <p>Nombre d'erreurs : {instruStore.nbBadResponse}</p>
-                </li>
-                <li>
-                  <p>
-                    Nombre de bonnes réponses : {instruStore.nbGoodResponse}
+
+                <li className="timeline__instruments-item">
+                  <p className="timeline__instruments-result">
+                    {`Nombre d'erreur${
+                      instruStore.nbBadResponse > 1 ? "s" : ""
+                    } : ${instruStore.nbBadResponse}`}
                   </p>
                 </li>
-                <li>
-                  {currentUser && <p>Score : +{gameStore.state.score}</p>}
-                </li>
-                <li>
-                  <p>Terminé en {gameStore.state.timeElapsed} s</p>
+
+                <li className="timeline__instruments-item">
+                  <p className="timeline__instruments-result">
+                    {`Nombre de bonne réponse${
+                      instruStore.nbGoodResponse > 1 ? "s" : ""
+                    } : ${instruStore.nbGoodResponse}`}
+                  </p>
                 </li>
 
-                <li>
-                  <button onClick={resetGame}>Recommencer une partie</button>
-                  <Link to="/settings-game">
+                <li className="timeline__instruments-item">
+                  {currentUser && (
+                    <p className="timeline__instruments-score">
+                      Score : +{gameStore.state.score}
+                    </p>
+                  )}
+                </li>
+
+                <li className="timeline__instruments-item">
+                  <p className="timeline__instruments-time">
+                    {gameStore.state.timeElapsed === 0
+                      ? ""
+                      : `Terminé en ${gameStore.state.timeElapsed} secondes`}
+                  </p>
+                </li>
+
+                <li className="timeline__instruments-item timeline__instruments-actions">
+                  <button
+                    className="timeline__instruments-button"
+                    onClick={resetGame}
+                  >
+                    Recommencer une partie
+                  </button>
+                  <Link
+                    to="/settings-game"
+                    className="timeline__instruments-link"
+                  >
                     Modifier les paramètres d'une partie
                   </Link>
-                  {!currentUser && <Link to="/register">Créer un compte</Link>}
+                  {!currentUser && (
+                    <Link to="/register" className="timeline__instruments-link">
+                      Créer un compte
+                    </Link>
+                  )}
                 </li>
               </ul>
             ) : (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+              <>
                 {modeGame !== "survival" ? (
                   <p>
-                    Nombre de cartes restantes à poser :
+                    Nombre de cartes restantes à poser :{" "}
                     {instrumentsNotInExpo.length}
                   </p>
                 ) : (
@@ -256,7 +279,7 @@ const TimelineComposer = observer(() => {
                     }
                   />
                 )}
-              </div>
+              </>
             )}
           </div>
 
