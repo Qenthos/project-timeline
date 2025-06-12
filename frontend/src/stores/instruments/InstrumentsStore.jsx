@@ -51,7 +51,7 @@ export default class InstrumentsStore {
   getInstrumentsById(id) {
     return this._instruments.find((instrument) => instrument.id === id) || null;
   }
-
+  
   updateInstrument(id, name, category, created, weight, height, description) {
     fetch(`${API_URL}/${id}`, {
       method: "PUT",

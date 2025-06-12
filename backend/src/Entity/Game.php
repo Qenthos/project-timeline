@@ -29,6 +29,9 @@ class Game
     private int $timer;
 
     #[ORM\Column(type: 'integer')]
+    private int $time_elapsed;
+
+    #[ORM\Column(type: 'integer')]
     private int $nb_cards;
 
     #[ORM\Column(type: 'integer')]
@@ -100,6 +103,17 @@ class Game
     public function setTimer(int $timer): self
     {
         $this->timer = $timer;
+        return $this;
+    }
+
+    public function getTimeElapsed() 
+    {
+        return $this->time_elapsed;    
+    }
+
+    public function setTimeElapsed(int $time) 
+    {
+        $this->time_elapsed = $time;
         return $this;
     }
 
