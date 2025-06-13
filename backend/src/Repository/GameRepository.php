@@ -28,8 +28,8 @@ class GameRepository extends ServiceEntityRepository
         ->select('g.id, g.complete, g.score, g.nb_bad, g.timer, g.time_elapsed, g.nb_cards, g.difficulty, g.gamemode, g.time')
         ->addSelect('cat.name AS categoryName')
         ->addSelect('player.id AS playerId')
-        ->leftJoin('g.categorie', 'cat') // attention à l’orthographe du champ
-        ->leftJoin('g.player', 'player') // adapte si le nom est différent
+        ->leftJoin('g.categorie', 'cat') 
+        ->leftJoin('g.player', 'player') 
         ->getQuery()
         ->getArrayResult(); 
     }
