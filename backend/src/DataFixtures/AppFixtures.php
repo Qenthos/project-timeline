@@ -13,6 +13,7 @@ use App\Repository\CategoryRepository;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Validator\Constraints\Length;
 
 class AppFixtures extends Fixture
 {
@@ -36,6 +37,7 @@ class AppFixtures extends Fixture
         $users = [];
         $profileBanners = [];
         $profilePicture = [];
+        $gamemode = ["poids", "taille", "création"];
 
         // Création de Bannières
         for ($i = 1; $i <= 11; $i++) {
@@ -106,6 +108,7 @@ class AppFixtures extends Fixture
             $game->setComplete((bool)rand(0, 1))
                 ->setScore(rand(100, 1000))
                 ->setNbBad(rand(1, 10))
+                ->setGamemode($gamemode[rand(0, sizeof($gamemode)-1)])
                 ->setTimer(rand(30, 300))
                 ->setNbCards(rand(8, 50))
                 ->setDifficulty(rand(1, 5))

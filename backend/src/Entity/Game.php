@@ -37,6 +37,9 @@ class Game
     #[ORM\Column(type: 'integer')]
     private int $difficulty;
 
+    #[ORM\Column(type: 'string')]
+    private string $gamemode;
+
     #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $time;
 
@@ -50,6 +53,7 @@ class Game
 
     public function __construct() {
         $this->complete = false;
+        $this->time_elapsed = 0;
         $this->score = 0; 
         $this->nb_bad = 0;
         $this->timer = 120;
@@ -138,6 +142,17 @@ class Game
         $this->difficulty = $difficulty;
         return $this;
     }
+
+    public function getGamemode(): string
+    {
+        return $this->gamemode;
+    }
+
+    public function setGamemode(string $mode): self
+    {
+        $this->gamemode = $mode;
+        return $this;
+    } 
 
     public function getTime(): \DateTimeInterface
     {

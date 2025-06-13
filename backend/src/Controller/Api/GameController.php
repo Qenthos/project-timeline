@@ -28,6 +28,14 @@ class GameController extends AbstractController
         $this->loggerInterface = $logger;
     }
 
+    #[Route('api/games', name: "allGames", methods: ['GET'])]
+    public function listGames(GameRepository $gameRepository): JsonResponse
+    {
+
+        $games = $gameRepository->findAllGames();
+        return $this->json($games);
+    }
+
     #[Route('api/user/{id}/games', name: "gamesByUser", methods: ['GET'])]
     public function listPlayerGames(GameRepository $gameRepository, int $id): JsonResponse
     {
