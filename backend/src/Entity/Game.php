@@ -32,8 +32,8 @@ class Game
     #[ORM\Column(type: 'integer')]
     private int $nbCards;
 
-    #[ORM\Column(type: 'integer')]
-    private int $difficulty;
+    #[ORM\Column(type: 'string')]
+    private string $difficulty;
 
     #[ORM\Column(type: 'string')]
     private string $gamemode;
