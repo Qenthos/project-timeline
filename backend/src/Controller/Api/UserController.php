@@ -4,6 +4,8 @@ namespace App\Controller\Api;
 
 use ApiPlatform\OpenApi\Model\Response;
 use App\Entity\User;
+use App\Repository\ProfileBannerRepository;
+use App\Repository\ProfilePictureRepository;
 use App\Repository\UserRepository;
 use COM;
 use Psr\Log\LoggerInterface;
@@ -108,7 +110,7 @@ class UserController extends AbstractController
     // AJOUT 
 
     #[Route('api/user', name: 'createUser', methods: ['POST'])]
-    public function createUser(Request $request): JsonResponse
+    public function createUser(Request $request, ProfileBannerRepository $PBrep, ProfilePictureRepository $PPrep): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -118,6 +120,8 @@ class UserController extends AbstractController
         $user->setPassword($data['password'] ?? null);
         $user->setScore($data['score'] ?? 0);
         $user->setElo($data['elo'] ?? 1000);
+        $user->setProfileBanner($PBrep->getBannerById($data['pfb'] ?? 1));
+        $user->setProfilePicture($PPrep->getPictureById($data['pfp'] ?? 1));
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();

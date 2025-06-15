@@ -44,5 +44,18 @@ class ProfilePictureRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    
+    /**
+     * Récupère une bannière par son identifiant.
+     *
+     * @param int $id
+     * @return ProfilePicture|null
+     */
+    public function getPictureById(int $id): ? ProfilePicture
+    {
+        return $this->createQueryBuilder('pp')
+            ->where('pp.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

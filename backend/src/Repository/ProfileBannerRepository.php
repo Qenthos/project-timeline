@@ -43,4 +43,19 @@ class ProfileBannerRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Récupère une bannière par son identifiant.
+     *
+     * @param int $id
+     * @return ProfileBanner|null
+     */
+    public function getBannerById(int $id): ?ProfileBanner
+    {
+        return $this->createQueryBuilder('pb')
+            ->where('pb.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
