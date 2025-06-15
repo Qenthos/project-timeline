@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 
+
 class UserController extends AbstractController
 {
 
@@ -130,7 +131,7 @@ class UserController extends AbstractController
     }
 
     #[Route('api/user/{id}', name: 'updateUser', methods: ['PUT', 'PATCH'])]
-    public function updateUser(int $id, Request $request, UserRepository $userRepo): JsonResponse
+    public function updateUser(int $id, Request $request, UserRepository $userRepo, ProfilePictureRepository $pfpRepo, ProfileBannerRepository $pfbRepo): JsonResponse
     {
         $user = $userRepo->find($id);
 
@@ -154,6 +155,23 @@ class UserController extends AbstractController
         }
         if (isset($data['elo'])) {
             $user->setElo($data['elo']);
+        }
+        if (isset($data['pfp'])) {
+            $pfp = $pfpRepo->find($data['pfp']);
+            if ($pfp) {
+                $user->setProfilePicture($pfp);
+            } else {
+                return $this->json(['error' => 'Profile picture not found'], 400);
+            }
+        }
+    
+        if (isset($data['pfb'])) {
+            $pfb = $pfbRepo->find($data['pfb']);
+            if ($pfb) {
+                $user->setProfileBanner($pfb);
+            } else {
+                return $this->json(['error' => 'Profile banner not found'], 400);
+            }
         }
 
         $this->entityManager->flush();
