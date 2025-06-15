@@ -113,7 +113,8 @@ class AppFixtures extends Fixture
                 ->setNbCards(rand(8, 50))
                 ->setDifficulty(['easy', 'normal', 'hard'][array_rand(['easy', 'normal', 'hard'])])
                 ->setTime(new \DateTime(sprintf('-%d days', rand(0, 100))))
-                ->setPlayer($users[array_rand($users)]);
+                ->setPlayer($users[array_rand($users)])
+                ->setCategorie($categories[rand(0, 9)]);
 
             $manager->persist($game);
         }
