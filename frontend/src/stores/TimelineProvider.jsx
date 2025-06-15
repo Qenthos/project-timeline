@@ -10,7 +10,7 @@ const instruStore = new TimelineStore(instrumentsStore);
 
 const games = new Games();
 const usersStore = new UsersStore();
-const gameStore = new GameStore(games, usersStore);
+const gameStore = new GameStore(games, usersStore, instruStore);
 
 const timeStore = {
   instrumentsStore,

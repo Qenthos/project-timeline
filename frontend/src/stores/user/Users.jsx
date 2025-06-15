@@ -6,8 +6,8 @@ export default class Users {
   _email;
   _score;
   _admin;
-  _profilePicture;
-  _bannerImage;
+  _pfp;
+  _pfb;
   _createdAt;
   _isConnected;
   _playedGames;
@@ -19,8 +19,8 @@ export default class Users {
     email,
     score = 0,
     admin,
-    profilePicture,
-    bannerImage,
+    pfp,
+    pfb,
     createdAt,
     isConnected = false,
     playedGames = 0,
@@ -31,9 +31,8 @@ export default class Users {
     this._email = email;
     this._score = score;
     this._admin = admin;
-    this._profilePicture =
-      profilePicture || "/media/profile-pictures/pdp-deux.png";
-    this._bannerImage = bannerImage || "/media/banner-images/wallpaper-un.jpg";
+    this._pfp = pfp ?? 1;
+    this._pfb = pfb ?? 1;
     this._createdAt = createdAt ? new Date(createdAt) : new Date();
     this._isConnected = isConnected;
     this._playedGames = playedGames;
@@ -62,12 +61,20 @@ export default class Users {
     return this._admin;
   }
 
-  get profilePicture() {
-    return this._profilePicture;
+  get pfp() {
+    return this._pfp;
   }
 
-  get bannerImage() {
-    return this._bannerImage;
+  get pfpUrl() {
+    return `/media/profile-pictures/pdp-${this._pfp}.png`;
+  }
+
+  get pfb() {
+    return this._pfb;
+  }
+
+  get pfbUrl() {
+    return `/media/banner-images/wallpaper-${this._pfb}.jpg`;
   }
 
   get createdAt() {
@@ -119,25 +126,22 @@ export default class Users {
     }
   }
 
-  set profilePicture(value) {
-    if (
-      typeof value === "string" &&
-      /\.(jpg|jpeg|png|gif|webp|avif|svg)$/i.test(value.trim())
-    ) {
-      this._profilePicture = value.trim();
+  set pfp(value) {
+    if (Number.isInteger(value) && value > 0) {
+      this._pfp = value;
     } else {
-      throw new Error(`URL de photo de profil invalide : ${value}`);
+      throw new Error(
+        `ID de photo de profil invalide : ${JSON.stringify(value)}`
+      );
     }
   }
 
-  set bannerImage(value) {
-    if (
-      typeof value === "string" &&
-      /\.(jpg|jpeg|png|gif|webp|avif|svg)$/i.test(value.trim())
-    ) {
-      this._bannerImage = value.trim();
+  set pfb(value) {
+    console.log(value)
+    if (Number.isInteger(value) && value > 0) {
+      this._pfb = value;
     } else {
-      throw new Error(`URL de bannière invalide : ${value}`);
+      throw new Error(`ID de bannière invalide : ${JSON.stringify(value)}`);
     }
   }
 

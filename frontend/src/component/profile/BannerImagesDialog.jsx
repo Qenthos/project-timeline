@@ -5,7 +5,10 @@ import "./BannerImagesDialog.scss";
 const BannerImagesDialog = ({ onSelected, onCancel }) => {
   const dialogRef = useRef(null);
 
-  const imageNames = ["wallpaper-un.jpg", "wallpaper-deux.jpg"];
+  const bannerImages = [
+    { id: 1, name: "PFP1", image: "wallpaper-un.jpg" },
+    { id: 2, name: "PFP2", image: "wallpaper-deux.jpg" },
+  ];
 
   useEffect(() => {
     if (dialogRef.current) {
@@ -41,10 +44,9 @@ const BannerImagesDialog = ({ onSelected, onCancel }) => {
     onCancel();
   };
 
-  const handleImageSelect = (name) => {
+  const handleImageSelect = (cosmetic) => {
     dialogRef.current.close();
-    const imagePath = `/media/banner-images/${name}`;
-    onSelected(imagePath);
+    onSelected(cosmetic);
   };
 
   return (
@@ -59,16 +61,16 @@ const BannerImagesDialog = ({ onSelected, onCancel }) => {
           Sélection photo de profil
         </h2>
         <ul className="banner-dialog__gallery" role="list">
-          {imageNames.map((name, index) => (
-            <li key={name}>
+          {bannerImages.map((img, index) => (
+            <li key={img.id}>
               <button
                 type="button"
-                onClick={() => handleImageSelect(name)}
+                onClick={() => handleImageSelect(img.id)}
                 className="banner-dialog__image-btn"
                 aria-label={`Sélectionner l’image ${index + 1}`}
               >
                 <img
-                  src={`/media/banner-images/${name}`}
+                  src={`/media/banner-images/${img.image}`}
                   alt={`Image ${index + 1}`}
                   className="banner-dialog__image"
                 />

@@ -5,7 +5,10 @@ import "./ProfilPicturesDialog.scss";
 const ProfilPicturesDialog = ({ onSelected, onCancel }) => {
   const dialogRef = useRef(null);
 
-  const imageNames = ["pdp-deux.png", "pdp-trois.png"];
+  const images = [
+    { id: 1, name: "PFP1", image: "pdp-3.png" },
+    { id: 2, name: "PFP2", image: "pdp-2.png" },
+  ];
 
   useEffect(() => {
     if (dialogRef.current) {
@@ -41,10 +44,9 @@ const ProfilPicturesDialog = ({ onSelected, onCancel }) => {
     onCancel();
   };
 
-  const handleImageSelect = (name) => {
+  const handleImageSelect = (cosmetic) => {
     dialogRef.current.close();
-    const imagePath = `/media/profile-pictures/${name}`;
-    onSelected(imagePath);
+    onSelected(cosmetic);
   };
 
   return (
@@ -59,16 +61,16 @@ const ProfilPicturesDialog = ({ onSelected, onCancel }) => {
           Sélection photo de profil
         </h2>
         <ul className="profil-dialog__gallery" role="list">
-          {imageNames.map((name, index) => (
-            <li key={name}>
+          {images.map((img, index) => (
+            <li key={img.id}>
               <button
                 type="button"
-                onClick={() => handleImageSelect(name)}
+                onClick={() => handleImageSelect(img.id)}
                 className="profil-dialog__image-btn"
                 aria-label={`Sélectionner l’image ${index + 1}`}
               >
                 <img
-                  src={`/media/profile-pictures/${name}`}
+                  src={`/media/profile-pictures/${img.image}`}
                   alt={`Image ${index + 1}`}
                   className="profil-dialog__image"
                 />

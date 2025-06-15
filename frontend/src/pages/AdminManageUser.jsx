@@ -3,17 +3,19 @@ import { Outlet } from "react-router";
 import { useUsersStore } from "../stores/useStore";
 import ListUsers from "../component/user/ListUsers";
 import "./AdminManageUser.scss";
+import LoadingScreen from "../component/LoadingScreen";
 
 const AdminManageUser = () => {
   const navigate = useNavigate();
   let location = useLocation();
 
-  const userStore = useUsersStore();
-  const usersCount = userStore.usersCount;
+  const { usersCount, users, isLoaded } = useUsersStore();
 
   const isEditing = location.pathname.includes("/edit/");
 
-  return (
+  return !isLoaded ? (
+    <LoadingScreen message="Chargement des utilisateurs en cours" />
+  ) : (
     <main className="user-manage">
       <section
         className={`user-manage__section ${
@@ -26,11 +28,11 @@ const AdminManageUser = () => {
           {usersCount}
           {usersCount > 1 ? " joueurs" : " joueur"}
         </h1>
-        {userStore.users.length === 0 ? (
+        {users.length === 0 ? (
           <p>Aucun utilisateur trouvé.</p>
         ) : (
           <ListUsers
-            users={userStore.users}
+            users={users}
             editable={true}
             onEdit={(id) => navigate(`edit/${id}`)}
           />

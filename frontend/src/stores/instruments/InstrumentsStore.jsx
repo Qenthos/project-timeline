@@ -4,9 +4,7 @@ import Instruments from "./Instruments";
 // const API_URL =
 //   "https://682de731746f8ca4a47b1b3a.mockapi.io/instruments/instruments";
 
-const API_URL =
-  "http://localhost:8000/api/instruments";
-  
+const API_URL = "http://localhost:8000/api/instruments";
 
 export default class InstrumentsStore {
   _instruments = [];
@@ -51,7 +49,7 @@ export default class InstrumentsStore {
   getInstrumentsById(id) {
     return this._instruments.find((instrument) => instrument.id === id) || null;
   }
-  
+
   updateInstrument(id, name, category, created, weight, height, description) {
     fetch(`${API_URL}/${id}`, {
       method: "PUT",
@@ -67,18 +65,16 @@ export default class InstrumentsStore {
         description: description,
       }),
     })
-    .then((response) => {
-      console.log("Réponse brute :", response); // pour voir status, headers, etc.
-      if (!response.ok) {
-        return response.text().then(err => {
-          console.error("Erreur API (non JSON) : ", err); // ← tu verras ici la page HTML
-          throw new Error(`Erreur ${response.status}`);
-        });
-      }
-      return response.json();
-    })
-    
-    
+      .then((response) => {
+        console.log("Réponse brute :", response);
+        if (!response.ok) {
+          return response.text().then((err) => {
+            console.error("Erreur API : ", err);
+            throw new Error(`Erreur ${response.status}`);
+          });
+        }
+        return response.json();
+      })
       .then((data) => {
         runInAction(() => {
           const instrumentToUpdate = this.getInstrumentsById(id);
@@ -93,7 +89,6 @@ export default class InstrumentsStore {
             });
           }
         });
-        
       })
       .catch((error) => {
         console.error("Erreur lors de la mise à jour :", error);
@@ -107,14 +102,14 @@ export default class InstrumentsStore {
         "Content-Type": "application/json",
       },
     })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Erreur lors de la suppression");
-      }
-     alert("Instrument supprimé");
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erreur lors de la suppression");
+        }
+        alert("Instrument supprimé");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 }

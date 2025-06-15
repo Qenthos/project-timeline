@@ -44,7 +44,7 @@ const Header = () => {
             <li className="header__nav__avatar">
               <img
                 src={
-                  usersStore.currentUser.profilePicture
+                  usersStore.currentUser.pfpUrl
                 }
                 alt="Mon profil"
                 className="header__nav__avatar-img"

@@ -2,19 +2,20 @@ import RankingListUsers from "../component/user/RankingListUsers";
 import Header from "../component/Header";
 import { useUsersStore } from "../stores/useStore";
 import "./Ranking.scss";
+import LoadingScreen from "../component/LoadingScreen";
 
 const Ranking = () => {
-  const userStore = useUsersStore();
+  const { users, isLoaded } = useUsersStore();
 
-  
-
-  return (
+  return !isLoaded ? (
+    <LoadingScreen message="Chargement des utilisateurs en cours..." />
+  ) : (
     <>
       <Header />
       <main className="ranking">
         <section className="ranking__section">
           <h1 className="ranking__title">Classement des utilisateurs</h1>
-          <RankingListUsers users={userStore.users} />
+          <RankingListUsers users={users} />
         </section>
       </main>
     </>

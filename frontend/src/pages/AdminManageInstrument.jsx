@@ -2,17 +2,19 @@ import { useNavigate } from "react-router";
 import { Outlet } from "react-router";
 import { useInstrumentsStore } from "../stores/useStore";
 import ListInstruments from "../component/instrument/ListInstruments";
+import LoadingScreen from "../component/LoadingScreen";
 import "./AdminManageInstrument.scss";
 
 const AdminManageInstrument = () => {
   let navigate = useNavigate();
 
-  const instruStore = useInstrumentsStore();
-  const instrumentsCount = instruStore.instrumentsCount;
+  const { instrumentsCount, instruments, isLoaded } = useInstrumentsStore();
 
   const isEditing = location.pathname.includes("/edit/");
 
-  return (
+  return !isLoaded ? (
+    <LoadingScreen message="Chargement des instruments en cours" />
+  ) : (
     <main className="instrument-manage">
       <section
         className={`instrument-manage__section ${
@@ -20,16 +22,15 @@ const AdminManageInstrument = () => {
         }`}
       >
         <h1 className="instrument-manage__title">
-          Gestion
-          {instrumentsCount > 1 ? " des " : " de "}
+          Gestion {instrumentsCount > 1 ? "des " : "de "}
           {instrumentsCount}
           {instrumentsCount > 1 ? " instruments" : " instrument"}
         </h1>
-        {instruStore.instruments.length === 0 ? (
+        {instruments.length === 0 ? (
           <p>Aucun instrument trouvé.</p>
         ) : (
           <ListInstruments
-            instruments={instruStore.instruments}
+            instruments={instruments}
             editable
             onEdit={(id) => navigate(`edit/${id}`)}
           />

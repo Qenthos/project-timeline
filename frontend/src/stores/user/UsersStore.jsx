@@ -3,12 +3,13 @@ import Users from "./Users";
 
 // const API_URL = "https://683866862c55e01d184d280a.mockapi.io/player/users";
 
-const API_URL = "http://localhost:8000/api/users"
+const API_URL = "http://localhost:8000/api/users";
 
 export default class UsersStore {
   _users = [];
   _currentUser = null;
-  
+  _isLoaded = false;
+
   constructor() {
     makeAutoObservable(this);
     this.loadUsers();
@@ -31,11 +32,17 @@ export default class UsersStore {
       const data = await response.json();
       runInAction(() => {
         this._users = data.map((user) => new Users(user));
+        this._isLoaded = true;
       });
     } catch (error) {
       throw new Error("Erreur de chargement : " + error);
     }
   }
+
+  get isLoaded() {
+    return this._isLoaded;
+  }
+
 
   get users() {
     return this._users;
@@ -65,22 +72,22 @@ export default class UsersStore {
         email: email,
         username: username,
         password: password,
-        profilePicture: "/media/profile-pictures/pdp-deux.png",
-        bannerImage: "/media/banner-images/wallpaper-un.jpg",
+        pfp: 1,
+        pfb: 1,
         score: 0,
         elo: 0,
         // admin: false,
         isConnected: true,
       }),
     })
-    .then((response) => {
-      if (!response.ok) {
-        return response.text().then((text) => {
-          throw new Error(`Erreur ${response.status} : ${text}`);
-        });
-      }
-      return response.json();
-    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            throw new Error(`Erreur ${response.status} : ${text}`);
+          });
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log(data);
         runInAction(() => {
@@ -95,7 +102,7 @@ export default class UsersStore {
       });
   }
 
-/**
+  /**
    * Login
    * @param {*} email
    * @param {*} password
@@ -115,7 +122,7 @@ export default class UsersStore {
       if (!userByEmail) {
         throw new Error("Adresse mail introuvable");
       }
-  
+
       if (userByEmail.password !== password) {
         throw new Error("Mot de passe incorrect");
       }
@@ -130,7 +137,8 @@ export default class UsersStore {
           this._users.push(user);
         }
 
-        localStorage.setItem("currentUser", JSON.stringify({ ...userByEmail}));      });
+        localStorage.setItem("currentUser", JSON.stringify({ ...userByEmail }));
+      });
     } catch (error) {
       console.error("Erreur lors de la connexion :", error);
       throw error;
@@ -139,57 +147,65 @@ export default class UsersStore {
 
   /**
    * Login Administrateur
-   * @param {*} email 
-   * @param {*} password 
+   * @param {*} email
+   * @param {*} password
    */
   async loginAdmin(email, password) {
     try {
       const response = await fetch(API_URL);
-  
+
       if (!response.ok) {
         throw new Error("Erreur réseau");
       }
-  
+
       const users = await response.json();
-  
+
       const userByEmail = users.find((u) => u.email === email);
-  
+
       if (!userByEmail) {
         throw new Error("Adresse mail introuvable");
       }
-  
+
       if (userByEmail.password !== password) {
         throw new Error("Mot de passe incorrect");
       }
 
       const isAdmin = await this.getIsAdmin(userByEmail.id);
-  
+
       if (!isAdmin) {
         throw new Error("Accès refusé : vous n'êtes pas administrateur");
       }
-  
+
       runInAction(() => {
-        const user = new Users({ ...userByEmail, admin: true, isConnected: true });
-  
+        const user = new Users({
+          ...userByEmail,
+          admin: true,
+          isConnected: true,
+        });
+
         this._currentUser = user;
-  
+
         const exists = this._users.find((u) => u.id === user.id);
         if (!exists) {
           this._users.push(user);
         }
-  
-        localStorage.setItem("currentUser", JSON.stringify({ ...userByEmail, admin: true }));
+
+        localStorage.setItem(
+          "currentUser",
+          JSON.stringify({ ...userByEmail, admin: true })
+        );
       });
     } catch (error) {
       console.error("Erreur lors de la connexion admin :", error);
       throw error;
     }
   }
-  
 
   async getIsAdmin(id) {
     try {
-      const response = await fetch(`http://localhost:8000/api/user/isAdmin/${id}`);
+      const response = await fetch(
+        `http://localhost:8000/api/user/isAdmin/${id}`
+      );
       if (!response.ok) {
         throw new Error("Erreur lors de la récupération du statut admin");
       }
@@ -231,15 +247,15 @@ export default class UsersStore {
         password,
       }),
     })
-    .then((response) => {
-      if (!response.ok) {
-        return response.text().then((text) => {
-          throw new Error(`Erreur ${response.status} : ${text}`);
-        });
-      }
-      return response.json();
-    })
-    
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            throw new Error(`Erreur ${response.status} : ${text}`);
+          });
+        }
+        return response.json();
+      })
+
       .then((data) => {
         runInAction(() => {
           const userToUpdate = this.getUserById(id);
@@ -285,7 +301,7 @@ export default class UsersStore {
    */
   updateScore(score) {
     fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
@@ -319,12 +335,12 @@ export default class UsersStore {
    */
   updateProfilPicture(profilePicture) {
     fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        profilePicture: profilePicture,
+        pfp: profilePicture,
       }),
     })
       .then((response) => {
@@ -339,7 +355,7 @@ export default class UsersStore {
         runInAction(() => {
           const userToUpdate = this.getUserById(this._currentUser.id);
           if (userToUpdate) {
-            userToUpdate.profilePicture = profilePicture;
+            userToUpdate.pfp = profilePicture;
           }
         });
         this.refreshCurrentUser();
@@ -355,12 +371,12 @@ export default class UsersStore {
    */
   updateBannerImage(bannerImage) {
     fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        bannerImage: bannerImage,
+        pfb: bannerImage,
       }),
     })
       .then((response) => {
@@ -375,7 +391,7 @@ export default class UsersStore {
         runInAction(() => {
           const userToUpdate = this.getUserById(this._currentUser.id);
           if (userToUpdate) {
-            userToUpdate.bannerImage = bannerImage;
+            userToUpdate.pfb = bannerImage;
           }
         });
         this.refreshCurrentUser();
@@ -394,8 +410,18 @@ export default class UsersStore {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:8000/api/user/${this._currentUser.id}`);
+      const response = await fetch(
+        `http://localhost:8000/api/user/${this._currentUser.id}`
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Erreur HTTP ${response.status} lors du rafraîchissement du user`
+        );
+      }
+
       const data = await response.json();
+
       runInAction(() => {
         const updatedUser = new Users(data);
         this._currentUser = updatedUser;

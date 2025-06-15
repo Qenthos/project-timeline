@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import Header from "../component/Header";
 import { useUsersStore } from "./../stores/useStore";
+import LoadingScreen from "../component/LoadingScreen";
 import ConfirmDialog from "../component/ConfirmDialog";
 import ProfilPicturesDialog from "../component/profile/ProfilPicturesDialog";
 import BannerImagesDialog from "../component/profile/BannerImagesDialog";
@@ -11,7 +12,6 @@ const Profil = () => {
   const usersStore = useUsersStore();
   let navigate = useNavigate();
 
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState(() => {
     const user = usersStore.currentUser;
@@ -20,11 +20,12 @@ const Profil = () => {
       : {};
   });
 
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showProfilPictureDialog, setShowProfilPictureDialog] = useState(false);
   const [showBannerImageDialog, setShowBannerImageDialog] = useState(false);
+
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
@@ -106,8 +107,8 @@ const Profil = () => {
    * Update banner
    * @param {*} bannerImage
    */
-  const handleSelectedBannerImage = (bannerImage) => {
-    usersStore.updateBannerImage(bannerImage);
+  const handleSelectedBannerImage = (idBannerImage) => {
+    usersStore.updateBannerImage(idBannerImage);
     setShowBannerImageDialog(false);
   };
 
@@ -143,7 +144,9 @@ const Profil = () => {
     }
   };
 
-  return (
+  return !usersStore.isLoaded ? (
+    <LoadingScreen message="Chargement de votre profil en cours..." />
+  ) : (
     <>
       <Header />
       <main className="profile">
@@ -162,7 +165,7 @@ const Profil = () => {
 
             <div className="profile__banner-container">
               <img
-                src={usersStore.currentUser.bannerImage}
+                src={usersStore.currentUser.pfbUrl}
                 alt="Image de couverture"
                 className="profile__banner"
                 onClick={() => setShowBannerImageDialog(true)}
@@ -185,7 +188,7 @@ const Profil = () => {
 
             <div className="profile__avatar">
               <img
-                src={usersStore.currentUser.profilePicture}
+                src={usersStore.currentUser.pfpUrl}
                 alt="Photo de profil"
                 onClick={() => setShowProfilPictureDialog(true)}
               />
@@ -254,7 +257,9 @@ const Profil = () => {
                       passwordVisible ? "is-visible" : ""
                     }`}
                     onClick={
-                      isEditing ? () => toggleVisibility(setPasswordVisible) : undefined
+                      isEditing
+                        ? () => toggleVisibility(setPasswordVisible)
+                        : undefined
                     }
                     aria-label={
                       passwordVisible
@@ -296,7 +301,9 @@ const Profil = () => {
                       confirmPasswordVisible ? "is-visible" : ""
                     }`}
                     onClick={
-                      isEditing ? () => toggleVisibility(setConfirmPasswordVisible) : undefined
+                      isEditing
+                        ? () => toggleVisibility(setConfirmPasswordVisible)
+                        : undefined
                     }
                     aria-label={
                       confirmPasswordVisible

@@ -5,9 +5,10 @@ import { TimelineContext } from "../stores/TimelineContext";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
-import { useUsersStore } from "../stores/useStore";
+import { useUsersStore, useInstrumentsStore } from "../stores/useStore";
 import React from "react";
 import Header from "../component/Header";
+import LoadingScreen from "../component/LoadingScreen";
 import DroppableZoneTimeline from "../component/timeline/DroppableZoneTimeline";
 import DraggableInstrument from "../component/timeline/DraggableInstrument";
 import Instrument from "../component/Instrument";
@@ -15,12 +16,17 @@ import "./TimelineComposer.scss";
 
 const TimelineComposer = observer(() => {
   const location = useLocation();
+
+  const [loadingCards, setLoadingCards] = useState(true);
+  const [isGameFinished, setIsGameFinished] = useState(false);
+
   if (!location.state) return <Navigate to="/settings-game" />;
 
   const { timer, cards, isUnlimited, difficulty, modeGame } =
     location.state || {};
 
   const { gameStore, instruStore } = useContext(TimelineContext);
+  const { isLoaded } = useInstrumentsStore();
   const usersStore = useUsersStore();
 
   const [showDragCard, setShowDragCard] = useState(true);
@@ -45,15 +51,16 @@ const TimelineComposer = observer(() => {
   const isToucheDevice = window.matchMedia("(pointer: coarse)").matches;
   const backend = isToucheDevice ? TouchBackend : HTML5Backend;
 
-  const isGameFinished =
-    gameStore.state.currentIndex >=
-      gameStore.state.selectedInstruments.length ||
-    gameStore.state.timerRemaining <= 0;
+
+  const currentInstrument =
+    gameStore.state.selectedInstruments[gameStore.state.currentIndex];
 
   /**
    * Handle local storage of timeline
    */
   useEffect(() => {
+    if (!isLoaded) return;
+
     const sauvegarde = localStorage.getItem("tabIds");
     if (!sauvegarde) {
       instruStore.reset();
@@ -64,19 +71,31 @@ const TimelineComposer = observer(() => {
 
     gameStore.startNewRound();
     setRandomDefaultCard();
-  }, [cards, instruStore]);
+  }, [cards, instruStore, isLoaded]);
+
 
   /**
    *Select random draggable card
    */
   const setRandomDefaultCard = () => {
-    const randomInstrument =
-      allInstruments[Math.floor(Math.random() * allInstruments.length)];
-    instruStore.setDefaultCard(randomInstrument);
+    if (!allInstruments || allInstruments.length === 0) {
+      console.warn("Aucun instrument encore disponbile");
+      setLoadingCards(false);
+      <LoadingScreen message="Aucun instrument encore disponbile" />;
+      return;
+    }
 
-    gameStore.setRandomSelectedInstruments(allInstruments, cards);
+    try {
+      gameStore.setRandomCards(cards);
+      setLoadingCards(false);
+
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+  
+  console.log(loadingCards)
   /**
    *Show the next draggable card
    */
@@ -105,28 +124,53 @@ const TimelineComposer = observer(() => {
    * - The time is up
    * - all cards have been placed
    */
-  useEffect(() => {
-    if (currentUser && !gameStore.state.endGame) {
-      const noMoreCards =
-        gameStore.state.currentIndex >=
-        gameStore.state.selectedInstruments.length;
-      if (gameStore.state.timerRemaining <= 0 || noMoreCards) {
-        gameStore.finishGame(
-          instruStore.nbBadResponse,
-          instruStore.nbGoodResponse
-        );
+useEffect(() => {
+  if (!isLoaded || isGameFinished) return;
+
+  if (!gameStore.state.endGame) {
+    const noMoreCards =
+      gameStore.state.currentIndex >=
+      gameStore.state.selectedInstruments.length;
+      if (
+        gameStore.state.selectedInstruments.length > 0 &&
+        (gameStore.state.timerRemaining <= 0 || noMoreCards)
+      ) {
+      setIsGameFinished(true);
+      gameStore.finishGame(
+        cards,
+        timer,
+        difficulty,
+        instruStore.nbBadResponse,
+        instruStore.nbGoodResponse
+      );
+      if (currentUser) {
         usersStore.updateScore(currentUser.score + gameStore.state.score);
-
-        localStorage.removeItem("tabIds");
       }
+      localStorage.removeItem("tabIds");
     }
-  }, [
-    gameStore.state.currentIndex,
-    gameStore.state.timerRemaining,
-    gameStore.state.endGame,
-    currentUser,
-  ]);
+  }
+}, [
+  gameStore.state.currentIndex,
+  gameStore.state.timerRemaining,
+  gameStore.state.endGame,
+  currentUser,
+]);
 
+useEffect(() => {
+  if (gameStore.state.timerRemaining === 0 && !isGameFinished) {
+    setIsGameFinished(true);
+    gameStore.finishGame(
+      cards,
+      timer,
+      difficulty,
+      instruStore.nbBadResponse,
+      instruStore.nbGoodResponse
+    );
+  }
+}, [gameStore.state.timerRemaining, isGameFinished]);
+
+  
+  
   /**
    * Reset game : states by defaults
    */
@@ -134,9 +178,12 @@ const TimelineComposer = observer(() => {
     instruStore.reset();
     gameStore.startNewRound();
     setRandomDefaultCard();
+    setIsGameFinished(false);
   };
 
-  return (
+  return !isLoaded ? (
+    <LoadingScreen message="Chargement des instruments en cours" />
+  ) : (
     <DndProvider backend={backend}>
       <Header />
       <main className="timeline">
@@ -264,20 +311,15 @@ const TimelineComposer = observer(() => {
               <>
                 {modeGame !== "survival" ? (
                   <p>
-                    Nombre de cartes restantes à poser :{" "}
-                    {instrumentsNotInExpo.length}
+                    {loadingCards
+                      ? "Chargement des cartes en cours..."
+                      : `Nombre de cartes restantes à poser : ${instrumentsNotInExpo.length}`}
                   </p>
                 ) : (
                   ""
                 )}
-                {showDragCard && (
-                  <DraggableInstrument
-                    instrument={
-                      gameStore.state.selectedInstruments[
-                        gameStore.state.currentIndex
-                      ]
-                    }
-                  />
+                {showDragCard && currentInstrument && (
+                  <DraggableInstrument instrument={currentInstrument} />
                 )}
               </>
             )}

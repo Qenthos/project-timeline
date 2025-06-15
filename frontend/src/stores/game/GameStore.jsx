@@ -1,23 +1,25 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 
 export default class GameStore {
   _gamesStore;
   _timerInterval = null;
+  _timelineStore;
 
-  constructor(gamesStore, usersStore) {
+  constructor(gamesStore, usersStore, timelineStore) {
     this._gamesStore = gamesStore;
     this._usersStore = usersStore;
+    this._timelineStore = timelineStore;
     makeAutoObservable(this);
   }
 
-  resetGame() {
+  resetGame(timer = 30) {
     this._gamesStore.currentIndex = 0;
-    this._gamesStore.timerGame = 30;
-    this._gamesStore.timerRemaining = 30;
+    this._gamesStore.timerGame = timer;
+    this._gamesStore.timerRemaining = timer;
     this._gamesStore.endGame = false;
     this._gamesStore.win = false;
     this._gamesStore.isPaused = false;
-    this._gamesStore.score = 100;
+    this._gamesStore.score = 0;
     this._gamesStore.nbBadResponse = 0;
     this._gamesStore.nbGoodResponse = 0;
   }
@@ -38,14 +40,47 @@ export default class GameStore {
     stateGame.difficulty = difficulty;
     stateGame.isUnlimited = isUnlimited;
     stateGame.score = score;
-    this.resetGame();
+    this.resetGame(timer);
   }
 
-  calculateScore(nbBadResponse, nbGoodResponse) {
+  calculateScore(cards, timer, difficulty, nbBadResponse, nbGoodResponse, win) {
     let newScore = this._gamesStore.score;
-    newScore -= nbBadResponse * 10;
-    newScore += nbGoodResponse * 15;
-    newScore = Math.max(0, Math.ceil(newScore));
+
+    const difficultySettings = {
+      easy: { good: 10, bad: 5, winBonus: 20, loseMalus: 5 },
+      normal: { good: 15, bad: 10, winBonus: 30, loseMalus: 10 },
+      hard: { good: 20, bad: 15, winBonus: 50, loseMalus: 20 },
+      personalize: () => {
+        const baseDifficulty = cards / Math.max(timer, 1);
+        const scale = Math.min(Math.max(baseDifficulty, 0.5), 3);
+
+        return {
+          good: Math.round(12 * scale),
+          bad: Math.round(8 * (scale > 1 ? scale : 1)),
+          winBonus: Math.round(25 * scale),
+          loseMalus: Math.round(10 * scale),
+        };
+      },
+    };
+
+    const points =
+      difficulty === "personalize"
+        ? difficultySettings.personalize()
+        : difficultySettings[difficulty] || difficultySettings.normal;
+
+    newScore += nbGoodResponse * points.good;
+    newScore -= nbBadResponse * points.bad;
+
+    // Bonus ou malus selon win
+    if (win) {
+      newScore += points.winBonus;
+    } else {
+      newScore -= points.loseMalus;
+    }
+
+    // Score minimum à 10
+    newScore = Math.max(10, Math.ceil(newScore));
+
     this._gamesStore.score = newScore;
   }
 
@@ -63,13 +98,20 @@ export default class GameStore {
     this.incrementCurrentIndex();
   }
 
-  finishGame(nbBadResponse, nbGoodResponse) {
+  finishGame(cards, timer, difficulty, nbBadResponse, nbGoodResponse) {
     if (this._gamesStore.endGame) {
       return;
     }
     this._gamesStore.endGame = true;
     this.calculateTimeRemaining();
-    this.calculateScore(nbBadResponse, nbGoodResponse);
+    this.calculateScore(
+      cards,
+      timer,
+      difficulty,
+      nbBadResponse,
+      nbGoodResponse,
+      this._gamesStore.win
+    );
     this.clearTimer();
     this.postGameToUser();
   }
@@ -85,10 +127,29 @@ export default class GameStore {
     this.startTimer();
   }
 
-  setRandomSelectedInstruments(allInstruments, cards) {
-    const random = [...allInstruments].sort(() => Math.random() - 0.5);
-    const selection = random.slice(0, cards);
-    this._gamesStore.selectedInstruments = selection;
+  async setRandomCards(cards) {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/instruments/random/${cards + 1}`
+      );
+      if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`);
+
+      const data = await response.json();
+
+      runInAction(() => {
+        const selection = data.slice(0, cards);
+        const excluded = data[cards];
+
+        this._gamesStore.selectedInstruments = selection;
+
+        if (excluded) {
+          this._timelineStore.setDefaultCard(excluded);
+        }
+      });
+    } catch (error) {
+      console.error("Erreur lors de la récupération des instruments :", error);
+      throw error;
+    }
   }
 
   tickTimer() {
@@ -119,17 +180,18 @@ export default class GameStore {
     }
   }
 
- async postGameToUser() {
+  async postGameToUser() {
     const userId = this._usersStore.currentUser?.id;
-  
+
     if (!userId) {
       console.warn("Utilisateur introuvable");
       return;
     }
-  
-    const { win, selectedInstruments, score, difficulty, timerGame, nbRounds } = this._gamesStore;
+
+    const { win, selectedInstruments, score, difficulty, timerGame } =
+      this._gamesStore;
     const nbCards = selectedInstruments?.length ?? 0;
-  
+
     fetch(`http://localhost:8000/api/user/${userId}/games`, {
       method: "POST",
       headers: {
@@ -142,23 +204,20 @@ export default class GameStore {
         difficulty,
       }),
     })
-    .then(response => {
-      if (!response.ok) {
-        return response.text().then(text => {
-          throw new Error(`Erreur ${response.status} : ${text}`);
-        });
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log("Partie enregistrée :", data);
-      // Tu peux ici faire un runInAction si tu veux mettre à jour un store ou autre
-    })
-    .catch(error => {
-      console.error("Erreur lors de l'enregistrement de la partie :", error);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            throw new Error(`Erreur ${response.status} : ${text}`);
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Partie enregistrée :", data);
+        // Tu peux ici faire un runInAction si tu veux mettre à jour un store ou autre
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l'enregistrement de la partie :", error);
+      });
   }
-  
-
-  
 }

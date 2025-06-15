@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
-import { useInstrumentsStore, useUsersStore } from "./stores/useStore.js";
+import { useUsersStore } from "./stores/useStore.js";
 import {
   Home,
   Login,
@@ -20,16 +20,12 @@ import {
 } from "./pages";
 
 import ProtectedRoute from "./component/ProtectedRoute.jsx";
-import LoadingScreen from "./component/LoadingScreen.jsx";
-
 
 const App = observer(() => {
-  const { isLoaded } = useInstrumentsStore();
+
   const usersStore = useUsersStore();
 
-  return !isLoaded ? (
-    <LoadingScreen />
-  ) : (
+  return  (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />}></Route>

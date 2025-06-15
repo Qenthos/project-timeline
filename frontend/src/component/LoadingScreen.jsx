@@ -1,11 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./LoadingScreen.scss";
 import { motion } from "framer-motion";
 
-const LoadingScreen = () => {
+const LoadingScreen = ({message}) => {
   return (
     <div className="loading-screen">
-      <p className="loading-screen__text">En cours de chargement</p>
+      <p className="loading-screen__text">{message}</p>
       <div className="loading-screen__dots">
         {[0, 1, 2].map((dot, index) => (
           <motion.div
@@ -25,5 +26,15 @@ const LoadingScreen = () => {
     </div>
   );
 };
+
+
+LoadingScreen.propTypes = {
+  message: PropTypes.string,
+};
+
+LoadingScreen.defaultProps = {
+  message: "En cours de chargement",
+};
+
 
 export default LoadingScreen;
