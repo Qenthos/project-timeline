@@ -61,7 +61,7 @@ class UserController extends AbstractController
 
         return $this->json([
             'id' => $user->getId(),
-            'username' => $user->getPseudo(),
+            'username' => $user->getUsername(),
             'email' => $user->getEmail(),
             'score' => $user->getScore(),
             'elo' => $user->getElo(),
@@ -79,7 +79,7 @@ class UserController extends AbstractController
 
         return $this->json([
             'id' => $user->getId(),
-            'pseudo' => $user->getUsername(),
+            'username' => $user->getUsername(),
             'profilePicture' => [
                 'id' => $user->getProfilePicture()->getId(),
                 'name' => $user->getProfilePicture()->getName(),
@@ -113,7 +113,7 @@ class UserController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         $user = new User();
-        $user->setUsername($data['pseudo'] ?? null);
+        $user->setUsername($data['username'] ?? null);
         $user->setEmail($data['email'] ?? null);
         $user->setPassword($data['password'] ?? null);
         $user->setScore($data['score'] ?? 0);
@@ -125,7 +125,7 @@ class UserController extends AbstractController
         return $this->json(['message' => 'Utilisateur créé', 'id' => $user->getId()], 201);
     }
 
-    #[Route('api/user/{id}', name: 'updateUser', methods: ['PUT'])]
+    #[Route('api/user/{id}', name: 'updateUser', methods: ['PUT', 'PATCH'])]
     public function updateUser(int $id, Request $request, UserRepository $userRepo): JsonResponse
     {
         $user = $userRepo->find($id);
@@ -136,8 +136,8 @@ class UserController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
 
-        if (isset($data['pseudo'])) {
-            $user->setUsername($data['pseudo']);
+        if (isset($data['username'])) {
+            $user->setUsername($data['username']);
         }
         if (isset($data['email'])) {
             $user->setEmail($data['email']);

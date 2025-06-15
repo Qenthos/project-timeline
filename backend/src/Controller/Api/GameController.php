@@ -67,7 +67,8 @@ class GameController extends AbstractController
         }
 
         $data = json_decode($request->getContent(), true);
-        $categorie = $catRepo->findOneByName($data["categorie"]) ?? new Category($data["categorie"]);
+        // $categorie = $catRepo->findOneByName($data["categorie"]) ?? new Category($data["categorie"]);
+        $categorie = $catRepo->findOneByName("noCategory") ?? new Category("noCategory");
 
         $game = new Game();
         $game->setPlayer($user);
@@ -79,6 +80,7 @@ class GameController extends AbstractController
         $game->setNbCards($data["nbCards"] ?? 10);
         $game->setDifficulty($data["difficulty"] ?? "normal");
         $game->setTime(new \DateTime());
+        $game->setCategorie($categorie);
 
         $this->entityManager->persist($game);
         $this->entityManager->flush();

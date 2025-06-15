@@ -57,6 +57,7 @@ class Game
         $this->timer = 120;
         $this->nbCards = 10;
         $this->difficulty = 'normal';
+        $this->gamemode = 'poids';
     }
 
     public function getId(): int

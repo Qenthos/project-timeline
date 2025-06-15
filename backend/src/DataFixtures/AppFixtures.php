@@ -69,6 +69,12 @@ class AppFixtures extends Fixture
             $categories[] = $categorie;
         }
 
+        $categorie = new Category("noCategory");
+            $categorie
+                ->setDescription("pas de categorie")
+                ->setImage("non_image"); 
+            $manager->persist($categorie);
+
         foreach ($usersData as $index=>$data) {
             $user = new User();
             $user->setUsername($data["username"])

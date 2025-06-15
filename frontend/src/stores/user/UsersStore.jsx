@@ -220,7 +220,7 @@ export default class UsersStore {
    */
   updateUser(id, username, email, score, password) {
     fetch(`http://localhost:8000/api/user/${id}`, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
