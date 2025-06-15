@@ -67,12 +67,18 @@ export default class InstrumentsStore {
         description: description,
       }),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Erreur : ${response.status}`);
-        }
-        return response.json();
-      })
+    .then((response) => {
+      console.log("Réponse brute :", response); // pour voir status, headers, etc.
+      if (!response.ok) {
+        return response.text().then(err => {
+          console.error("Erreur API (non JSON) : ", err); // ← tu verras ici la page HTML
+          throw new Error(`Erreur ${response.status}`);
+        });
+      }
+      return response.json();
+    })
+    
+    
       .then((data) => {
         runInAction(() => {
           const instrumentToUpdate = this.getInstrumentsById(id);

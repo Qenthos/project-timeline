@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import { runInAction } from "mobx";
 
 export default class TimelineStore {
   _instrumentsStore;
@@ -169,13 +170,13 @@ export default class TimelineStore {
 
     // Re-tri visuel après 1 seconde
     setTimeout(() => {
-      this._idsTimeline = [...sortedOrder];
-
-      while (this._idsTimeline.length < this._size) {
-        this._idsTimeline.push(null);
-      }
-
-      this.saveTabIds();
+      runInAction(() => {
+        this._idsTimeline = [...sortedOrder];
+        while (this._idsTimeline.length < this._size) {
+          this._idsTimeline.push(null);
+        }
+        this.saveTabIds();
+      });
     }, 1000);
   }
 }

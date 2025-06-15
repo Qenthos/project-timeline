@@ -9,6 +9,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const usersStore = useUsersStore();
   let navigate = useNavigate();
@@ -33,10 +34,16 @@ const Login = () => {
    * Form
    * @param {*} e
    */
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    usersStore.login(email, password);
-    navigate("/profil");
+    try {
+      await usersStore.login(email, password);
+      if (usersStore.currentUser) {
+        navigate("/profil");
+      } 
+    } catch (err) {
+      setErrorMessage(err.message);
+    }
   };
 
   return (
@@ -55,7 +62,7 @@ const Login = () => {
                 <input
                   className="login__input"
                   id="mail"
-                  type="text"
+                  type="email"
                   name="mail"
                   placeholder="exemple@domaine.com"
                   onChange={(e) => setEmail(e.target.value)}
@@ -91,6 +98,11 @@ const Login = () => {
                 ></button>
               </li>
             </ul>
+            {errorMessage && (
+              <p className="login__error" style={{ color: "red", marginTop: "1rem" }}>
+                {errorMessage}
+              </p>
+            )}
             <ul className="login__buttons">
               <li className="login__button-item">
                 <input

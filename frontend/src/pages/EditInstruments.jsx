@@ -151,6 +151,7 @@ const EditInstrument = () => {
               className="instrument-edit__input"
               min="0"
               step="0.1"
+              max="10000"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
             />
@@ -166,6 +167,7 @@ const EditInstrument = () => {
               className="instrument-edit__input"
               min="0"
               step="0.1"
+              max="12000"
               value={height}
               onChange={(e) => setHeight(e.target.value)}
             />

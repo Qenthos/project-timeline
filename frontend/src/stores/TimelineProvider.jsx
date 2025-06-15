@@ -1,13 +1,16 @@
 import InstrumentsStore from "./instruments/InstrumentsStore";
 import TimelineStore from "./timeline/timelineStore";
+import Games from "./game/Games";
 import GameStore from "./game/GameStore";
 import UsersStore from "./user/usersStore";
 import { TimelineContext } from "./TimelineContext";
 
 const instrumentsStore = new InstrumentsStore();
 const instruStore = new TimelineStore(instrumentsStore);
-const gameStore = new GameStore();
+
+const games = new Games();
 const usersStore = new UsersStore();
+const gameStore = new GameStore(games, usersStore);
 
 const timeStore = {
   instrumentsStore,

@@ -5,7 +5,7 @@ import { TimelineContext } from "../stores/TimelineContext";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
-import { useUsersStore } from "./../stores/useStore";
+import { useUsersStore } from "../stores/useStore";
 import React from "react";
 import Header from "../component/Header";
 import DroppableZoneTimeline from "../component/timeline/DroppableZoneTimeline";
@@ -17,25 +17,25 @@ const TimelineComposer = observer(() => {
   const location = useLocation();
   if (!location.state) return <Navigate to="/settings-game" />;
 
-  const { timer, cards, isUnlimited, difficulty, modeGame, nbLives } =
+  const { timer, cards, isUnlimited, difficulty, modeGame } =
     location.state || {};
 
   const { gameStore, instruStore } = useContext(TimelineContext);
   const usersStore = useUsersStore();
 
-  // const [selectedInstruments, setSelectedInstruments] = useState([]);
   const [showDragCard, setShowDragCard] = useState(true);
 
+  const currentUser = usersStore.currentUser || null;
+
+  /**
+   * Initialize a game
+   */
   useEffect(() => {
-    gameStore.timer = timer;
-    gameStore.timerGame = timer;
-    gameStore.isUnlimited = isUnlimited;
-    gameStore.score = 100;
-    gameStore.roundFinish = 1;
+    gameStore.initializeGame({ timer, difficulty, isUnlimited, score: 100 });
   }, []);
 
   const instrumentExpoSlot = instruStore.instrumentsTimelineBySlot;
-  const instrumentsNotInExpo = gameStore.selectedInstruments
+  const instrumentsNotInExpo = gameStore.state.selectedInstruments
     .filter((instrument) => !instruStore.existsInTimeline(instrument.id))
     .slice(0, cards);
 
@@ -44,6 +44,11 @@ const TimelineComposer = observer(() => {
   //Compatibily device and mobile
   const isToucheDevice = window.matchMedia("(pointer: coarse)").matches;
   const backend = isToucheDevice ? TouchBackend : HTML5Backend;
+
+  const isGameFinished =
+    gameStore.state.currentIndex >=
+      gameStore.state.selectedInstruments.length ||
+    gameStore.state.timerRemaining <= 0;
 
   /**
    * Handle local storage of timeline
@@ -101,17 +106,26 @@ const TimelineComposer = observer(() => {
    * - all cards have been placed
    */
   useEffect(() => {
-    const noMoreCards =
-      gameStore.currentIndex >= gameStore.selectedInstruments.length;
-    if (gameStore.timerGame <= 0 || noMoreCards) {
-      gameStore.finishGame(
-        instruStore.nbBadResponse,
-        instruStore.nbGoodResponse
-      );
-      usersStore.updateScore((usersStore.currentUser.score += gameStore.score));
-      localStorage.removeItem("tabIds");
+    if (currentUser && !gameStore.state.endGame) {
+      const noMoreCards =
+        gameStore.state.currentIndex >=
+        gameStore.state.selectedInstruments.length;
+      if (gameStore.state.timerRemaining <= 0 || noMoreCards) {
+        gameStore.finishGame(
+          instruStore.nbBadResponse,
+          instruStore.nbGoodResponse
+        );
+        usersStore.updateScore(currentUser.score + gameStore.state.score);
+
+        localStorage.removeItem("tabIds");
+      }
     }
-  }, [gameStore.currentIndex, gameStore.timerGame]);
+  }, [
+    gameStore.state.currentIndex,
+    gameStore.state.timerRemaining,
+    gameStore.state.endGame,
+    currentUser,
+  ]);
 
   /**
    * Reset game : states by defaults
@@ -128,11 +142,15 @@ const TimelineComposer = observer(() => {
       <main className="timeline">
         <section className="timeline__section">
           <h2 className="timeline__title">
-            A vous de jouer {usersStore.currentUser.username} !
+            {currentUser
+              ? `À vous de jouer ${currentUser.username}`
+              : "Vous jouez en tant qu'invité"}{" "}
+            !
             <span className="timeline__subtitle">
-              (Vous avez {cards} à placer {subtitleText})
+              (Vous avez {cards} cartes à placer {subtitleText})
             </span>
           </h2>
+
           <ul className="timeline__list-parameters">
             <li className="timeline__list-parameters-item">
               <p className="timeline__list-parameters-text timeline__list-parameters-text--difficulty">
@@ -147,74 +165,106 @@ const TimelineComposer = observer(() => {
             <li className="timeline__list-parameters-item timeline__list-parameters-item--timer ">
               <p className="timeline__list-parameters-text timeline__list-parameters-text--timer">
                 {isUnlimited
-                  ? "Illimité"
+                  ? "Temps illimité"
                   : `Timer : ${
-                      gameStore.timerGame >= 60
-                        ? `${Math.floor(gameStore.timerGame / 60)}min `
+                      gameStore.state.timerRemaining >= 60
+                        ? `${Math.floor(
+                            gameStore.state.timerRemaining / 60
+                          )}min `
                         : ""
-                    }${gameStore.timerGame % 60}s`}
+                    }${gameStore.state.timerRemaining % 60}s`}
               </p>
-              <button
-                onClick={() => (gameStore.isPaused = !gameStore.isPaused)}
-              >
-                {gameStore.isPaused ? "Play" : "Pause"}
-              </button>
+              {!isUnlimited && !isGameFinished ? (
+                <button
+                  onClick={() =>
+                    (gameStore.state.isPaused = !gameStore.state.isPaused)
+                  }
+                >
+                  {gameStore.state.isPaused ? "Play" : "Pause"}
+                </button>
+              ) : (
+                ""
+              )}
             </li>
-            <li>
-              <p>Score : {usersStore.currentUser.score}</p>
-            </li>
+            <li>{currentUser && <p>Score : {currentUser.score}</p>}</li>
           </ul>
           <div className="timeline__instruments">
-            {gameStore.currentIndex >= gameStore.selectedInstruments.length ||
-            gameStore.timerGame <= 0 ? (
-              <ul>
-                <li>
-                  <p>
-                    {gameStore.win
+            {isGameFinished ? (
+              <ul className="timeline__instruments-list">
+                <li className="timeline__instruments-item">
+                  <p className="timeline__instruments-message">
+                    {gameStore.state.win
                       ? "Gagné ! Vous avez fait aucune faute."
                       : "Perdu !"}
                   </p>
                 </li>
-                {gameStore.timerGame <= 0 && (
-                  <li>
-                    <p>Le temps de {gameStore.timer} secondes est écoulé !</p>
+
+                {gameStore.state.timerRemaining <= 0 && (
+                  <li className="timeline__instruments-item">
+                    <p className="timeline__instruments-message">
+                      Le temps de {gameStore.state.timerGame} secondes est
+                      écoulé !
+                    </p>
                   </li>
                 )}
-                <li>
-                  <p>Nombre d'erreurs : {instruStore.nbBadResponse}</p>
-                </li>
-                <li>
-                  <p>
-                    Nombre de bonnes réponses : {instruStore.nbGoodResponse}
+
+                <li className="timeline__instruments-item">
+                  <p className="timeline__instruments-result">
+                    {`Nombre d'erreur${
+                      instruStore.nbBadResponse > 1 ? "s" : ""
+                    } : ${instruStore.nbBadResponse}`}
                   </p>
                 </li>
-                <li>
-                  <p>Score : +{gameStore.score}</p>
-                </li>
-                <li>
-                  <p>Terminé en {gameStore.timeRemaining} s</p>
+
+                <li className="timeline__instruments-item">
+                  <p className="timeline__instruments-result">
+                    {`Nombre de bonne réponse${
+                      instruStore.nbGoodResponse > 1 ? "s" : ""
+                    } : ${instruStore.nbGoodResponse}`}
+                  </p>
                 </li>
 
-                <li>
-                  <button onClick={resetGame}>Recommencer une partie</button>
-                  <Link to="/settings-game">
+                <li className="timeline__instruments-item">
+                  {currentUser && (
+                    <p className="timeline__instruments-score">
+                      Score : +{gameStore.state.score}
+                    </p>
+                  )}
+                </li>
+
+                <li className="timeline__instruments-item">
+                  <p className="timeline__instruments-time">
+                    {gameStore.state.timeElapsed === 0
+                      ? ""
+                      : `Terminé en ${gameStore.state.timeElapsed} secondes`}
+                  </p>
+                </li>
+
+                <li className="timeline__instruments-item timeline__instruments-actions">
+                  <button
+                    className="timeline__instruments-button"
+                    onClick={resetGame}
+                  >
+                    Recommencer une partie
+                  </button>
+                  <Link
+                    to="/settings-game"
+                    className="timeline__instruments-link"
+                  >
                     Modifier les paramètres d'une partie
                   </Link>
-                  <Link to="/">Revenir à l'accueil</Link>
+                  {!currentUser && (
+                    <Link to="/register" className="timeline__instruments-link">
+                      Créer un compte
+                    </Link>
+                  )}
                 </li>
               </ul>
             ) : (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+              <>
                 {modeGame !== "survival" ? (
                   <p>
-                    Nombre de cartes restantes à poser :
+                    Nombre de cartes restantes à poser :{" "}
                     {instrumentsNotInExpo.length}
                   </p>
                 ) : (
@@ -223,11 +273,13 @@ const TimelineComposer = observer(() => {
                 {showDragCard && (
                   <DraggableInstrument
                     instrument={
-                      gameStore.selectedInstruments[gameStore.currentIndex]
+                      gameStore.state.selectedInstruments[
+                        gameStore.state.currentIndex
+                      ]
                     }
                   />
                 )}
-              </div>
+              </>
             )}
           </div>
 
@@ -245,7 +297,7 @@ const TimelineComposer = observer(() => {
                         idInstrument,
                         modeGame
                       );
-                      handleDrop(); // on appelle ta version locale
+                      handleDrop();
                     }}
                   />
 

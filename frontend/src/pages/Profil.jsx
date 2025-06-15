@@ -15,12 +15,18 @@ const Profil = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedUser, setEditedUser] = useState(() => {
     const user = usersStore.currentUser;
-    return user ? { username: user.username, email: user.email, password: user.password } : {};
+    return user
+      ? { username: user.username, email: user.email, password: "" }
+      : {};
   });
 
   const [showProfilPictureDialog, setShowProfilPictureDialog] = useState(false);
   const [showBannerImageDialog, setShowBannerImageDialog] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   if (!usersStore.currentUser) {
     return <p>Chargement du profil...</p>;
@@ -52,8 +58,6 @@ const Profil = () => {
     setShowConfirmDialog(false);
   };
 
-  console.log(editedUser.password)
-
   /**
    * Save new values
    * @param {*} e
@@ -66,12 +70,27 @@ const Profil = () => {
   /**
    * Update user and close mode edit
    */
-  const handleSave = () => {
+  const handleSave = (e) => {
+    e.preventDefault();
+
     const { id } = usersStore.currentUser;
     const { username, email, password } = editedUser;
 
-    usersStore.updateUser(id, username, email, password);
+    if (password.trim() === "" && passwordError) {
+      usersStore.updateUser(id, username, email, usersStore.currentUser.score);
+    } else {
+      usersStore.updateUser(
+        id,
+        username,
+        email,
+        usersStore.currentUser.score,
+        password
+      );
+    }
+
     setIsEditing(false);
+    setConfirmPassword("");
+    setPasswordError("");
   };
 
   /**
@@ -90,6 +109,38 @@ const Profil = () => {
   const handleSelectedBannerImage = (bannerImage) => {
     usersStore.updateBannerImage(bannerImage);
     setShowBannerImageDialog(false);
+  };
+
+  /**
+   * Get password from first input
+   */
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setEditedUser((prev) => ({ ...prev, password: value }));
+    validatePasswords(value, confirmPassword);
+  };
+
+  /**
+   * Get password from second input
+   * @param {*} e
+   */
+  const handleConfirmPasswordChange = (e) => {
+    const value = e.target.value;
+    setConfirmPassword(value);
+    validatePasswords(editedUser.password, value);
+  };
+
+  /**
+   * Compare password one and two
+   * @param {String} password1 : password on the first input
+   * @param {String} password2 : password on the second input
+   */
+  const validatePasswords = (password1, password2) => {
+    if (password1 && password2 && password1 !== password2) {
+      setPasswordError("Les deux champs doivent être identiques !");
+    } else {
+      setPasswordError("");
+    }
   };
 
   return (
@@ -141,7 +192,7 @@ const Profil = () => {
             </div>
           </div>
 
-          <form className="profile__form">
+          <form className="profile__form" onSubmit={handleSave}>
             <ul className="profile__fields">
               <li className="profile__field">
                 <label htmlFor="username" className="profile__label">
@@ -172,32 +223,91 @@ const Profil = () => {
                   readOnly={!isEditing}
                 />
               </li>
+              <li className="profile__field">
+                <label className="profile__label" htmlFor="password">
+                  Nouveau mot de passe
+                </label>
+                <div className="profile__password-container">
+                  <input
+                    className="profile__input"
+                    type={passwordVisible ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    pattern={
+                      isEditing
+                        ? "^(?=.*[A-Z])(?=.*\\d)(?=.*[^\\w\\s]).{8,}$"
+                        : undefined
+                    }
+                    value={editedUser.password}
+                    onInvalid={(e) =>
+                      e.target.setCustomValidity(
+                        "8 caractères min. avec une majuscule, un chiffre et un caractère spécial."
+                      )
+                    }
+                    onInput={(e) => e.target.setCustomValidity("")}
+                    onChange={handlePasswordChange}
+                    readOnly={!isEditing}
+                  />
+                  <button
+                    type="button"
+                    className={`profile__confirm-show-password ${
+                      passwordVisible ? "is-visible" : ""
+                    }`}
+                    onClick={
+                      isEditing ? () => toggleVisibility(setPasswordVisible) : undefined
+                    }
+                    aria-label={
+                      passwordVisible
+                        ? "Masquer le mot de passe"
+                        : "Afficher le mot de passe"
+                    }
+                  ></button>
+                </div>
+              </li>
 
               <li className="profile__field">
-                <label htmlFor="password" className="profile__label">
-                  Mot de passe
+                <label className="profile__label" htmlFor="confirm_password">
+                  Confirmer le mot de passe
                 </label>
-                <input
-                  type={passwordVisible ? "text" : "password"}
-                  id="password"
-                  name="password"
-                  className="profile__input"
-                  value={editedUser.password}
-                  onChange={handleInputChange}
-                  readOnly={!isEditing}
-                />
-                <button
-                  type="button"
-                  className={`profile__show-password ${
-                    passwordVisible ? "is-visible" : ""
-                  }`}
-                  onClick={() => toggleVisibility(setPasswordVisible)}
-                  aria-label={
-                    passwordVisible
-                      ? "Masquer le mot de passe"
-                      : "Afficher le mot de passe"
-                  }
-                ></button>
+                <div className="profile__password-container">
+                  <input
+                    className="profile__input"
+                    type={confirmPasswordVisible ? "text" : "password"}
+                    name="confirm_password"
+                    id="confirm_password"
+                    pattern={
+                      isEditing
+                        ? "^(?=.*[A-Z])(?=.*\\d)(?=.*[^\\w\\s]).{8,}$"
+                        : undefined
+                    }
+                    onInvalid={(e) =>
+                      e.target.setCustomValidity(
+                        "8 caractères min. avec une majuscule, un chiffre et un caractère spécial."
+                      )
+                    }
+                    onInput={(e) => e.target.setCustomValidity("")}
+                    value={confirmPassword}
+                    onChange={handleConfirmPasswordChange}
+                    readOnly={!isEditing}
+                  />
+                  <button
+                    type="button"
+                    className={`profile__confirm-show-password ${
+                      confirmPasswordVisible ? "is-visible" : ""
+                    }`}
+                    onClick={
+                      isEditing ? () => toggleVisibility(setConfirmPasswordVisible) : undefined
+                    }
+                    aria-label={
+                      confirmPasswordVisible
+                        ? "Masquer le mot de passe"
+                        : "Afficher le mot de passe"
+                    }
+                  ></button>
+                </div>
+                {passwordError && (
+                  <p className="profile__error">{passwordError}</p>
+                )}
               </li>
 
               <li className="profile__field">
@@ -209,13 +319,12 @@ const Profil = () => {
 
               {isEditing ? (
                 <li className="profile__field">
-                  <button
-                    type="button"
-                    onClick={handleSave}
+                  <input
+                    type="submit"
                     className="profile__save-btn"
-                  >
-                    Enregistrer
-                  </button>
+                    value=" Enregistrer"
+                    disabled={passwordError}
+                  ></input>
                   <button
                     type="button"
                     onClick={() => setIsEditing(false)}

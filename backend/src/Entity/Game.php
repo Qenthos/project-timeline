@@ -5,8 +5,6 @@ namespace App\Entity;
 use App\Entity\Category;
 use App\Repository\GameRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
-use phpDocumentor\Reflection\Types\Boolean;
 
 #[ORM\Entity]
 class Game
@@ -17,7 +15,7 @@ class Game
     private int $id;
 
     #[ORM\Column(type: 'boolean')]
-    private bool $complete;
+    private bool $win;
 
     #[ORM\Column(type: 'integer')]
     private int $score;
@@ -57,8 +55,8 @@ class Game
         $this->score = 0; 
         $this->nb_bad = 0;
         $this->timer = 120;
-        $this->nb_cards = 10;
-        $this->difficulty = 2;
+        $this->nbCards = 10;
+        $this->difficulty = 'normal';
     }
 
     public function getId(): int
@@ -66,14 +64,14 @@ class Game
         return $this->id;
     }
 
-    public function isComplete(): bool
+    public function isWin(): bool
     {
-        return $this->complete;
+        return $this->win;
     }
 
-    public function setComplete(bool $complete): self
+    public function setWin(bool $win): self
     {
-        $this->complete = $complete;
+        $this->win = $win;
         return $this;
     }
 
@@ -104,7 +102,7 @@ class Game
         return $this->timer;
     }
 
-    public function setTimer(int $timer): self
+    public function setTimer(?int $timer): self
     {
         $this->timer = $timer;
         return $this;
@@ -123,21 +121,21 @@ class Game
 
     public function getNbCards(): int
     {
-        return $this->nb_cards;
+        return $this->nbCards;
     }
 
-    public function setNbCards(int $nb_cards): self
+    public function setNbCards(int $nbCards): self
     {
-        $this->nb_cards = $nb_cards;
+        $this->nbCards = $nbCards;
         return $this;
     }
 
-    public function getDifficulty(): int
+    public function getDifficulty(): string
     {
         return $this->difficulty;
     }
 
-    public function setDifficulty(int $difficulty): self
+    public function setDifficulty(string $difficulty): self
     {
         $this->difficulty = $difficulty;
         return $this;

@@ -4,7 +4,10 @@
 /***0px***/
 
 .settings {
+  display: flex;
   align-items: center;
+  justify-content: center;
+
   &__section {
     display: flex;
     align-items: center;
@@ -19,6 +22,7 @@
   &__title {
     position: relative;
     width: 100%;
+
     &::before {
       position: absolute;
       content: "";
@@ -39,6 +43,7 @@
       height: 30px;
     }
   }
+
   &__instrument-fieldset {
     display: flex;
     align-items: start;
@@ -63,17 +68,17 @@
     justify-content: center;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
 
-    &--Annee {
-      background-image: url("./../../public/media/piano-bg.jpg");
+    &--selected {
+     border: 5px solid black;
     }
-    &--Poids {
-      background-image: url("./../../public/media/piano-bg.jpg");
-    }
+
+    &--Annee,
+    &--Poids,
     &--Taille {
       background-image: url("./../../public/media/piano-bg.jpg");
     }
 
-    & > .settings__instrument-content {
+    > .settings__instrument-content {
       position: relative;
       z-index: 3;
       width: 100%;
@@ -82,6 +87,7 @@
       height: 2rem;
       border-radius: 0 0 0.5rem 0.5rem;
     }
+
     &:active {
       transform: scale(0.98);
       background-color: rgba(255, 0, 0, 0.15);
@@ -125,6 +131,10 @@
     transition: transform 0.1s ease-in-out, background-color 0.2s;
     text-align: left;
 
+    &--selected {
+      border: 5px solid black;
+     }
+
     &--easy {
       background-color: green;
     }
@@ -137,7 +147,7 @@
       background-color: red;
     }
 
-    &--survival {
+    &--customize  {
       background-color: purple;
     }
 
@@ -151,11 +161,11 @@
       background-color: rgba(255, 255, 255, 0.1);
     }
 
-    &__difficulty-label {
+    .settings__difficulty-label {
       font-weight: bold;
     }
 
-    &__difficulty-details {
+    .settings__difficulty-details {
       display: flex;
       gap: 1rem;
     }
@@ -177,7 +187,14 @@
     height: 3rem;
     margin: 0.5rem 0 0 0;
   }
+
+  &__list-recap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
+
 
 /***640px***/
 @include mobile-sm {

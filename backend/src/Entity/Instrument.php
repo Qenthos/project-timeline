@@ -81,6 +81,12 @@ class Instrument
         return $this;
     }
 
+    public function getCreatedDate(): \DateTime
+{
+    return (new \DateTime())->setTimestamp($this->created);
+}
+
+
     public function getDescription(): string
     {
         return $this->description;

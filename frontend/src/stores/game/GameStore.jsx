@@ -1,140 +1,62 @@
 import { makeAutoObservable } from "mobx";
 
 export default class GameStore {
-  _timer;
-  _timerGame;
-  _timeRemaining;
-  _score;
-  _isPaused;
-  _isUnlimited;
-  _endGame;
-  _win;
-  _currentIndex;
-  _timerInterval;
-  _selectedInstruments = [];
-  _nbBadResponse = 0;
-  _nbGoodResponse = 0;
+  _gamesStore;
+  _timerInterval = null;
 
-  constructor() {
-    this._timer = 30;
-    this._score = 100;
-    this._isPaused = false;
-    this._isUnlimited = false;
-    this._endGame = false;
-    this._win = false;
-    this._currentIndex = 0;
-    this._timerGame = 30;
-    this._timeRemaining = 0;
-    this._timerInterval = null;
-    this._selectedInstruments = [];
-    this._nbBadResponse = 0;
-    this._nbGoodResponse = 0;
-
+  constructor(gamesStore, usersStore) {
+    this._gamesStore = gamesStore;
+    this._usersStore = usersStore;
     makeAutoObservable(this);
   }
 
-  get selectedInstruments() {
-    return this._selectedInstruments;
-  }
-
-  set selectedInstruments(value) {
-    this._selectedInstruments = value;
-  }
-
-  get timer() {
-    return this._timer;
-  }
-
-  get score() {
-    return this._score;
-  }
-
-  get isPaused() {
-    return this._isPaused;
-  }
-
-  get isUnlimited() {
-    return this._isUnlimited;
-  }
-
-  get endGame() {
-    return this._endGame;
-  }
-
-  get win() {
-    return this._win;
-  }
-
-
-  get currentIndex() {
-    return this._currentIndex;
-  }
-
-  set timer(value) {
-    this._timer = value;
-  }
-
-  set score(value) {
-    this._score = value;
-  }
-
-  set isPaused(value) {
-    this._isPaused = value;
-  }
-
-  set isUnlimited(value) {
-    this._isUnlimited = value;
-  }
-
-  set endGame(value) {
-    this._endGame = value;
-  }
-
-  set win(value) {
-    this._win = value;
-  }
-
-  
-  set currentIndex(value) {
-    this._currentIndex = value;
-  }
-
-  get timerGame() {
-    return this._timerGame;
-  }
-  set timerGame(value) {
-    this._timerGame = value;
-  }
-
-  get timeRemaining() {
-    return this._timeRemaining;
-  }
-
   resetGame() {
-    this._currentIndex = 0;
-    this._timer = 30;
-    this._endGame = false;
-    this._win = false;
-    this._isPaused = false;
+    this._gamesStore.currentIndex = 0;
+    this._gamesStore.timerGame = 30;
+    this._gamesStore.timerRemaining = 30;
+    this._gamesStore.endGame = false;
+    this._gamesStore.win = false;
+    this._gamesStore.isPaused = false;
+    this._gamesStore.score = 100;
+    this._gamesStore.nbBadResponse = 0;
+    this._gamesStore.nbGoodResponse = 0;
+  }
+
+  get state() {
+    return this._gamesStore;
+  }
+
+  initializeGame({
+    timer = 30,
+    difficulty = "easy",
+    isUnlimited = false,
+    score = 100,
+  } = {}) {
+    const stateGame = this._gamesStore;
+    stateGame.timerGame = timer;
+    stateGame.timerRemaining = timer;
+    stateGame.difficulty = difficulty;
+    stateGame.isUnlimited = isUnlimited;
+    stateGame.score = score;
+    this.resetGame();
   }
 
   calculateScore(nbBadResponse, nbGoodResponse) {
-    let newScore = this._score;
+    let newScore = this._gamesStore.score;
     newScore -= nbBadResponse * 10;
     newScore += nbGoodResponse * 15;
     newScore = Math.max(0, Math.ceil(newScore));
-    this._score = newScore;
+    this._gamesStore.score = newScore;
   }
 
   calculateTimeRemaining() {
-    const timeGame = this._timer;
-    const finishTime = this._timerGame;
-    let remaining = timeGame - finishTime;
-    this._timeRemaining = remaining;
+    const remaining =
+      this._gamesStore.timerGame - this._gamesStore.timerRemaining;
+    this._gamesStore.timeElapsed = remaining;
   }
 
   incrementCurrentIndex() {
-    this._currentIndex += 1;
+    this._gamesStore.currentIndex += 1;
   }
 
   handleDrop() {
@@ -142,49 +64,101 @@ export default class GameStore {
   }
 
   finishGame(nbBadResponse, nbGoodResponse) {
-    this._endGame = true;
+    if (this._gamesStore.endGame) {
+      return;
+    }
+    this._gamesStore.endGame = true;
     this.calculateTimeRemaining();
     this.calculateScore(nbBadResponse, nbGoodResponse);
+    this.clearTimer();
+    this.postGameToUser();
   }
 
   startNewRound() {
-    this._currentIndex = 0;
-    this._timerGame = this._timer;
-    this._endGame = false;
-    this._win = false;
-    this._isPaused = false;
+    this._gamesStore.currentIndex = 0;
+    this._gamesStore.timerRemaining = this._gamesStore.timerGame;
+    this._gamesStore.endGame = false;
+    this._gamesStore.win = false;
+    this._gamesStore.isPaused = false;
+    this._gamesStore.nbBadResponse = 0;
+    this._gamesStore.nbGoodResponse = 0;
     this.startTimer();
   }
 
   setRandomSelectedInstruments(allInstruments, cards) {
-    // Mélange aléatoire et sélection des cartes
     const random = [...allInstruments].sort(() => Math.random() - 0.5);
     const selection = random.slice(0, cards);
-    this.selectedInstruments = selection;
+    this._gamesStore.selectedInstruments = selection;
   }
 
   tickTimer() {
-    if (!this._isPaused && !this._endGame && !this._isUnlimited) {
-      this._timerGame -= 1;
-      if (this._timerGame <= 0) {
-        this._endGame = true;
+    if (
+      !this._gamesStore.isPaused &&
+      !this._gamesStore.endGame &&
+      !this._gamesStore.isUnlimited
+    ) {
+      this._gamesStore.timerRemaining -= 1;
+      if (this._gamesStore.timerRemaining <= 0) {
+        this._gamesStore.endGame = true;
+        this.clearTimer();
       }
     }
   }
 
   startTimer() {
-    this._timerGame = this._timer;
-    this._endGame = false;
-    if (this._timerInterval) {
-      clearInterval(this._timerInterval);
-    }
-
+    this.clearTimer();
     this._timerInterval = setInterval(() => {
       this.tickTimer();
-      if (this._endGame) {
-        clearInterval(this._timerInterval);
-        this._timerInterval = null;
-      }
     }, 1000);
   }
+
+  clearTimer() {
+    if (this._timerInterval) {
+      clearInterval(this._timerInterval);
+      this._timerInterval = null;
+    }
+  }
+
+ async postGameToUser() {
+    const userId = this._usersStore.currentUser?.id;
+  
+    if (!userId) {
+      console.warn("Utilisateur introuvable");
+      return;
+    }
+  
+    const { win, selectedInstruments, score, difficulty, timerGame, nbRounds } = this._gamesStore;
+    const nbCards = selectedInstruments?.length ?? 0;
+  
+    fetch(`http://localhost:8000/api/user/${userId}/games`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        win,
+        nbCards,
+        score,
+        difficulty,
+      }),
+    })
+    .then(response => {
+      if (!response.ok) {
+        return response.text().then(text => {
+          throw new Error(`Erreur ${response.status} : ${text}`);
+        });
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log("Partie enregistrée :", data);
+      // Tu peux ici faire un runInAction si tu veux mettre à jour un store ou autre
+    })
+    .catch(error => {
+      console.error("Erreur lors de l'enregistrement de la partie :", error);
+    });
+  }
+  
+
+  
 }

@@ -50,6 +50,28 @@ class UserController extends AbstractController
         return $this->json($data);
     }
 
+    #[Route('api/user/{id}', name: 'getUserById', methods: ['GET'])]
+    public function getUserById(int $id, UserRepository $userRepo): JsonResponse
+    {
+        $user = $userRepo->find($id);
+
+        if (!$user) {
+            return $this->json(['error' => 'Utilisateur non trouvé'], 404);
+        }
+
+        return $this->json([
+            'id' => $user->getId(),
+            'username' => $user->getPseudo(),
+            'email' => $user->getEmail(),
+            'score' => $user->getScore(),
+            'elo' => $user->getElo(),
+            'played_games' => $user->getPlayedGames(),
+            'pfp' => $user->getProfilePicture()?->getId(),
+            'pfb' => $user->getProfileBanner()?->getId(),
+        ]);
+    }
+
+
     #[Route('api/user/cosmetics/{id}', name: "CosmeticsByUser", methods: ['GET'])]
     public function getCosmeticsByUser(UserRepository $userRepository, int $id): JsonResponse
     {
@@ -103,7 +125,7 @@ class UserController extends AbstractController
         return $this->json(['message' => 'Utilisateur créé', 'id' => $user->getId()], 201);
     }
 
-    #[Route('api/user/{id}', name: 'updateUser', methods: ['PATCH'])]
+    #[Route('api/user/{id}', name: 'updateUser', methods: ['PUT'])]
     public function updateUser(int $id, Request $request, UserRepository $userRepo): JsonResponse
     {
         $user = $userRepo->find($id);
@@ -121,7 +143,7 @@ class UserController extends AbstractController
             $user->setEmail($data['email']);
         }
         if (isset($data['password'])) {
-            $user->setPassword($data['password']); 
+            $user->setPassword($data['password']);
         }
         if (isset($data['score'])) {
             $user->setScore($data['score']);

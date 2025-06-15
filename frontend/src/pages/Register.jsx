@@ -63,11 +63,15 @@ const Register = () => {
    * Send form and create account
    * @param {*} e
    */
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!passwordError) {
-      userStore.createAccount(email, username, password);
-      navigate("/profil")
+      try {
+        userStore.createAccount(email, username, password);
+        navigate("/profil");
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -127,6 +131,12 @@ const Register = () => {
                       id="password"
                       pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$"
                       value={password}
+                      onInvalid={(e) =>
+                        e.target.setCustomValidity(
+                          "8 caractères min. avec une majuscule, un chiffre et un caractère spécial."
+                        )
+                      }
+                      onInput={(e) => e.target.setCustomValidity("")}
                       onChange={handlePasswordChange}
                       required
                     />
@@ -158,6 +168,12 @@ const Register = () => {
                       pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$"
                       value={confirmPassword}
                       onChange={handleConfirmPasswordChange}
+                      onInvalid={(e) =>
+                        e.target.setCustomValidity(
+                          "8 caractères min. avec une majuscule, un chiffre et un caractère spécial."
+                        )
+                      }
+                      onInput={(e) => e.target.setCustomValidity("")}
                       required
                     />
                     <button
