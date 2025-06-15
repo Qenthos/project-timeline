@@ -30,7 +30,7 @@ class Game
     private int $time_elapsed;
 
     #[ORM\Column(type: 'integer')]
-    private int $nb_cards;
+    private int $nbCards;
 
     #[ORM\Column(type: 'integer')]
     private int $difficulty;
@@ -50,7 +50,7 @@ class Game
     private Category $categorie;
 
     public function __construct() {
-        $this->complete = false;
+        $this->win = false;
         $this->time_elapsed = 0;
         $this->score = 0; 
         $this->nb_bad = 0;

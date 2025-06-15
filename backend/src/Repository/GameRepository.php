@@ -24,7 +24,7 @@ class GameRepository extends ServiceEntityRepository
     public function findAllGames(): array
     {
          return $this->createQueryBuilder('g')
-        ->select('g.id, g.complete, g.score, g.nb_bad, g.timer, g.time_elapsed, g.nb_cards, g.difficulty, g.gamemode, g.time')
+        ->select('g.id, g.win, g.score, g.nb_bad, g.timer, g.time_elapsed, g.nbCards, g.difficulty, g.gamemode, g.time')
         ->addSelect('cat.name AS categoryName')
         ->addSelect('player.id AS playerId')
         ->leftJoin('g.categorie', 'cat') 
@@ -43,7 +43,7 @@ class GameRepository extends ServiceEntityRepository
     public function findFinishedGamesByUser(int $userId): array
     {
         return $this->createQueryBuilder('g')
-            ->andWhere('g.finished = true')
+            ->andWhere('g.win = true')
             ->andWhere('g.player = :userId')
             ->setParameter('userId', $userId)
             ->getQuery()
@@ -94,7 +94,7 @@ class GameRepository extends ServiceEntityRepository
     public function findUnfinishedGamesByUser(int $userId): array
     {
         return $this->createQueryBuilder('g')
-            ->andWhere('g.finished = false')
+            ->andWhere('g.win = false')
             ->andWhere('g.player = :userId')
             ->setParameter('userId', $userId)
             ->getQuery()
