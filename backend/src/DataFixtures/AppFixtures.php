@@ -130,8 +130,7 @@ class AppFixtures extends Fixture
 
             // On évite de recréer la même catégorie plusieurs fois
             if (!isset($categories[$categoryName])) {
-                $category = $categories[$index];
-                $category->setName($categoryName);
+                $category = new Category($categoryName);
                 $category->setDescription("description de la catégorie en question");
                 $category->setImage("chemin d'accès vers l'image en question");
                 $manager->persist($category);

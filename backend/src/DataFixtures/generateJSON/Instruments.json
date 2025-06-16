@@ -9,7 +9,7 @@
     "description": "Instrument à cordes frottées, le plus aigu de la famille des archets, utilisé en musique classique, jazz, et folk.",
     "anecdote": "Antonio Stradivari, luthier italien du XVIIᵉ siècle, est célèbre pour ses violons au son exceptionnel, certains valent plusieurs millions aujourd’hui.",
     "origine": "Italie",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 2,
@@ -21,7 +21,7 @@
     "description": "Instrument à cordes frottées situé entre le violon et le violoncelle, doté d’un son riche et grave.",
     "anecdote": "Mozart préférait l’alto au violon dans les quatuors à cordes et jouait lui-même de cet instrument.",
     "origine": "Italie",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 3,
@@ -33,7 +33,7 @@
     "description": "Instrument à cordes frottées de grande taille, offrant un registre grave et chaleureux, utilisé en soliste ou orchestre.",
     "anecdote": "Le morceau « Le Cygne » de Camille Saint‑Saëns illustre la virtuosité et l’émotion que peut transmettre le violoncelle.",
     "origine": "Italie",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 4,
@@ -45,7 +45,7 @@
     "description": "La plus grave des cordes frottées, importante tant en orchestre symphonique qu’en jazz ou musique traditionnelle.",
     "anecdote": "Dans les années 1950, le jazz « slap » popularisé par Bill Black sur le slap bass offrait une nouvelle façon rythmique de jouer la contrebasse.",
     "origine": "Europe centrale",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 5,
@@ -57,7 +57,7 @@
     "description": "Instrument à cordes pincées présent dans quasiment tous les styles musicaux, de la folk à la pop en passant par le flamenco.",
     "anecdote": "La guitare moderne s’est popularisée en Espagne au XIXᵉ siècle, et Andrés Segovia la rendit prestigieuse dans la musique classique.",
     "origine": "Espagne",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 6,
@@ -69,7 +69,7 @@
     "description": "Instrument à cordes pincées, triangulaire, présent dès l’Antiquité : sumériens, égyptiens, irlandais…",
     "anecdote": "La harpe celtique est un symbole national irlandais, représenté sur les pièces de monnaie et drapeaux officiels.",
     "origine": "Mésopotamie",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 7,
@@ -81,7 +81,7 @@
     "description": "Instrument à cordes pincées à caisse bombée, très populaire à la Renaissance et au Moyen Âge.",
     "anecdote": "Le luth était l’instrument favori des troubadours ; sa forme a inspiré celle de la mandoline.",
     "origine": "Proche-Orient",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 8,
@@ -93,7 +93,7 @@
     "description": "Grand luth avec manche prolongé et basse supplémentaire, utilisé en accompagnement à la Renaissance et au Baroque.",
     "anecdote": "Les théorbistes accompagnaient souvent les cantates baroques ; le monstre à 14 cordes graves en fait un instrument unique.",
     "origine": "Italie",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 9,
@@ -105,7 +105,7 @@
     "description": "Petit instrument pincé, à cordes doubles, issu de la famille du luth et utilisé dans la musique folk italienne.",
     "anecdote": "Popularisée à Naples, elle est devenue un symbole de la musique de rue et des sérénades italiennes.",
     "origine": "Italie",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 10,
@@ -117,7 +117,7 @@
     "description": "Instrument à cordes pincées de la tradition classique indienne, avec raja mélodiques et résonateurs sympathiques.",
     "anecdote": "Ravi Shankar popularisa le sitar en Occident, inspirant George Harrison des Beatles à l’utiliser dans plusieurs morceaux.",
     "origine": "Inde",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 11,
@@ -129,7 +129,7 @@
     "description": "Instrument à cordes originaire d'Afrique de l’Ouest, la kora se situe entre la harpe et le luth. Elle est constituée d’une calebasse coupée en deux recouverte d'une peau de vache et d’un long manche.",
     "anecdote": "La kora est traditionnellement jouée par les griots, véritables bardes africains, qui transmettent l'histoire et la sagesse des peuples mandingues à travers leurs chants et récits.",
     "origine": "Mali",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 12,
@@ -141,7 +141,7 @@
     "description": "Instrument à cordes triangulaire russe, la balalaïka possède trois cordes et se décline en plusieurs tailles. Elle est souvent utilisée dans la musique folklorique russe.",
     "anecdote": "Lénine lui-même, bien que plus porté sur la théorie révolutionnaire que sur la musique, aurait dit que la balalaïka était « l’âme du peuple russe » – un cliché, mais qui claque 🇷🇺.",
     "origine": "Russie",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 13,
@@ -153,7 +153,7 @@
     "description": "Instrument traditionnel chinois à deux cordes frottées, souvent appelé « violon chinois ». Il produit un son expressif et très vocal.",
     "anecdote": "On dit que l’Erhu peut imiter les pleurs humains. Lors de la Révolution culturelle, certains musiciens cachaient leurs erhus pour éviter d’être persécutés.",
     "origine": "Chine",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 14,
@@ -165,7 +165,7 @@
     "description": "Instrument à trois cordes japonais, joué avec un plectre appelé bachi. Utilisé dans le théâtre kabuki et les chants folkloriques.",
     "anecdote": "Le shamisen a accompagné les geishas et les samouraïs dans leur quotidien. Il était aussi l’instrument des aveugles itinérants du Japon féodal.",
     "origine": "Japon",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 15,
@@ -177,7 +177,7 @@
     "description": "Instrument traditionnel suédois à cordes frottées et à touches (comme un clavier de violon !). Un mélange fascinant entre la vielle à roue et le violon.",
     "anecdote": "Le nyckelharpa a failli disparaître au XXe siècle, mais un revival folk l’a sauvé. Il est aujourd’hui symbole de la musique traditionnelle suédoise.",
     "origine": "Suède",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 16,
@@ -189,7 +189,7 @@
     "description": "L’oud est un luth sans frettes du Moyen-Orient, souvent considéré comme l’ancêtre de la guitare européenne. Il produit un son chaud et profond.",
     "anecdote": "Averroès, philosophe andalou, jouait de l’oud pour apaiser son esprit après ses réflexions métaphysiques. Pas étonnant qu’il soit surnommé ‘l’instrument des penseurs’.",
     "origine": "Irak",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 17,
@@ -201,7 +201,7 @@
     "description": "Instrument à cordes d’origine grecque, dérivé du saz turc. Utilisé dans le rebetiko, une sorte de blues oriental né dans les bas-fonds d’Athènes.",
     "anecdote": "Le bouzouki était mal vu dans la Grèce des années 30, associé aux fumeurs de haschich et aux marginaux. Aujourd’hui, c’est un emblème national 🇬🇷.",
     "origine": "Grèce",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 18,
@@ -213,7 +213,7 @@
     "description": "Cithare chinoise à cordes pincées, souvent posée à l’horizontale. Elle produit des sons cristallins et flottants.",
     "anecdote": "La légende raconte qu’un empereur chinois a rêvé d’un instrument imitant le son du vent sur les bambous… le guzheng serait né de ce songe.",
     "origine": "Chine",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 19,
@@ -225,7 +225,7 @@
     "description": "Instrument à cordes pincées ou frappées, ancêtre médiéval de la cithare. Il était utilisé en Europe et au Moyen-Orient.",
     "anecdote": "Le roi David est souvent représenté jouant du psaltérion dans l’iconographie médiévale. Il servait autant à la musique qu’à la prière 🙏.",
     "origine": "Moyen-Orient",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 20,
@@ -237,7 +237,7 @@
     "description": "Instrument à cordes pincées très ancien, utilisé dans de nombreuses civilisations : grecque, indienne, chinoise...",
     "anecdote": "La cithare a traversé les âges et les continents : on en retrouve des variantes chez les Romains, les Chinois (le guqin) ou les Indiens (la vina).",
     "origine": "Grèce antique",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 21,
@@ -249,7 +249,7 @@
     "description": "Instrument à cordes frappées, le piano a été inventé au début du XVIIIe siècle par Bartolomeo Cristofori. Il permet une grande expressivité grâce à la dynamique liée à la force de frappe des touches.",
     "anecdote": "Beethoven a tellement martyrisé ses pianos qu’il devait souvent les remplacer. Il a même aidé à l’évolution de leur solidité, notamment en cassant les marteaux à force de rage.",
     "origine": "Italie",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 22,
@@ -261,7 +261,7 @@
     "description": "Instrument à cordes pincées utilisant un mécanisme où des sautereaux viennent pincer les cordes, donnant un son cristallin typique de la musique baroque.",
     "anecdote": "À l’époque baroque, certains clavecins étaient si richement décorés qu’ils valaient plus cher que les tableaux de maîtres accrochés au mur.",
     "origine": "Flandres",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 23,
@@ -273,7 +273,7 @@
     "description": "Monument sonore composé de centaines de tuyaux, l’orgue est actionné par un ou plusieurs claviers et un pédalier. Utilisé principalement dans les églises pour sa puissance et sa solennité.",
     "anecdote": "Jean-Sébastien Bach pouvait improviser pendant des heures à l’orgue. Il a été défié par le roi de Prusse Frédéric II pour improviser une fugue à 6 voix : ce fut **l’Offrande musicale**.",
     "origine": "Grèce antique",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 24,
@@ -285,7 +285,7 @@
     "description": "Instrument à anches libres actionnées par un système de soufflerie, l’harmonium est un cousin de l’accordéon utilisé souvent dans les églises ou les musiques folkloriques.",
     "anecdote": "L’harmonium a connu un regain de popularité dans les musiques spirituelles indiennes, notamment grâce à Ravi Shankar et aux Beatles.",
     "origine": "France",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 25,
@@ -297,7 +297,7 @@
     "description": "Instrument électronique monodique, créé par Maurice Martenot. Il produit des sons vibrants grâce à un oscillateur, manipulé via un clavier et une bague coulissante.",
     "anecdote": "Utilisé dans des films comme *Ghostbusters* ou dans des œuvres de Messiaen, cet instrument hypnotique évoque des voix d’outre-tombe.",
     "origine": "France",
-    "categorie": "electronique"
+    "category": "electronique"
   },
   {
     "id": 26,
@@ -309,7 +309,7 @@
     "description": "Petit clavier électronique monodique, la Clavioline est un ancêtre des synthétiseurs, célèbre pour ses sons vibrants et nasillards.",
     "anecdote": "Le son du solo de *Telstar* par The Tornados (1962) est celui d'une clavioline trafiquée. C'était le premier hit britannique n°1 aux États-Unis.",
     "origine": "France",
-    "categorie": "electronique"
+    "category": "electronique"
   },
   {
     "id": 27,
@@ -321,7 +321,7 @@
     "description": "Clavier électromécanique utilisant des bandes magnétiques pour reproduire des sons enregistrés (cordes, flûtes, chœurs…).",
     "anecdote": "Le Mellotron a marqué l’intro mythique de *Strawberry Fields Forever* des Beatles. Il est aussi très utilisé par Radiohead ou King Crimson.",
     "origine": "Angleterre",
-    "categorie": "electronique"
+    "category": "electronique"
   },
   {
     "id": 28,
@@ -333,7 +333,7 @@
     "description": "Piano électromécanique où des marteaux frappent des lames métalliques, captées par des micros. Son timbre est doux, rond, très utilisé dans le jazz et le funk.",
     "anecdote": "Inventé pour rééduquer les soldats blessés de la Seconde Guerre mondiale, il a été popularisé par Herbie Hancock et Stevie Wonder.",
     "origine": "États-Unis",
-    "categorie": "electronique"
+    "category": "electronique"
   },
   {
     "id": 29,
@@ -345,7 +345,7 @@
     "description": "Clavier électromécanique à cordes tendues, proche du clavecin mais au son funky. Il utilise un système de micros magnétiques, comme une guitare électrique.",
     "anecdote": "*Superstition* de Stevie Wonder ? C’est un clavinet Hohner D6. Son son tranchant a défini le funk des années 70.",
     "origine": "Allemagne",
-    "categorie": "electronique"
+    "category": "electronique"
   },
   {
     "id": 30,
@@ -357,7 +357,7 @@
     "description": "Premier synthétiseur modulaire commercialisé à grande échelle, conçu par Robert Moog. Il a révolutionné la musique électronique avec ses oscillateurs analogiques.",
     "anecdote": "Wendy Carlos a popularisé le Moog avec l’album *Switched-On Bach*, où elle rejoue Bach en version électronique. Un choc sonore à l’époque.",
     "origine": "États-Unis",
-    "categorie": "electronique"
+    "category": "electronique"
   },
   {
     "id": 31,
@@ -369,7 +369,7 @@
     "description": "Le tambour est l’un des instruments de percussion les plus anciens du monde, composé d’une membrane tendue sur un cadre. Il existe dans toutes les cultures et se décline en de nombreuses formes, du djembé africain au snare drum occidental.",
     "anecdote": "Dans de nombreuses sociétés, le tambour est utilisé non seulement pour la musique mais aussi pour communiquer à distance, transmettre des messages ou accompagner des rituels sacrés.",
     "origine": "Universelle (présent sur tous les continents)",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 32,
@@ -381,7 +381,7 @@
     "description": "Le djembé est un tambour en forme de calice originaire d’Afrique de l’Ouest, taillé dans un tronc d’arbre et recouvert d’une peau de chèvre. Il est joué à mains nues et produit une grande variété de sons.",
     "anecdote": "Traditionnellement, le djembé accompagne les cérémonies, danses et rassemblements sociaux. Il est aussi un symbole d’unité et de fête dans de nombreux pays africains.",
     "origine": "Afrique de l’Ouest (Mali, Guinée, Côte d’Ivoire)",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 33,
@@ -393,7 +393,7 @@
     "description": "Les congas sont des tambours hauts et étroits d’origine cubaine, joués à mains nues. Elles sont essentielles dans la musique afro-cubaine comme la salsa ou la rumba.",
     "anecdote": "Les congas ont été popularisées à l’international par des musiciens comme Tito Puente et sont devenues un pilier des orchestres de jazz latin.",
     "origine": "Cuba",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 34,
@@ -405,7 +405,7 @@
     "description": "Les bongos sont une paire de petits tambours reliés entre eux, originaires de Cuba. Ils sont joués à mains nues et produisent des sons aigus et clairs.",
     "anecdote": "Les bongos sont omniprésents dans la musique cubaine et latine, et leur technique de jeu rapide est appelée le ‘martillo’ (marteau).",
     "origine": "Cuba",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 35,
@@ -417,7 +417,7 @@
     "description": "Le cajón est une caisse en bois originaire du Pérou, sur laquelle le musicien s’assoit pour en jouer. Il est devenu un élément clé du flamenco et des musiques du monde.",
     "anecdote": "Le cajón aurait été inventé par des esclaves africains au Pérou, qui utilisaient des caisses de transport comme instruments de percussion.",
     "origine": "Pérou",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 36,
@@ -429,7 +429,7 @@
     "description": "Les timbales sont des tambours métalliques d’origine cubaine, joués avec des baguettes. Elles sont incontournables dans la musique salsa et mambo.",
     "anecdote": "Le célèbre percussionniste Tito Puente a contribué à populariser les timbales dans le monde entier.",
     "origine": "Cuba",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 37,
@@ -441,7 +441,7 @@
     "description": "Les maracas sont des hochets remplis de graines ou de billes, originaires d’Amérique latine. Elles sont utilisées pour marquer le rythme dans de nombreux styles de musique.",
     "anecdote": "Les maracas étaient autrefois fabriquées à partir de fruits secs comme la calebasse ou le coco, et sont souvent associées à la musique festive.",
     "origine": "Amérique latine (Venezuela, Cuba, Brésil)",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 38,
@@ -453,7 +453,7 @@
     "description": "Le xylophone est un instrument de percussion composé de lames de bois accordées, frappées avec des maillets. Il existe des variantes en Afrique, en Asie et en Occident.",
     "anecdote": "En Afrique, le balafon est une forme de xylophone traditionnelle, souvent muni de résonateurs en calebasse.",
     "origine": "Afrique et Asie du Sud-Est",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 39,
@@ -465,7 +465,7 @@
     "description": "Le vibraphone est un instrument de percussion à lames métalliques, équipé de résonateurs et de moteurs produisant un effet de vibrato. Il est très utilisé dans le jazz.",
     "anecdote": "Le vibraphone a été inventé aux États-Unis et popularisé par des musiciens comme Lionel Hampton.",
     "origine": "États-Unis",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 40,
@@ -477,7 +477,7 @@
     "description": "Le glockenspiel est un instrument de percussion composé de lames métalliques accordées, frappées avec des maillets. Il produit un son brillant et cristallin.",
     "anecdote": "Le glockenspiel est souvent utilisé dans les orchestres et les fanfares pour ses sonorités éclatantes.",
     "origine": "Europe (Allemagne)",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 41,
@@ -489,7 +489,7 @@
     "description": "Le marimba est un instrument de percussion à lames d'origine africaine et sud-américaine, composé de lames de bois accordées et de résonateurs. Il produit un son chaleureux et profond, très utilisé dans la musique classique contemporaine et les ensembles de percussion.",
     "anecdote": "Le marimba moderne trouve ses racines au Guatemala, où il est devenu l'instrument national. Dans les années 1950, il a été popularisé dans les conservatoires occidentaux grâce au percussionniste Clair Omar Musser.",
     "origine": "Guatemala",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 42,
@@ -501,7 +501,7 @@
     "description": "Le triangle est un instrument de percussion métallique sans hauteur déterminée. Il se compose d’une tige d’acier pliée en forme triangulaire et produit un son cristallin très reconnaissable.",
     "anecdote": "Souvent moqué comme 'l'instrument pour les débutants', le triangle nécessite pourtant précision et finesse. Dans l’orchestre, certains solos de triangle sont réputés redoutables, notamment dans les œuvres de Wagner ou de Bizet.",
     "origine": "Europe",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 43,
@@ -513,7 +513,7 @@
     "description": "Les claves sont deux bâtons de bois que l'on frappe l'un contre l'autre pour produire un son sec et percussif. Elles sont très présentes dans les musiques afro-cubaines.",
     "anecdote": "Les claves jouent un rôle essentiel dans la musique cubaine : elles marquent le rythme appelé 'clave', fondement rythmique du son et de la salsa.",
     "origine": "Cuba",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 44,
@@ -525,7 +525,7 @@
     "description": "Les castagnettes sont des instruments à percussion idiophones, souvent associées à la danse flamenca. Elles sont composées de deux coquilles en bois tenues dans la main.",
     "anecdote": "Utilisées depuis l’Antiquité dans la région méditerranéenne, les castagnettes étaient déjà connues des Romains. Le mot vient du castillan 'castañuelas', en référence à leur forme de châtaigne.",
     "origine": "Espagne",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 45,
@@ -537,7 +537,7 @@
     "description": "Les gongs sont des instruments circulaires en métal suspendus verticalement, frappés avec une mailloche pour produire un son profond et résonant. Très utilisés en Asie, ils ont aussi une place dans les orchestres contemporains.",
     "anecdote": "En Indonésie, les gongs sont sacrés : ils sont souvent bénis par des prêtres avant d’être joués. Dans le gamelan javanais, le gong marque la fin d’un cycle musical.",
     "origine": "Indonésie",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 46,
@@ -549,7 +549,7 @@
     "description": "Les toms sont des fûts de batterie sans timbre, utilisés pour ponctuer les phrases rythmiques. Ils existent en plusieurs tailles et sont couramment utilisés dans les batteries modernes.",
     "anecdote": "Les toms ont été popularisés par les batteurs de jazz des années 1920, notamment Gene Krupa, qui les utilisa pour créer les premiers solos de batterie spectaculaires.",
     "origine": "États-Unis",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 47,
@@ -561,7 +561,7 @@
     "description": "La darbouka est un tambour en forme de gobelet, souvent fabriqué en céramique ou en métal. Très présente dans les musiques du Maghreb, du Moyen-Orient et des Balkans, elle produit des sons vifs et percussifs.",
     "anecdote": "Dans certaines régions, la darbouka est jouée uniquement par les hommes lors des cérémonies traditionnelles, mais elle est aujourd’hui maîtrisée par de nombreuses musiciennes virtuoses à travers le monde.",
     "origine": "Égypte",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 48,
@@ -573,7 +573,7 @@
     "description": "La tabla est un instrument de percussion indien composé de deux fûts accordés différemment. Elle permet une très grande expressivité rythmique et est fondamentale dans la musique classique hindoustanie.",
     "anecdote": "Le maître de tabla Zakir Hussain a popularisé l'instrument à l’international, notamment en collaborant avec des artistes de jazz et de musique électronique.",
     "origine": "Inde",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 49,
@@ -585,7 +585,7 @@
     "description": "L’udu est un instrument de percussion africain en argile. D’origine nigériane, il produit un son grave et profond lorsqu’on tape sur ses ouvertures.",
     "anecdote": "À l’origine, l’udu était une jarre à eau chez les Igbo du Nigeria. Elle est devenue instrument de musique quand quelqu’un a accidentellement frappé la jarre vide… et adoré le son produit !",
     "origine": "Nigeria",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 50,
@@ -597,7 +597,7 @@
     "description": "Les timbales sont des percussions métalliques montées sur pied, très utilisées dans la musique cubaine, le jazz latin et la salsa. Elles se jouent avec des baguettes fines.",
     "anecdote": "Le célèbre percussionniste Tito Puente a contribué à faire connaître les timbales dans le monde entier, en les intégrant à des orchestres de jazz dès les années 1950.",
     "origine": "Cuba",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 51,
@@ -609,7 +609,7 @@
     "description": "Le handpan est un instrument de percussion mélodique en métal, inventé en Suisse au début des années 2000. Il se joue avec les mains et produit des sons doux et envoûtants, proches du steel drum mais avec des harmoniques riches.",
     "anecdote": "Le handpan a été créé par Felix Rohner et Sabina Schärer à Berne, en Suisse, et s’est rapidement répandu dans le monde entier, notamment dans les musiques méditatives et de rue.",
     "origine": "Suisse",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 52,
@@ -621,7 +621,7 @@
     "description": "Le steel drum, ou steelpan, est un instrument de percussion mélodique originaire de Trinité-et-Tobago, fabriqué à partir de fûts métalliques recyclés. Il est emblématique de la musique caribéenne.",
     "anecdote": "Les premiers steel drums ont été créés à partir de bidons de pétrole, transformant un objet industriel en instrument de fête et de revendication culturelle.",
     "origine": "Trinité-et-Tobago",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 53,
@@ -633,7 +633,7 @@
     "description": "Le theremin est un instrument électronique inventé par Léon Theremin en 1920. Il se joue sans contact, en modulant des champs électromagnétiques avec les mains pour produire des sons étranges et éthérés.",
     "anecdote": "Le theremin est célèbre pour ses sons fantomatiques dans les films de science-fiction et d’horreur des années 1950.",
     "origine": "Russie",
-    "categorie": "electronique"
+    "category": "electronique"
   },
   {
     "id": 54,
@@ -645,7 +645,7 @@
     "description": "La trompette est un instrument à vent de la famille des cuivres, reconnaissable à son timbre brillant et puissant. Elle existe depuis l’Antiquité et a évolué jusqu’à la trompette à pistons moderne.",
     "anecdote": "La trompette a longtemps été utilisée pour les cérémonies militaires et royales avant de devenir un pilier du jazz et de la musique classique.",
     "origine": "Égypte ancienne / Europe",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 55,
@@ -657,7 +657,7 @@
     "description": "Le trombone est un instrument à vent de la famille des cuivres, caractérisé par sa coulisse permettant de varier la hauteur des notes. Il est utilisé dans les orchestres, le jazz et les fanfares.",
     "anecdote": "Le nom ‘trombone’ signifie littéralement ‘grande trompette’ en italien.",
     "origine": "Europe (Italie)",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 56,
@@ -669,7 +669,7 @@
     "description": "Le cor d’harmonie, ou French horn, est un instrument à vent de la famille des cuivres, reconnaissable à sa forme en spirale. Il est apprécié pour son timbre chaud et velouté.",
     "anecdote": "Le cor d’harmonie a évolué à partir des cors de chasse et a été perfectionné en Allemagne au XVIIIe siècle.",
     "origine": "Allemagne",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 57,
@@ -681,7 +681,7 @@
     "description": "Le tuba est le plus grand et le plus grave des cuivres modernes. Il est utilisé dans les orchestres, les fanfares et les brass bands.",
     "anecdote": "Le tuba a été inventé à Berlin en 1835 par Wilhelm Wieprecht et Johann Moritz.",
     "origine": "Allemagne",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 58,
@@ -693,7 +693,7 @@
     "description": "Le bugle est un instrument à vent de la famille des cuivres, proche de la trompette mais avec un son plus doux et rond. Il est souvent utilisé dans les fanfares militaires.",
     "anecdote": "Le bugle était autrefois utilisé pour donner des signaux dans l’armée, notamment pour le réveil ou la retraite.",
     "origine": "Angleterre",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 59,
@@ -705,7 +705,7 @@
     "description": "Le serpent est un instrument à vent en bois recouvert de cuir, de forme sinueuse, ancêtre du tuba et du saxhorn. Il était utilisé pour accompagner les chants religieux.",
     "anecdote": "Le serpent doit son nom à sa forme courbée rappelant un serpent.",
     "origine": "France",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 60,
@@ -717,7 +717,7 @@
     "description": "L’ophicléide est un instrument à vent en cuivre, muni de clés, inventé au XIXe siècle pour renforcer la section basse des orchestres. Il a été progressivement remplacé par le tuba.",
     "anecdote": "L’ophicléide apparaît dans des œuvres célèbres comme la Symphonie fantastique de Berlioz.",
     "origine": "France",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 61,
@@ -729,7 +729,7 @@
     "description": "Le cor des Alpes est un long instrument à vent en bois, utilisé traditionnellement dans les Alpes suisses pour communiquer à distance et accompagner les cérémonies montagnardes. Il produit un son grave et majestueux.",
     "anecdote": "Autrefois, les bergers utilisaient le cor des Alpes pour rassembler les troupeaux ou annoncer des événements dans la vallée.",
     "origine": "Suisse",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 62,
@@ -741,7 +741,7 @@
     "description": "Le didgeridoo est un instrument à vent ancestral des peuples aborigènes d’Australie, fabriqué à partir de branches d’eucalyptus évidées par les termites. Il produit un bourdonnement continu grâce à la technique du souffle continu.",
     "anecdote": "Le didgeridoo accompagne les chants et danses rituelles aborigènes depuis des millénaires, et chaque instrument est souvent décoré de motifs traditionnels.",
     "origine": "Australie",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 63,
@@ -753,7 +753,7 @@
     "description": "Le shofar est un instrument à vent fabriqué à partir d’une corne de bélier, utilisé dans la tradition juive lors des fêtes religieuses comme Roch Hachana et Yom Kippour.",
     "anecdote": "Le son du shofar symbolise l’éveil spirituel et la commémoration d’événements bibliques.",
     "origine": "Proche-Orient",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 64,
@@ -765,7 +765,7 @@
     "description": "La flûte traversière est un instrument à vent de la famille des bois, joué en soufflant latéralement dans l’embouchure. Elle existe depuis l’Antiquité et a évolué vers le modèle moderne en métal au XIXe siècle.",
     "anecdote": "La flûte traversière était très prisée à la cour de Frédéric II de Prusse, lui-même flûtiste accompli.",
     "origine": "Asie (Chine ancienne), puis Europe",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 65,
@@ -777,7 +777,7 @@
     "description": "La flûte à bec est un instrument à vent en bois, caractérisé par son bec et ses trous digitaux. Très populaire à la Renaissance et au Baroque, elle est facile à apprendre et utilisée dans l’éducation musicale.",
     "anecdote": "La flûte à bec a connu un regain de popularité au XXe siècle grâce au mouvement de la musique ancienne.",
     "origine": "Europe",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 66,
@@ -789,7 +789,7 @@
     "description": "Le hautbois est un instrument à vent à anche double, au timbre clair et pénétrant. Il occupe une place centrale dans l’orchestre classique.",
     "anecdote": "Le hautbois donne traditionnellement le la d’accord à l’orchestre avant un concert.",
     "origine": "France",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 67,
@@ -801,7 +801,7 @@
     "description": "Le basson est un grand instrument à vent à anche double, connu pour sa tessiture grave et sa sonorité chaleureuse. Il joue un rôle essentiel dans l’harmonie de l’orchestre.",
     "anecdote": "Le basson est parfois surnommé ‘le clown de l’orchestre’ en raison de ses possibilités expressives et comiques.",
     "origine": "Europe (Italie/France)",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 68,
@@ -813,7 +813,7 @@
     "description": "La clarinette est un instrument à vent à anche simple, inventé au début du XVIIIe siècle. Elle est très polyvalente, présente dans la musique classique, le jazz et les musiques du monde.",
     "anecdote": "La clarinette a été popularisée par Mozart, qui lui a dédié plusieurs œuvres majeures.",
     "origine": "Allemagne",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 69,
@@ -825,7 +825,7 @@
     "description": "Le saxophone est un instrument à vent en laiton à anche simple, inventé par Adolphe Sax en 1846. Il est incontournable dans le jazz, la musique classique et les musiques actuelles.",
     "anecdote": "Le saxophone a été initialement conçu pour les orchestres militaires avant de devenir l’emblème du jazz.",
     "origine": "Belgique",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 70,
@@ -837,7 +837,7 @@
     "description": "Le duduk est un instrument à vent traditionnel arménien en bois d’abricotier, à anche double, produisant un son doux et mélancolique.",
     "anecdote": "Le duduk est classé au patrimoine culturel immatériel de l’UNESCO et accompagne souvent les cérémonies et les films évoquant l’Arménie.",
     "origine": "Arménie",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 71,
@@ -849,7 +849,7 @@
     "description": "La zurna est un instrument à vent traditionnel à anche double, très répandu dans les Balkans, le Proche-Orient et l’Asie centrale. Elle produit un son puissant et perçant, utilisé lors des fêtes et cérémonies.",
     "anecdote": "La zurna accompagne souvent les danses populaires et les mariages, et est parfois associée à un tambour pour former un duo festif incontournable.",
     "origine": "Turquie / Asie centrale",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 72,
@@ -861,7 +861,7 @@
     "description": "La quena est une flûte droite traditionnelle des Andes, taillée dans le bois ou l’os, caractérisée par son embouchure biseautée. Elle est essentielle dans la musique folklorique andine.",
     "anecdote": "La quena était déjà utilisée par les civilisations précolombiennes, notamment les Incas, pour accompagner les chants et les danses.",
     "origine": "Pérou / Bolivie",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 73,
@@ -873,7 +873,7 @@
     "description": "Le shakuhachi est une flûte japonaise en bambou, taillée en biseau, connue pour sa sonorité profonde et méditative. Elle est utilisée dans la musique zen et les arts traditionnels japonais.",
     "anecdote": "Les moines zen du Japon jouaient du shakuhachi comme pratique de méditation et de respiration.",
     "origine": "Japon",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 74,
@@ -885,7 +885,7 @@
     "description": "La kalimba, aussi appelée piano à pouces, est un instrument africain à lamelles métalliques fixées sur une caisse de résonance en bois. Elle produit des sons cristallins en pinçant les lamelles avec les pouces.",
     "anecdote": "La kalimba est souvent utilisée lors de veillées et de cérémonies pour raconter des histoires ou accompagner des chants.",
     "origine": "Afrique subsaharienne (Zimbabwe, Mozambique)",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 75,
@@ -897,7 +897,7 @@
     "description": "La mbira est un instrument à lamelles métalliques d’Afrique australe, considéré comme sacré par les peuples Shona du Zimbabwe. Elle est jouée lors de cérémonies religieuses et sociales.",
     "anecdote": "La mbira est réputée pour entrer en communication avec les ancêtres lors des rituels traditionnels.",
     "origine": "Zimbabwe",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 76,
@@ -909,7 +909,7 @@
     "description": "Le berimbau est un instrument à corde unique d’origine africaine, devenu emblématique de la capoeira au Brésil. Il se compose d’un arc en bois, d’une corde métallique et d’une calebasse servant de résonateur.",
     "anecdote": "Le berimbau rythme les combats de capoeira et guide les mouvements des capoeiristes.",
     "origine": "Brésil (influence africaine)",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 77,
@@ -921,7 +921,7 @@
     "description": "Le tumbi est un instrument à corde unique originaire du Pendjab, en Inde, utilisé dans la musique folklorique punjabi. Il produit un son aigu et rythmique.",
     "anecdote": "Le tumbi est devenu célèbre mondialement grâce à la musique bhangra et à des tubes internationaux comme ‘Mundian To Bach Ke’.",
     "origine": "Inde (Pendjab)",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 78,
@@ -933,7 +933,7 @@
     "description": "Le rebab est un instrument à cordes frottées originaire du Moyen-Orient, diffusé dans le monde arabe, en Afrique du Nord et en Asie du Sud-Est. Il possède une ou plusieurs cordes et une caisse de résonance en peau.",
     "anecdote": "Le rebab est considéré comme l’ancêtre du violon et a voyagé le long des routes commerciales médiévales.",
     "origine": "Moyen-Orient",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 79,
@@ -945,7 +945,7 @@
     "description": "Le doudouk (ou duduk) est un instrument à vent en bois d’abricotier, à anche double, emblématique de la musique arménienne. Il produit un son doux et mélancolique.",
     "anecdote": "Le doudouk a été inscrit au patrimoine culturel immatériel de l’UNESCO pour son importance dans la culture arménienne.",
     "origine": "Arménie",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 80,
@@ -957,7 +957,7 @@
     "description": "La sanza est un terme générique pour désigner les lamellophones africains comme la kalimba ou la mbira, composés de lamelles métalliques fixées sur une caisse de résonance.",
     "anecdote": "La sanza accompagne les chants, les contes et les rituels dans de nombreuses cultures d’Afrique subsaharienne.",
     "origine": "Afrique centrale et australe",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 81,
@@ -969,7 +969,7 @@
     "description": "Le cimbalom est un grand instrument à cordes frappées, originaire d’Europe centrale, notamment de Hongrie. Il se joue à l’aide de petits maillets et produit un son brillant et résonant.",
     "anecdote": "Le cimbalom est un pilier de la musique tzigane et folklorique hongroise, et il a aussi été utilisé par des compositeurs classiques comme Kodály et Bartók.",
     "origine": "Hongrie",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 82,
@@ -981,7 +981,7 @@
     "description": "Le hulusi est un instrument à vent traditionnel chinois, composé d’une calebasse et de tuyaux en bambou. Il est réputé pour son timbre doux et mélodieux.",
     "anecdote": "Le hulusi est souvent joué lors des fêtes du peuple Dai, dans la province du Yunnan, et symbolise l’amour dans la culture locale.",
     "origine": "Chine (Yunnan)",
-    "categorie": "vent"
+    "category": "vent"
   },
   {
     "id": 83,
@@ -993,7 +993,7 @@
     "description": "La pipa est un luth chinois à quatre cordes pincées, célèbre pour sa caisse en forme de poire. Elle est jouée depuis plus de deux mille ans dans la musique classique chinoise.",
     "anecdote": "La pipa est surnommée ‘le roi des instruments chinois’ et ses techniques de jeu sont très expressives, imitant parfois le bruit des chevaux ou de la pluie.",
     "origine": "Chine",
-    "categorie": "corde"
+    "category": "corde"
   },
   {
     "id": 84,
@@ -1005,7 +1005,7 @@
     "description": "Le trautonium est un instrument électronique inventé en Allemagne par Friedrich Trautwein. Il se joue sur un fil tendu et produit des sons électroniques uniques, utilisés notamment dans la musique de film.",
     "anecdote": "Le trautonium a servi à créer les cris d’oiseaux dans le film ‘Les Oiseaux’ d’Alfred Hitchcock.",
     "origine": "Allemagne",
-    "categorie": "electronique"
+    "category": "electronique"
   },
   {
     "id": 85,
@@ -1017,7 +1017,7 @@
     "description": "La boîte à rythmes Roland TR-808 est une machine électronique de percussion devenue culte dans la musique hip-hop, dance et pop grâce à ses sons distinctifs de grosse caisse et de caisse claire.",
     "anecdote": "La TR-808, initialement un échec commercial, est aujourd’hui l’une des boîtes à rythmes les plus samplées au monde.",
     "origine": "Japon",
-    "categorie": "electronique"
+    "category": "electronique"
   },
   {
     "id": 86,
@@ -1029,7 +1029,7 @@
     "description": "Le stylophone est un petit synthétiseur analogique portable, joué avec un stylet métallique. Il est célèbre pour son timbre électronique et son utilisation dans la pop britannique.",
     "anecdote": "David Bowie a utilisé le stylophone sur son tube ‘Space Oddity’.",
     "origine": "Royaume-Uni",
-    "categorie": "electronique"
+    "category": "electronique"
   },
   {
     "id": 87,
@@ -1041,7 +1041,7 @@
     "description": "Le verrophone est un instrument contemporain constitué de tubes de verre accordés, frottés ou frappés pour produire des sons purs et cristallins.",
     "anecdote": "Le verrophone a été inventé par le musicien allemand Sascha Reckert et est parfois utilisé dans la musique contemporaine et expérimentale.",
     "origine": "Allemagne",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 88,
@@ -1053,7 +1053,7 @@
     "description": "Les cymbales sont des instruments de percussion en métal, utilisées depuis l’Antiquité dans les musiques rituelles, militaires et orchestrales.",
     "anecdote": "Les cymbales turques, très prisées dans les orchestres classiques, ont inspiré la fabrication moderne en Europe au XVIIIe siècle.",
     "origine": "Turquie / Mésopotamie",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 89,
@@ -1065,7 +1065,7 @@
     "description": "La grosse caisse est un grand tambour de percussion, utilisé pour marquer le rythme dans les orchestres, fanfares et groupes de musique populaire.",
     "anecdote": "Dans l’orchestre classique, la grosse caisse est souvent utilisée pour souligner les moments dramatiques ou solennels.",
     "origine": "Europe",
-    "categorie": "percussion"
+    "category": "percussion"
   },
   {
     "id": 90,
@@ -1077,7 +1077,7 @@
     "description": "La batterie est un ensemble de percussions comprenant généralement une grosse caisse, des caisses claires, des toms et des cymbales. Elle est la base rythmique de la musique moderne.",
     "anecdote": "La batterie moderne est née de la fusion d’instruments de percussions européens et africains au début du XXe siècle, notamment à la Nouvelle-Orléans.",
     "origine": "États-Unis",
-    "categorie": "percussion"
+    "category": "percussion"
   }
 
 ]

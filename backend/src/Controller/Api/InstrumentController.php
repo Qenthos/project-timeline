@@ -52,6 +52,7 @@ class InstrumentController extends AbstractController
             $data[] = [
                 'id' => $instrument->getId(),
                 'name' => $instrument->getName(),
+                'image' => $instrument->getImage(),
                 'created' => $instrument->getCreated(),
                 'weight' => $instrument->getWeight(),
                 'height' => $instrument->getHeight(),
@@ -77,6 +78,7 @@ class InstrumentController extends AbstractController
             $data[] = [
                 'id' => $instrument->getId(),
                 'name' => $instrument->getName(),
+                'image' => $instrument->getImage(),
                 'created' => $instrument->getCreated(),
                 'weight' => $instrument->getWeight(),
                 'height' => $instrument->getHeight(),
@@ -103,6 +105,7 @@ class InstrumentController extends AbstractController
             $data[] = [
                 'id' => $instrument->getId(),
                 'name' => $instrument->getName(),
+                'image' => $instrument->getImage(),
                 'created' => $instrument->getCreated(),
                 'weight' => $instrument->getWeight(),
                 'height' => $instrument->getHeight(),
