@@ -9,10 +9,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: white;
   }
 
   &__fieldset {
-    padding: 44px;
+    padding: 20px 38px 30px 39px;
     border-radius: 10px;
     border: 2px solid black;
   }
@@ -24,15 +25,12 @@
   &__list {
     display: flex;
     flex-direction: column;
-    align-items: start;
-    justify-content: center;
-    margin: -25px 0 0 0;
+    gap: 1rem;
   }
 
   &__item {
     display: flex;
     flex-direction: column;
-    margin: 0.5rem 0;
     width: 100%;
     position: relative;
   }
@@ -40,6 +38,7 @@
   &__label,
   &__input {
     font-size: 1.2rem;
+    font-weight: 500;
   }
 
   &__input {
@@ -47,6 +46,7 @@
     height: 3rem;
     padding: 0 15px;
     margin: 0.2rem 0 0 0;
+    border: 1.5px solid black;
   }
 
   #password {
@@ -73,27 +73,30 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0.3rem 0 0 0;
+    margin: 1.5rem 0 0 0;
+    position: relative;
+    padding: 0 0 1.2rem 0;
+
+    &::after {
+      position: absolute;
+      bottom: 0;
+      content: "";
+      border-bottom: 2px solid black;
+      width: 100%
+    }
   }
 
   &__button--submit {
-    background-color: white;
-    padding: 10px 15px;
-    border: 4px solid $color-red;
-    border-radius: 10px;
-    font-size: 1.2rem;
+    @include button-style($color-red);
   }
 
   &__button--reset {
-    background-color: white;
-    padding: 10px 15px;
-    border: 4px solid $color-purple;
-    border-radius: 10px;
-    font-size: 1.2rem;
+    @include button-style($color-purple);
   }
 
   &__link-register {
     text-decoration: underline;
+    text-align: center;
   }
 }
 

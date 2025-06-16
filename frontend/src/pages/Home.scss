@@ -4,6 +4,11 @@
 /***0px***/
 
 .home {
+  // background-image: url("./../../public/media/bg-home.png");
+  // background-repeat: repeat;
+  // background-position: center;
+  // background-size: contain;
+
   &__title {
     text-align: center;
   }
@@ -28,17 +33,18 @@
     }
   }
 
-  &__item--play {
-    border: 4px solid $color-red;
+  &__link--discover-instruments {
+    @include button-style($color-red);
+
   }
 
-  &__item--instruments {
-    border: 4px solid $color-purple;
+  &__link--play {
+    @include button-style($color-purple);
+
   }
 
   &__item--first-list {
     background-color: white;
-    padding: 10px 15px;
     border-radius: 10px;
 
     .home__link {
@@ -63,7 +69,7 @@
       flex-direction: column;
       align-items: start;
       justify-content: center;
-      margin-left: 25rem;
+      // margin-left: 25rem;
     }
 
     &__title {
@@ -90,6 +96,26 @@
         background-color: $color-red;
         width: 30px;
         height: 30px;
+      }
+    }
+
+    &__link--play {
+      @include button-style(#7f00ff); // violet lumineux
+      background: linear-gradient(135deg, #7f00ff, #e100ff);
+      color: white;
+  
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  
+    &__link--discover-instruments {
+      @include button-style(#ff4b2b); // rouge orangé
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      color: white;
+  
+      &:hover {
+        transform: scale(1.05);
       }
     }
 

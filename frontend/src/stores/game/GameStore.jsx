@@ -114,6 +114,7 @@ export default class GameStore {
     );
     this.clearTimer();
     this.postGameToUser();
+    this._usersStore.incrementPlayedGames();
   }
 
   startNewRound() {
@@ -138,13 +139,10 @@ export default class GameStore {
 
       runInAction(() => {
         const selection = data.slice(0, cards);
-        const excluded = data[cards];
+        const defaultCard = data[cards];
 
         this._gamesStore.selectedInstruments = selection;
-
-        if (excluded) {
-          this._timelineStore.setDefaultCard(excluded);
-        }
+        this._timelineStore.setDefaultCard(defaultCard);
       });
     } catch (error) {
       console.error("Erreur lors de la récupération des instruments :", error);
@@ -188,8 +186,15 @@ export default class GameStore {
       return;
     }
 
-    const { win, selectedInstruments, score, difficulty, timerGame } =
-      this._gamesStore;
+    const {
+      win,
+      selectedInstruments,
+      score,
+      difficulty,
+      timerGame,
+      timeElapsed,
+      nbBadResponse,
+    } = this._gamesStore;
     const nbCards = selectedInstruments?.length ?? 0;
 
     fetch(`http://localhost:8000/api/user/${userId}/games`, {
@@ -198,10 +203,13 @@ export default class GameStore {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        win,
-        nbCards,
-        score,
-        difficulty,
+        win: win,
+        nbCards: nbCards,
+        score: score,
+        difficulty: difficulty,
+        timer: timerGame,
+        time_elapsed: timeElapsed,
+        nb_bad: nbBadResponse,
       }),
     })
       .then((response) => {
@@ -214,7 +222,6 @@ export default class GameStore {
       })
       .then((data) => {
         console.log("Partie enregistrée :", data);
-        // Tu peux ici faire un runInAction si tu veux mettre à jour un store ou autre
       })
       .catch((error) => {
         console.error("Erreur lors de l'enregistrement de la partie :", error);

@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import "./RankingUserPreview.scss";
+import { observer } from "mobx-react-lite";
 
-const RankingUserPreview = ({ user, index }) => {
+const RankingUserPreview = observer(({ user, index }) => {
   const headingId = `user-title-${user.id}`;
 
   const getPodiumClass = () => {
@@ -31,7 +32,7 @@ const RankingUserPreview = ({ user, index }) => {
       </div>
     </>
   );
-};
+});
 
 RankingUserPreview.propTypes = {
   user: PropTypes.shape({

@@ -1,24 +1,25 @@
 import { useState, useEffect } from "react";
+import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router";
-import Header from "../component/Header";
 import { useUsersStore } from "./../stores/useStore";
+import Header from "../component/Header";
 import LoadingScreen from "../component/LoadingScreen";
 import ConfirmDialog from "../component/ConfirmDialog";
 import ProfilPicturesDialog from "../component/profile/ProfilPicturesDialog";
 import BannerImagesDialog from "../component/profile/BannerImagesDialog";
 import "./Profil.scss";
 
-const Profil = () => {
+const Profil = observer(() => {
   const usersStore = useUsersStore();
   let navigate = useNavigate();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editedUser, setEditedUser] = useState(() => {
-    const user = usersStore.currentUser;
-    return user
-      ? { username: user.username, email: user.email, password: "" }
-      : {};
+  const [editedUser, setEditedUser] = useState({
+    username: "",
+    email: "",
+    password: "",
   });
+  
 
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showProfilPictureDialog, setShowProfilPictureDialog] = useState(false);
@@ -28,6 +29,18 @@ const Profil = () => {
   const [passwordError, setPasswordError] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
+  useEffect(() => {
+    console.log(usersStore.currentUser)
+    if (usersStore.currentUser) {
+      setEditedUser({
+        username: usersStore.currentUser.username || "",
+        email: usersStore.currentUser.email || "",
+        password: "",
+      });
+    }
+  }, [usersStore.currentUser]);
+  
 
   if (!usersStore.currentUser) {
     return <p>Chargement du profil...</p>;
@@ -205,10 +218,12 @@ const Profil = () => {
                   type="text"
                   id="username"
                   name="username"
+                  autoComplete="username"
                   className="profile__input"
                   value={editedUser.username}
                   onChange={handleInputChange}
                   readOnly={!isEditing}
+                  max="50"
                 />
               </li>
 
@@ -220,6 +235,7 @@ const Profil = () => {
                   type="email"
                   id="email"
                   name="email"
+                  autoComplete="email"
                   className="profile__input"
                   value={editedUser.email}
                   onChange={handleInputChange}
@@ -236,6 +252,7 @@ const Profil = () => {
                     type={passwordVisible ? "text" : "password"}
                     name="password"
                     id="password"
+                    autoComplete="new-password"
                     pattern={
                       isEditing
                         ? "^(?=.*[A-Z])(?=.*\\d)(?=.*[^\\w\\s]).{8,}$"
@@ -279,6 +296,7 @@ const Profil = () => {
                     className="profile__input"
                     type={confirmPasswordVisible ? "text" : "password"}
                     name="confirm_password"
+                    autoComplete="new-password"
                     id="confirm_password"
                     pattern={
                       isEditing
@@ -316,7 +334,11 @@ const Profil = () => {
                   <p className="profile__error">{passwordError}</p>
                 )}
               </li>
-
+              <li className="profile__field">
+                <p className="profile__played-games">
+                  Nombre de parties jouées : {usersStore.currentUser.played_games}
+                </p>
+              </li>
               <li className="profile__field">
                 <p className="profile__date-inscription">
                   Inscrit depuis le{" "}
@@ -374,6 +396,6 @@ const Profil = () => {
       </main>
     </>
   );
-};
+});
 
 export default Profil;

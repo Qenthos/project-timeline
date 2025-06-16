@@ -28,24 +28,51 @@ html,
   scroll-behavior: smooth;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
 body {
-  // background-image: url("./../../public/media/bg-home.webp");
-  // background-repeat: no-repeat;
-  // background-position: center;
-  // background-size: cover;
+  background-image: url("/media/bg-home.png");
+  background-repeat: repeat;
+  background-position: center;
+  background-size: contain;
+  position: relative;
+  // &::before {
+  //   content: "";
+  //   z-index: -1;
+  //   position: absolute;
+  //   inset: 0;
+  //   width: 100%;
+  //   height: fit-content;
+  //   background-color: rgba(28, 28, 28, 0.12);
+  // }
+}
+
+#root {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-}
-main {
-  // display: flex;
-  // flex-direction: column;
-  flex: 1;
-  margin: 20px 20px 0 20px;
 }
 
 header {
-  margin: 20px;
+  flex-shrink: 0;
+  margin: 20px 20px 0 20px;
+}
+
+main {
+  flex: 1 0 auto;
+  padding: 0 20px 20px 20px;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+section {
+  height: 100%;
 }
 
 h1,
@@ -120,7 +147,7 @@ textarea {
 /***Ecran à partir de 1024px***/
 @include mobile-lg {
   main {
-    margin: 15px 0 15px 0;
+    padding: 0 0 15px 0;
   }
 
   header {

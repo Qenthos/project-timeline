@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useUsersStore } from "../stores/useStore";
 import { useNavigate } from "react-router";
+import { observer } from "mobx-react-lite";
 import Header from "../component/Header";
 import "./Register.scss";
 
-const Register = () => {
+const Register = observer(() => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -67,7 +68,8 @@ const Register = () => {
     e.preventDefault();
     if (!passwordError) {
       try {
-        userStore.createAccount(email, username, password);
+        console.log(username, email)
+        await userStore.createAccount(email, username, password);
         navigate("/profil");
       } catch (error) {
         console.error(error);
@@ -129,6 +131,7 @@ const Register = () => {
                       type={passwordVisible ? "text" : "password"}
                       name="password"
                       id="password"
+                      autoComplete="new-password"
                       pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$"
                       value={password}
                       onInvalid={(e) =>
@@ -164,6 +167,7 @@ const Register = () => {
                       className="register__input"
                       type={confirmPasswordVisible ? "text" : "password"}
                       name="confirm_password"
+                      autoComplete="new-password"
                       id="confirm_password"
                       pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$"
                       value={confirmPassword}
@@ -205,7 +209,7 @@ const Register = () => {
                     value="Annuler"
                   />
                 </li>
-                <li className="register__button-item">
+                <li className="register__button-item register__button-item--submit">
                   <input
                     className="register__button register__button--submit"
                     type="submit"
@@ -220,6 +224,6 @@ const Register = () => {
       </main>
     </>
   );
-};
+});
 
 export default Register;

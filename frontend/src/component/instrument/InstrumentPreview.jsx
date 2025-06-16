@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
+import { observer } from "mobx-react-lite";
 import "./InstrumentPreview.scss";
 
-const InstrumentPreview = ({
+const InstrumentPreview = observer(({
   instrument,
   onViewDetail = () => {},
   editable = false,
@@ -52,7 +53,7 @@ const InstrumentPreview = ({
       </div>
     </article>
   );
-};
+});
 
 InstrumentPreview.propTypes = {
   instrument: PropTypes.shape({

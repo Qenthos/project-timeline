@@ -2,9 +2,10 @@ import PropTypes from "prop-types";
 import InstrumentDetail from "./InstrumentDetail";
 import InstrumentPreview from "./InstrumentPreview";
 import { useState } from "react";
+import { observer } from "mobx-react-lite";
 import "./ListInstruments.scss";
 
-const ListInstruments = ({
+const ListInstruments = observer(({
   instruments,
   editable = false,
   onEdit = () => {},
@@ -105,7 +106,7 @@ const ListInstruments = ({
       )}
     </>
   );
-};
+});
 
 ListInstruments.propTypes = {
   instruments: PropTypes.array.isRequired,

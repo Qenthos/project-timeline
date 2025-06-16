@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import RankingUserPreview from "./RankingUserPreview";
 import "./RankingListUsers.scss";
+import { observer } from "mobx-react-lite";
 
-const RankingListUsers = ({ users }) => {
+const RankingListUsers = observer(({ users }) => {
   return (
     <>
       <ul className="ranking-list__users">
@@ -16,7 +17,7 @@ const RankingListUsers = ({ users }) => {
       </ul>
     </>
   );
-};
+});
 
 RankingListUsers.propTypes = {
   users: PropTypes.array.isRequired,

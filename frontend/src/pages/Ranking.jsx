@@ -1,10 +1,11 @@
+import { useUsersStore } from "../stores/useStore";
+import { observer } from "mobx-react-lite";
+import "./Ranking.scss";
 import RankingListUsers from "../component/user/RankingListUsers";
 import Header from "../component/Header";
-import { useUsersStore } from "../stores/useStore";
-import "./Ranking.scss";
 import LoadingScreen from "../component/LoadingScreen";
 
-const Ranking = () => {
+const Ranking = observer(() => {
   const { users, isLoaded } = useUsersStore();
 
   return !isLoaded ? (
@@ -20,6 +21,6 @@ const Ranking = () => {
       </main>
     </>
   );
-};
+});
 
 export default Ranking;

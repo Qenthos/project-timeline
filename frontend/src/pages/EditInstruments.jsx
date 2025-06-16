@@ -1,10 +1,11 @@
 import { useParams } from "react-router";
 import { useNavigate } from "react-router";
+import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useInstrumentsStore } from "./../stores/useStore";
 import "./EditInstruments.scss";
 
-const EditInstrument = () => {
+const EditInstrument = observer(() => {
   let { instruId } = useParams();
   let navigate = useNavigate();
 
@@ -220,6 +221,6 @@ const EditInstrument = () => {
       </form>
     </section>
   );
-};
+});
 
 export default EditInstrument;

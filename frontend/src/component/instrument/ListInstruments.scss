@@ -3,23 +3,55 @@
 
 /***0px***/
 
-.list__filter-title {
-  text-align: center;
+.list {
+  &__filter-title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  &__filter-instrument {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  &__instruments {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+  }
 }
 
-.list__filter-instrument {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
+.filter-instrument__button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  border: 2px solid transparent;
+  background-color: #f5f5f5;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.25s ease;
+
+  &:hover,
+  &:focus {
+    background-color: #4b0082;
+    color: white;
+  }
+
+  &:active {
+    background-color: #4b0082; 
+    color: white;
+    border-color: #4b0082;
+  }
 }
 
-.list__instruments {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-  gap: 2rem;
-  padding: 2rem;
-}
 
 /***640px***/
 @include mobile-sm {

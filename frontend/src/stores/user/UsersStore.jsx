@@ -43,7 +43,6 @@ export default class UsersStore {
     return this._isLoaded;
   }
 
-
   get users() {
     return this._users;
   }
@@ -62,44 +61,51 @@ export default class UsersStore {
    * @param {*} pseudo
    * @param {*} password
    */
-  createAccount(email, username, password) {
-    fetch(`http://localhost:8000/api/user`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        username: username,
-        password: password,
-        pfp: 1,
-        pfb: 1,
-        score: 0,
-        elo: 0,
-        // admin: false,
-        isConnected: true,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => {
-            throw new Error(`Erreur ${response.status} : ${text}`);
-          });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        runInAction(() => {
-          const newUser = new Users(data);
-          this._users.push(newUser);
-          this._currentUser = newUser;
-        });
-        alert("Compte créé avec succès !");
-      })
-      .catch((err) => {
-        console.error(err);
+  async createAccount(email, username, password) {
+    console.log(username);
+    try {
+      const response = await fetch(`http://localhost:8000/api/user`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          username: username,
+          password: password,
+          pfp: 1,
+          pfb: 1,
+          score: 0,
+          elo: 0,
+          admin: false,
+          played_games: 0,
+          isConnected: true,
+        }),
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Erreur ${response.status} : ${errorText}`);
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      runInAction(() => {
+        const newUser = new Users(data);
+        this._users.push(newUser);
+        if (this._currentUser) {
+          this.logout();
+        }
+        this._currentUser = newUser;
+        localStorage.setItem("currentUser", JSON.stringify(data));
+      });
+
+      return data;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
   }
 
   /**
@@ -258,7 +264,8 @@ export default class UsersStore {
 
       .then((data) => {
         runInAction(() => {
-          const userToUpdate = this.getUserById(id);
+          const userToUpdate = this.getUserById(Number(id));
+
           if (userToUpdate) {
             userToUpdate.username = username;
             userToUpdate.email = email;
@@ -398,6 +405,47 @@ export default class UsersStore {
       })
       .catch((err) => {
         console.error(err);
+      });
+  }
+
+  incrementPlayedGames() {
+    const user = this.getUserById(this._currentUser.id);
+
+    if (!user) {
+      console.error("Utilisateur non trouvé");
+      return;
+    }
+
+    const updatedPlayedGames = user.played_games + 1;
+
+    fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        played_games: updatedPlayedGames,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            throw new Error(`Erreur ${response.status} : ${text}`);
+          });
+        }
+        return response.json();
+      })
+      .then(() => {
+        runInAction(() => {
+          user.played_games = updatedPlayedGames;
+        });
+        this.refreshCurrentUser();
+      })
+      .catch((error) => {
+        console.error(
+          "Erreur lors de l'incrémentation de played_games :",
+          error
+        );
       });
   }
 

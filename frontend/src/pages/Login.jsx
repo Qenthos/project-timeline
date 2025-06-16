@@ -1,11 +1,12 @@
 import { Link } from "react-router";
+import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { useUsersStore } from "./../stores/useStore";
 import Header from "../component/Header";
 import "./Login.scss";
 
-const Login = () => {
+const Login = observer(() => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -64,6 +65,7 @@ const Login = () => {
                   id="mail"
                   type="email"
                   name="mail"
+                  autoComplete="email"
                   placeholder="exemple@domaine.com"
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -76,6 +78,7 @@ const Login = () => {
                 <input
                   className="login__input login__input--password"
                   id="password"
+                  autoComplete="current-password"
                   type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Mot de passe"
@@ -127,6 +130,6 @@ const Login = () => {
       </main>
     </>
   );
-};
+});
 
 export default Login;

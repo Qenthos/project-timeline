@@ -10,7 +10,7 @@ export default class Users {
   _pfb;
   _createdAt;
   _isConnected;
-  _playedGames;
+  _played_games;
   _elo;
 
   constructor({
@@ -23,7 +23,7 @@ export default class Users {
     pfb,
     createdAt,
     isConnected = false,
-    playedGames = 0,
+    played_games = 0,
     elo = 1000,
   }) {
     this._id = id;
@@ -35,7 +35,7 @@ export default class Users {
     this._pfb = pfb ?? 1;
     this._createdAt = createdAt ? new Date(createdAt) : new Date();
     this._isConnected = isConnected;
-    this._playedGames = playedGames;
+    this._played_games = played_games;
     this._elo = elo;
 
     makeAutoObservable(this);
@@ -85,8 +85,8 @@ export default class Users {
     return this._isConnected;
   }
 
-  get playedGames() {
-    return this._playedGames;
+  get played_games() {
+    return this._played_games;
   }
 
   get elo() {
@@ -162,9 +162,9 @@ export default class Users {
     }
   }
 
-  set playedGames(value) {
+  set played_games(value) {
     if (Number.isInteger(value) && value >= 0) {
-      this._playedGames = value;
+      this._played_games = value;
     } else {
       throw new Error(`Nombre de parties invalide : ${value}`);
     }

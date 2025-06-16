@@ -1,19 +1,20 @@
 import PropTypes from "prop-types";
+import { observer } from "mobx-react-lite";
 import "./UserPreview.scss";
 
-const UserPreview = ({ user, editable = false, onEdit = () => {} }) => {
+const UserPreview = observer(({ user, editable = false, onEdit = () => {} }) => {
   const headingId = `user-title-${user.id}`;
 
   return (
     <article className="user-card">
       <div className="user-card__images-container">
         <img
-          src={user.bannerImage}
+          src={user.pfbUrl}
           alt="Banner"
           className="user-card__banner-image"
         />
         <img
-          src={user.profilePicture}
+          src={user.pfpUrl}
           alt={user.username}
           className="user-card__profile-picture"
         />
@@ -53,12 +54,12 @@ const UserPreview = ({ user, editable = false, onEdit = () => {} }) => {
       </div>
     </article>
   );
-};
+});
 
 UserPreview.propTypes = {
   user: PropTypes.shape({
-    profilePicture: PropTypes.string.isRequired,
-    bannerImage: PropTypes.string.isRequired,
+    pfpUrl: PropTypes.string.isRequired,
+    pfbUrl: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
     email: PropTypes.string,
     role: PropTypes.string,

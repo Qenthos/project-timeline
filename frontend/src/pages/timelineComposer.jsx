@@ -51,7 +51,6 @@ const TimelineComposer = observer(() => {
   const isToucheDevice = window.matchMedia("(pointer: coarse)").matches;
   const backend = isToucheDevice ? TouchBackend : HTML5Backend;
 
-
   const currentInstrument =
     gameStore.state.selectedInstruments[gameStore.state.currentIndex];
 
@@ -70,32 +69,32 @@ const TimelineComposer = observer(() => {
     instruStore.setSizeTimeline(cards + 1);
 
     gameStore.startNewRound();
-    setRandomDefaultCard();
-  }, [cards, instruStore, isLoaded]);
-
+    const init = async () => {
+      await setRandomDefaultCard();
+    };
+    init(); 
+  }, [cards, isLoaded]);
 
   /**
    *Select random draggable card
    */
-  const setRandomDefaultCard = () => {
+  const setRandomDefaultCard = async () => {
     if (!allInstruments || allInstruments.length === 0) {
       console.warn("Aucun instrument encore disponbile");
       setLoadingCards(false);
-      <LoadingScreen message="Aucun instrument encore disponbile" />;
       return;
     }
-
     try {
-      gameStore.setRandomCards(cards);
-      setLoadingCards(false);
-
+      setLoadingCards(true);
+      await gameStore.setRandomCards(cards);
     } catch (error) {
-      console.error(error);
+      console.error("Erreur " + error);
+    } finally {
+      setLoadingCards(false);
     }
   };
 
-  
-  console.log(loadingCards)
+
   /**
    *Show the next draggable card
    */
@@ -124,17 +123,40 @@ const TimelineComposer = observer(() => {
    * - The time is up
    * - all cards have been placed
    */
-useEffect(() => {
-  if (!isLoaded || isGameFinished) return;
+  useEffect(() => {
+    if (!isLoaded || isGameFinished) return;
 
-  if (!gameStore.state.endGame) {
-    const noMoreCards =
-      gameStore.state.currentIndex >=
-      gameStore.state.selectedInstruments.length;
+    if (!gameStore.state.endGame) {
+      const noMoreCards =
+        gameStore.state.currentIndex >=
+        gameStore.state.selectedInstruments.length;
       if (
         gameStore.state.selectedInstruments.length > 0 &&
         (gameStore.state.timerRemaining <= 0 || noMoreCards)
       ) {
+        setIsGameFinished(true);
+        gameStore.finishGame(
+          cards,
+          timer,
+          difficulty,
+          instruStore.nbBadResponse,
+          instruStore.nbGoodResponse
+        );
+        if (currentUser) {
+          usersStore.updateScore(currentUser.score + gameStore.state.score);
+        }
+        localStorage.removeItem("tabIds");
+      }
+    }
+  }, [
+    gameStore.state.currentIndex,
+    gameStore.state.timerRemaining,
+    gameStore.state.endGame,
+    currentUser,
+  ]);
+
+  useEffect(() => {
+    if (gameStore.state.timerRemaining === 0 && !isGameFinished) {
       setIsGameFinished(true);
       gameStore.finishGame(
         cards,
@@ -143,34 +165,9 @@ useEffect(() => {
         instruStore.nbBadResponse,
         instruStore.nbGoodResponse
       );
-      if (currentUser) {
-        usersStore.updateScore(currentUser.score + gameStore.state.score);
-      }
-      localStorage.removeItem("tabIds");
     }
-  }
-}, [
-  gameStore.state.currentIndex,
-  gameStore.state.timerRemaining,
-  gameStore.state.endGame,
-  currentUser,
-]);
+  }, [gameStore.state.timerRemaining, isGameFinished]);
 
-useEffect(() => {
-  if (gameStore.state.timerRemaining === 0 && !isGameFinished) {
-    setIsGameFinished(true);
-    gameStore.finishGame(
-      cards,
-      timer,
-      difficulty,
-      instruStore.nbBadResponse,
-      instruStore.nbGoodResponse
-    );
-  }
-}, [gameStore.state.timerRemaining, isGameFinished]);
-
-  
-  
   /**
    * Reset game : states by defaults
    */

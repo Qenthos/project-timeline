@@ -51,6 +51,7 @@ export default class InstrumentsStore {
   }
 
   updateInstrument(id, name, category, created, weight, height, description) {
+    console.log(typeof id)
     fetch(`${API_URL}/${id}`, {
       method: "PUT",
       headers: {
@@ -77,16 +78,14 @@ export default class InstrumentsStore {
       })
       .then((data) => {
         runInAction(() => {
-          const instrumentToUpdate = this.getInstrumentsById(id);
+          const instrumentToUpdate = this.getInstrumentsById(Number(id));
           if (instrumentToUpdate) {
-            Object.assign(instrumentToUpdate, {
-              name,
-              category,
-              created,
-              weight,
-              height,
-              description,
-            });
+            instrumentToUpdate.name = name;
+            instrumentToUpdate.category = category;
+            instrumentToUpdate.created = created;
+            instrumentToUpdate.weight = weight;
+            instrumentToUpdate.height = height;
+            instrumentToUpdate.description = description;
           }
         });
       })

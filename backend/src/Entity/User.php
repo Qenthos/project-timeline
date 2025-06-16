@@ -126,6 +126,11 @@ class User
         return $this;
     }
 
+    public function getAdmin(): bool
+    {
+        return $this->admin;
+    }
+
     public function setAdmin(bool $val) {
         $this->admin = $val;
         return $this;

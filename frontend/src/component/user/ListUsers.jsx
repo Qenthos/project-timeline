@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import UserPreview from "./UserPreview";
+import { observer } from "mobx-react-lite";
 import "./ListUsers.scss";
 
-const ListUsers = ({ users, editable = false, onEdit = () => {} }) => {
+const ListUsers = observer(({ users, editable = false, onEdit = () => {} }) => {
   return (
     <>
       <ul className="list__users">
@@ -16,7 +17,7 @@ const ListUsers = ({ users, editable = false, onEdit = () => {} }) => {
       </ul>
     </>
   );
-};
+});
 
 ListUsers.propTypes = {
   users: PropTypes.array.isRequired,

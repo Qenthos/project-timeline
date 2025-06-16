@@ -172,19 +172,21 @@ const SettingsGame = () => {
                         <span className="settings__time-range-timer">
                           {timer}s
                         </span>
-                        <label
-                          htmlFor="unlimited-timer"
-                          className="settings__checkbox-label"
-                        >
-                          Illimité
-                        </label>
-                        <input
-                          className="settings__checkbox"
-                          type="checkbox"
-                          id="unlimited-timer"
-                          checked={isUnlimited}
-                          onChange={(e) => setIsUnlimited(e.target.checked)}
-                        />
+                        <div className="settings__unlimited-group">
+                          <input
+                            className="settings__checkbox"
+                            type="checkbox"
+                            id="unlimited-timer"
+                            checked={isUnlimited}
+                            onChange={(e) => setIsUnlimited(e.target.checked)}
+                          />
+                           <label
+                            htmlFor="unlimited-timer"
+                            className="settings__checkbox-label"
+                          >
+                            Illimité
+                          </label>
+                        </div>
                       </div>
                     </li>
                   </ul>

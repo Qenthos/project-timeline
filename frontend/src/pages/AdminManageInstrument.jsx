@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router";
 import { Outlet } from "react-router";
+import { observer } from "mobx-react-lite";
 import { useInstrumentsStore } from "../stores/useStore";
 import ListInstruments from "../component/instrument/ListInstruments";
 import LoadingScreen from "../component/LoadingScreen";
 import "./AdminManageInstrument.scss";
 
-const AdminManageInstrument = () => {
+const AdminManageInstrument = observer(() => {
   let navigate = useNavigate();
 
   const { instrumentsCount, instruments, isLoaded } = useInstrumentsStore();
@@ -48,6 +49,6 @@ const AdminManageInstrument = () => {
       </aside>
     </main>
   );
-};
+});
 
 export default AdminManageInstrument;

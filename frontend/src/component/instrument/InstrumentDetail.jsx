@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useRef } from "react";
+import { observer } from "mobx-react-lite";
 import "./InstrumentDetail.scss";
 
-const InstrumentDetail = ({ instrument, onClose }) => {
+const InstrumentDetail = observer(({ instrument, onClose }) => {
   const dialogRef = useRef(null);
 
   useEffect(() => {
@@ -80,7 +81,7 @@ const InstrumentDetail = ({ instrument, onClose }) => {
       </div>
     </dialog>
   );
-};
+});
 
 InstrumentDetail.propTypes = {
   instrument: PropTypes.shape({

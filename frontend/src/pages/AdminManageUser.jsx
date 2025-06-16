@@ -1,11 +1,12 @@
 import { useNavigate, useLocation } from "react-router";
 import { Outlet } from "react-router";
+import { observer } from "mobx-react-lite";
 import { useUsersStore } from "../stores/useStore";
 import ListUsers from "../component/user/ListUsers";
 import "./AdminManageUser.scss";
 import LoadingScreen from "../component/LoadingScreen";
 
-const AdminManageUser = () => {
+const AdminManageUser = observer(() => {
   const navigate = useNavigate();
   let location = useLocation();
 
@@ -50,6 +51,6 @@ const AdminManageUser = () => {
       </aside>
     </main>
   );
-};
+});
 
 export default AdminManageUser;

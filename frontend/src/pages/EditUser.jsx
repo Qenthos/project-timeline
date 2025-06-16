@@ -1,10 +1,11 @@
 import { useParams } from "react-router";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import { observer } from "mobx-react-lite";
 import { useUsersStore } from "./../stores/useStore";
 import "./EditUser.scss";
 
-const EditUser = () => {
+const EditUser = observer(() => {
   const { userId } = useParams();
   let navigate = useNavigate();
 
@@ -185,6 +186,6 @@ const EditUser = () => {
       </form>
     </section>
   );
-};
+});
 
 export default EditUser;
