@@ -2,24 +2,36 @@
 @use "../styles/_variables" as *;
 @use "../styles/_global" as *;
 
-/***0px***/
-
 .login {
+  // background: linear-gradient(135deg, #ff7f5f54, #feb47b50);
+  text-align: center;
+
+  
   &__form {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: white;
+    padding: 20px;
   }
 
   &__fieldset {
-    padding: 20px 38px 30px 39px;
-    border-radius: 10px;
-    border: 2px solid black;
+    padding: 30px;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    max-width: 420px;
   }
 
   &__legend {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    white-space: nowrap;
   }
 
   &__list {
@@ -31,6 +43,7 @@
   &__item {
     display: flex;
     flex-direction: column;
+    align-items: start;
     width: 100%;
     position: relative;
   }
@@ -39,26 +52,35 @@
   &__input {
     font-size: 1.2rem;
     font-weight: 500;
+    color: #333;
   }
 
   &__input {
-    border-radius: 5px;
+    position: relative;
+    border-radius: 10px;
     height: 3rem;
     padding: 0 15px;
-    margin: 0.2rem 0 0 0;
-    border: 1.5px solid black;
+    margin-top: 0.5rem;
+    border: 2px solid #ddd;
+    width: 100%;
+    transition: border-color 0.3s ease;
+    &:focus {
+      border-color: #ff7e5f;
+      outline: none;
+    }
   }
 
   #password {
-    padding: 0 47px 0 15px;
+    padding-right: 45px;
   }
 
   &__show-password {
     position: absolute;
     width: 24px;
     height: 24px;
-    top: 50%;
-    right: 0.75rem;
+    top: 56%;
+    right: 15px;
+    // transform: translateY(-50%);
     cursor: pointer;
     background-image: url("/media/hide-password.svg");
     background-repeat: no-repeat;
@@ -73,30 +95,44 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 1.5rem 0 0 0;
+    margin-top: 1.5rem;
     position: relative;
-    padding: 0 0 1.2rem 0;
+    padding-bottom: 1.2rem;
 
     &::after {
       position: absolute;
       bottom: 0;
       content: "";
-      border-bottom: 2px solid black;
-      width: 100%
+      border-bottom: 2px solid #ddd;
+      width: 100%;
     }
   }
 
   &__button--submit {
     @include button-style($color-red);
+    background: #ff7e5f;
+    color: white;
+    &:hover {
+      background: #feb47b;
+    }
   }
 
   &__button--reset {
     @include button-style($color-purple);
+    background: #feb47b;
+    color: white;
+    &:hover {
+      background: #ff7e5f;
+    }
   }
 
   &__link-register {
     text-decoration: underline;
     text-align: center;
+    color: #333;
+    &:hover {
+      color: #ff7e5f;
+    }
   }
 }
 
@@ -110,32 +146,7 @@
 
 /***1024px***/
 @include mobile-lg {
-  .login {
-    &__title {
-      position: relative;
-      text-align: center;
 
-      &::before {
-        position: absolute;
-        content: "";
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        border-bottom: 2px solid black;
-      }
-
-      &::after {
-        position: absolute;
-        content: "";
-        clip-path: circle(50% at 50% 50%);
-        bottom: -12px;
-        left: -20px;
-        background-color: $color-red;
-        width: 30px;
-        height: 30px;
-      }
-    }
-  }
 }
 
 /***1280px***/
