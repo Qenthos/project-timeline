@@ -8,7 +8,7 @@ const Home = () => {
       <Header />
       <main className="home">
         <section className="home__section">
-          <h1 className="home__title">Timeline</h1>
+          <h1 className="home__title">InstruLine</h1>
 
           <ul className="home__list home__list--primary-actions">
             <li className="home__item home__item--first-list home__item--play">
