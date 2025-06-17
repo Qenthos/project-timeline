@@ -354,13 +354,14 @@ const Profil = observer(() => {
                     value=" Enregistrer"
                     disabled={passwordError}
                   ></input>
-                  <button
-                    type="button"
+                  <input
+                    type="reset"
                     onClick={() => setIsEditing(false)}
                     className="profile__cancel-btn"
+                    value="Annuler"
                   >
-                    Annuler
-                  </button>
+                    
+                  </input>
                 </li>
               ) : (
                 <li className="profile__field">

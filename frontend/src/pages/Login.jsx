@@ -54,7 +54,7 @@ const Login = observer(() => {
         <h1 className="login__title">Se connecter</h1>
         <form className="login__form" onSubmit={handleSubmit}>
           <fieldset className="login__fieldset">
-            <legend className="login__legend">Formulaire de connexion</legend>
+            {/* <legend className="login__legend">Formulaire de connexion</legend> */}
             <ul className="login__list">
               <li className="login__item">
                 <label className="login__label" htmlFor="mail">

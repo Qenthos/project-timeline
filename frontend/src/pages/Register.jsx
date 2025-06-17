@@ -89,13 +89,13 @@ const Register = observer(() => {
             onSubmit={handleSubmit}
           >
             <fieldset className="register__fieldset">
-              <legend className="register__legend">
+              {/* <legend className="register__legend">
                 Formulaire de création
-              </legend>
+              </legend> */}
               <ul className="register__list">
                 <li className="register__item">
                   <label className="register__label" htmlFor="mail">
-                    Adresse mail
+                    Adresse e-mail
                   </label>
                   <input
                     className="register__input"
