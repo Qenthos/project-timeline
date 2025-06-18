@@ -24,11 +24,11 @@ class Instrument
     #[ORM\Column(type: 'integer')]
     private int $created;
 
-    #[ORM\Column(type: 'integer')]
-    private int $weight_kg;
+    #[ORM\Column(type: 'float')]
+    private float $weight_kg;
 
-    #[ORM\Column(type: 'integer')]
-    private int $height_cm;
+    #[ORM\Column(type: 'float')]
+    private float $height_cm;
 
     #[ORM\Column(type: 'text')]
     private string $description;
