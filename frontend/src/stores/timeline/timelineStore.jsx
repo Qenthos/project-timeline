@@ -137,6 +137,8 @@ export default class TimelineStore {
       .map((id) => (id ? this._instrumentsStore.getInstrumentsById(id) : null))
       .filter(Boolean);
 
+      console.log(instruments)
+
     // Tri selon le mode
     instruments.sort((a, b) => {
       if (mode === "annee") return a.created - b.created;

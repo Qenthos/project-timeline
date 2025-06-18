@@ -47,7 +47,6 @@ const ListInstruments = observer(({
 
   return (
     <>
-      <h3 className="list__filter-title">Mode de trie</h3>
       <ul className="list__filter-instrument">
         <li className="filter-instrument__item">
           <button

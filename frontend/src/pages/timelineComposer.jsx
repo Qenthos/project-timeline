@@ -72,7 +72,7 @@ const TimelineComposer = observer(() => {
     const init = async () => {
       await setRandomDefaultCard();
     };
-    init(); 
+    init();
   }, [cards, isLoaded]);
 
   /**
@@ -93,7 +93,6 @@ const TimelineComposer = observer(() => {
       setLoadingCards(false);
     }
   };
-
 
   /**
    *Show the next draggable card
@@ -185,7 +184,7 @@ const TimelineComposer = observer(() => {
       <Header />
       <main className="timeline">
         <section className="timeline__section">
-          <h2 className="timeline__title">
+          {/* <h2 className="timeline__title">
             {currentUser
               ? `À vous de jouer ${currentUser.username}`
               : "Vous jouez en tant qu'invité"}{" "}
@@ -193,30 +192,44 @@ const TimelineComposer = observer(() => {
             <span className="timeline__subtitle">
               (Vous avez {cards} cartes à placer {subtitleText})
             </span>
-          </h2>
+          </h2> */}
 
           <ul className="timeline__list-parameters">
             <li className="timeline__list-parameters-item">
+              <h2 className="timeline__title">
+                {currentUser ? `${currentUser.username}` : "Invité"}{" "}
+                <span className="timeline__subtitle">
+                  (Vous avez {cards} cartes à placer {subtitleText})
+                </span>
+              </h2>
+            </li>
+            <li className="timeline__list-parameters-item">
+              <p className="timeline__list-parameters-text timeline__list-parameters-text--difficulty">
+                Mode de jeu : trie par {modeGame}
+              </p>
               <p className="timeline__list-parameters-text timeline__list-parameters-text--difficulty">
                 Difficulté : {difficulty}
               </p>
             </li>
             <li className="timeline__list-parameters-item">
               <p className="timeline__list-parameters-text timeline__list-parameters-text--gamemode">
-                Mode de jeu : trie par {modeGame}
+                <span>{instrumentsNotInExpo.length}</span>
+                cartes à poser
               </p>
             </li>
             <li className="timeline__list-parameters-item timeline__list-parameters-item--timer ">
               <p className="timeline__list-parameters-text timeline__list-parameters-text--timer">
-                {isUnlimited
-                  ? "Temps illimité"
-                  : `Timer : ${
-                      gameStore.state.timerRemaining >= 60
-                        ? `${Math.floor(
-                            gameStore.state.timerRemaining / 60
-                          )}min `
-                        : ""
-                    }${gameStore.state.timerRemaining % 60}s`}
+                <span>
+                  {isUnlimited
+                    ? "Temps illimité"
+                    : `${
+                        gameStore.state.timerRemaining >= 60
+                          ? `${Math.floor(
+                              gameStore.state.timerRemaining / 60
+                            )}min `
+                          : ""
+                      }${gameStore.state.timerRemaining % 60}s`}
+                </span>
               </p>
               {!isUnlimited && !isGameFinished ? (
                 <button
@@ -230,7 +243,14 @@ const TimelineComposer = observer(() => {
                 ""
               )}
             </li>
-            <li>{currentUser && <p>Score : {currentUser.score}</p>}</li>
+            {currentUser && (
+              <li className="timeline__list-parameters-item timeline__list-parameters-item--score">
+                <p className="timeline__list-parameters-text timeline__list-parameters-text--score">
+                  <span>{currentUser.score}</span>
+                  points
+                </p>
+              </li>
+            )}
           </ul>
           <div className="timeline__instruments">
             {isGameFinished ? (
@@ -306,14 +326,14 @@ const TimelineComposer = observer(() => {
               </ul>
             ) : (
               <>
-                {modeGame !== "survival" ? (
-                  <p>
-                    {loadingCards
-                      ? "Chargement des cartes en cours..."
-                      : `Nombre de cartes restantes à poser : ${instrumentsNotInExpo.length}`}
+                {modeGame !== "survival" && (
+                  <p
+                    className={`timeline__nb-place-card ${
+                      !loadingCards ? "timeline__nb-place-card--hidden" : ""
+                    }`}
+                  >
+                    Chargement en cours
                   </p>
-                ) : (
-                  ""
                 )}
                 {showDragCard && currentInstrument && (
                   <DraggableInstrument instrument={currentInstrument} />

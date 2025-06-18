@@ -1,51 +1,113 @@
 @use "../../styles/_mixins" as *;
 @use "../../styles/_variables" as *;
 
-/***0px***/
+.ranking-user-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  background: linear-gradient(to right, #ffffff, #fdf5f2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  position: relative;
+  transition: transform 0.3s ease;
 
-.ranking-user-card__index {
-  font-size: 3rem;
-  font-weight: bold;
-  width: 2rem;
-  text-align: center;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  }
 }
 
+.ranking-user-card__index {
+  font-size: 2.2rem;
+  font-weight: 900;
+  width: 3rem;
+  text-align: center;
+  color: #333;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  animation: popIn 0.3s ease-in;
+}
+
+// Podium colors & glowing effect
 .podium--first {
   color: gold;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
 }
 
 .podium--second {
   color: silver;
+  text-shadow: 0 0 8px rgba(192, 192, 192, 0.6);
 }
 
 .podium--third {
   color: #cd7f32;
+  text-shadow: 0 0 6px rgba(205, 127, 50, 0.5);
 }
 
 .ranking-user-card__profile-picture {
-  width: 4rem;
-  height: 4rem;
+  width: 4.5rem;
+  height: 4.5rem;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid black;
+  border: 3px solid #ff7e5f;
   background-color: white;
+  box-shadow: 0 0 10px rgba(255, 126, 95, 0.3);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
 .ranking-user-card__info {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  color: #333;
 }
 
 .ranking-user-card__name {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+  text-transform: capitalize;
 }
 
 .ranking-user-card__score {
   font-size: 1.1rem;
+  font-weight: 500;
+  color: #666;
   margin: 0.2rem 0 0;
 }
+
+// Optional animation
+@keyframes popIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/*** Responsive tweaks ***/
+@include mobile-md {
+  .ranking-user-card {
+    padding: 1rem;
+  }
+
+  .ranking-user-card__name {
+    font-size: 1.2rem;
+  }
+
+  .ranking-user-card__score {
+    font-size: 1rem;
+  }
+}
+
 
 /***640px***/
 @include mobile-sm {

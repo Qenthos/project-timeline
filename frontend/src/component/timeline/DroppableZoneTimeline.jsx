@@ -1,28 +1,28 @@
 import { useDrop } from "react-dnd";
-import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "./DroppableZoneTimeline.scss";
 
 const DroppableZoneTimeline = ({ index, onDrop }) => {
   const [{ isOver, canDrop }, drop] = useDrop(() => ({
     accept: "instrument",
-    drop: (item) => {
-      onDrop(index, item.id);
-    },
+    drop: (item) => onDrop(index, item.id),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
     }),
   }));
 
+  const classNames = ["droppable-zone"];
+  if (isOver) classNames.push("droppable-zone--active");
+  if (canDrop && isOver) classNames.push("droppable-zone--valid");
+
   return (
     <div
-      className="droppable-zone"
+      className={classNames.join(" ")}
       ref={drop}
-      style={{
-        border: isOver ? "3px dashed green" : "3px dashed gray",
-      }}
-    ></div>
+      role="region"
+      aria-label={`Zone de drop numéro ${index + 1}`}
+    />
   );
 };
 

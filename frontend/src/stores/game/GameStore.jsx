@@ -114,7 +114,10 @@ export default class GameStore {
     );
     this.clearTimer();
     this.postGameToUser();
-    this._usersStore.incrementPlayedGames();
+    if (this._usersStore.currentUser) {
+      this._usersStore.incrementPlayedGames();
+    }
+   
   }
 
   startNewRound() {

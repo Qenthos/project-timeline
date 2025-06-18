@@ -3,6 +3,12 @@
 
 /***0px***/
 
+$primary: #6c5ce7;
+$secondary: #00cec9;
+$danger: #ff7675;
+$dark: #2d3436;
+$light: #f5f6fa;
+
 .timeline {
   padding: 0.2rem 0 1rem 0;
   margin: 0 auto;
@@ -25,16 +31,129 @@
     color: #555;
   }
 
-  &__list-parameters {
+  .timeline__list-parameters {
     display: flex;
-    align-items: center;
-    justify-content: start;
-    gap: 1rem;
-    // margin: 0 0 1rem 0;
-  }
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  
+    &-item {
+      flex: 1 1 200px;
+      min-width: 200px;
+      background: white;
+      padding: 1rem 1.2rem;
+      border-radius: 0.8rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: transform 0.2s ease;
+  
+      &:hover {
+        transform: translateY(-3px);
+      }
+  
+      h2.timeline__title {
+        font-size: 1.4rem;
+        color: #6c5ce7;
+        margin: 0;
+        text-align: center;
+      }
+  
+      .timeline__subtitle {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 0.2rem;
+      }
+  
+      p {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #2d3436;
+        margin: 0;
+      }
+  
+      .timeline__list-parameters-text--difficulty {
+        color: #6c5ce7;
+        align-items: start;
+        margin: 0.5rem 0 0 0;
+      }
+  
+      .timeline__list-parameters-text--gamemode {
+        color: #00cec9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
-  &__list-parameters-text--timer {
-    margin: 0 0.5rem 0 0;
+        span {
+          font-size: 3rem;
+          font-weight: bold;
+        }
+      }
+  
+      .timeline__list-parameters-text--timer {
+        color: #ff7675;
+
+        span {
+          font-size: 2rem;
+          font-weight: bold;
+        }
+      }
+
+      .timeline__list-parameters-text--score {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        span {
+          font-size: 3rem;
+          font-weight: bold;
+          text-align: center;
+        }
+      }
+  
+      button {
+        margin-top: 0.5rem;
+        padding: 0.4rem 0.8rem;
+        background-color: #2d3436;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+  
+        &:hover {
+          background-color: #000;
+        }
+      }
+    }
+  }
+  
+
+  // &__list-parameters-text--timer {
+  //   margin: 0 0.5rem 0 0;
+  // }
+
+  &__nb-place-card {
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #2d3436;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+
+    &--hidden {
+      display: none;
+    }
   }
 
   &__instruments {
@@ -60,6 +179,72 @@
     }
   }
 
+  &__instruments-list {
+    background: white;
+    padding: 35px 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  &__instruments {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+
+    padding: 1.5rem;
+    border-radius: 1rem;
+    // box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+
+    &-message,
+    &-result,
+    &-score,
+    &-time {
+      font-size: 1.1rem;
+      text-align: left;
+      color: $dark;
+    }
+
+    &-link,
+    &-button {
+      text-decoration: none;
+      font-weight: bold;
+      padding: 0.8rem 1.2rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    &-link {
+      background-color: $danger;
+      color: white;
+      border: none;
+
+      &:hover {
+        background-color: darken($danger, 10%);
+        transform: scale(1.05);
+      }
+    }
+
+    &-button {
+      background-color: $primary;
+      color: white;
+      border: none;
+
+      &:hover {
+        background-color: darken($primary, 10%);
+        transform: scale(1.05);
+      }
+    }
+
+    &-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin: 0.8rem 0 0 0;
+    }
+  }
+
   &__dropzones {
     display: flex;
     overflow-x: scroll;
@@ -69,6 +254,7 @@
     box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.18);
     border-radius: 1rem 1rem 0 0;
     margin: 1rem 0 0 0;
+    background-color: white;
     // display: grid;
     // gap: 1rem;
     // grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));

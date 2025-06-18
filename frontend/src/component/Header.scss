@@ -30,31 +30,29 @@
       transition: all 0.3s ease-in-out;
 
       &--ranking {
-        @include button-style($color-red);
+        @include button-base(
+        $linear-gradient-red,
+        $linear-gradient-red-hover,
+        $shadow-red
+      );
       }
 
-      &--login,
+      &--login {
+        @include button-base(
+          $linear-gradient-green,
+          $linear-gradient-green-hover,
+          $shadow-blue
+        );
+      }
       &--signup {
-        border: 2px solid $color-blue;
-        color: $color-blue;
-
-        &:hover {
-          background: $color-blue;
-          color: white;
-          box-shadow: 0 0 10px $color-blue;
-        }
+        @include button-base(
+          $linear-gradient-green,
+          $linear-gradient-green-hover,
+          $shadow-green
+        );
       }
 
-      &--signup {
-        border-color: $color-green;
-        color: $color-green;
-
-        &:hover {
-          background: $color-green;
-          color: white;
-          box-shadow: 0 0 10px $color-green;
-        }
-      }
+     
     }
 
     &__avatar {

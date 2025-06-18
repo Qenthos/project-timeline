@@ -5,17 +5,17 @@
 
 .hub {
     padding: 2rem;
-    background-color: #f8f9fa;
     // min-height: 100vh;
   
     &__section {
       max-width: 600px;
       margin: 0 auto;
-      background-color: #ffffff;
       border-radius: 12px;
       padding: 2rem;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
       text-align: center;
+      height: fit-content;
+      background-color: white;
     }
   
     &__title {

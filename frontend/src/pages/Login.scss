@@ -6,7 +6,12 @@
   // background: linear-gradient(135deg, #ff7f5f54, #feb47b50);
   text-align: center;
 
-  
+    &__title {
+      text-transform: uppercase;
+      color: #333;
+      font-weight: 800;
+    }
+
   &__form {
     display: flex;
     align-items: center;
@@ -108,21 +113,22 @@
     }
   }
 
-  &__button--submit {
-    @include button-style($color-red);
-    background: #ff7e5f;
-    color: white;
-    &:hover {
-      background: #feb47b;
+  &__button {
+    &--submit {
+      @include button-base(
+        $linear-gradient-orange,
+        $linear-gradient-orange-hover,
+        $shadow-orange
+      );
     }
-  }
-
-  &__button--reset {
-    @include button-style($color-purple);
-    background: #feb47b;
-    color: white;
-    &:hover {
-      background: #ff7e5f;
+  
+    &--reset {
+      @include button-base(
+        $linear-gradient-purple,
+        $linear-gradient-purple-hover,
+        $shadow-purple
+      );
+  
     }
   }
 

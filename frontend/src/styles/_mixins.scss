@@ -86,4 +86,31 @@
   }
 }
 
+@mixin button-base($bg-gradient, $hover-gradient, $shadow-color) {
+  width: 100%;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: $bg-gradient;
+  color: white;
+  box-shadow: 0 4px 12px $shadow-color;
+
+  &:hover {
+    background: $hover-gradient;
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+
 

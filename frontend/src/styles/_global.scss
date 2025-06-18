@@ -36,12 +36,12 @@ body,
 }
 
 body {
-  background-image: url("/media/bg-home.png");
-  background-repeat: repeat;
-  background-position: center;
-  background-size: contain;
+  // background-image: url("/media/bg-homee.png");
+  // background-repeat: repeat;
+  // background-position: center;
+  // background-size: contain;
+  background: $linear-gradient-yellow;
   position: relative;
-  background-position: center;
   
   // &::before {
   //   content: "";
@@ -98,7 +98,9 @@ span {
 
 h1 {
   font-size: 3.5rem;
-  font-weight: 700;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #333;
 }
 
 h3 {

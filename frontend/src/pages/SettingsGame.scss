@@ -135,6 +135,8 @@
       transition: background 0.3s ease;
       user-select: none;
       z-index: 2;
+      color: white;
+      font-weight: bold;
     }
   }
 
@@ -332,6 +334,11 @@
       outline: none;
       box-shadow: 0 0 8px $color-purple;
     }
+  }
+
+  &__unlimited-group {
+    display: flex;
+    align-items: center;
   }
 
   &__time-range-timer {

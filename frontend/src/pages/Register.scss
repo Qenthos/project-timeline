@@ -9,32 +9,33 @@
   padding: 2rem;
 
   &__section {
-    max-width: 480px;
+    // max-width: 480px;
     width: 100%;
     // animation: fadeIn 1s ease forwards;
   }
 
   &__title {
-    font-size: 2.2rem;
+    // font-size: 2.2rem;
     font-weight: 800;
     text-align: center;
     color: #333;
     margin-bottom: 1.5rem;
     position: relative;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    // letter-spacing: 2px;
+    white-space: nowrap;
 
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background: linear-gradient(to right, #ff7e5f, #feb47b);
-      border-radius: 2px;
-    }
+    // &::after {
+    //   content: "";
+    //   position: absolute;
+    //   bottom: -10px;
+    //   left: 50%;
+    //   transform: translateX(-50%);
+    //   width: 100%;
+    //   height: 4px;
+    //   background: linear-gradient(to right, #ff7e5f, #feb47b);
+    //   border-radius: 2px;
+    // }
   }
 
   &__form {
@@ -139,45 +140,24 @@
   }
 
   &__button {
-    width: 100%;
-    padding: 0.8rem 1.5rem;
-    border-radius: 12px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    border: none;
-    transition: all 0.3s ease;
-    cursor: pointer;
-
     &--submit {
-      background: linear-gradient(to right, #ff7e5f, #feb47b);
-      color: white;
-      box-shadow: 0 4px 12px rgba(255, 126, 95, 0.4);
-
-      &:hover {
-        background: linear-gradient(to right, #feb47b, #ff7e5f);
-        transform: translateY(-2px);
-      }
-
-      &:disabled {
-        background: #ccc;
-        cursor: not-allowed;
-        box-shadow: none;
-      }
+      @include button-base(
+        $linear-gradient-orange,
+        $linear-gradient-orange-hover,
+        $shadow-orange
+      );
     }
-
+  
     &--reset {
-      background: linear-gradient(to right, #c2a1f5, #b47bff);
-      color: white;
-      box-shadow: 0 4px 12px rgba(180, 123, 255, 0.3);
-
-      &:hover {
-        background: linear-gradient(to right, #b47bff, #c2a1f5);
-        transform: translateY(-2px);
-      }
+      @include button-base(
+        $linear-gradient-purple,
+        $linear-gradient-purple-hover,
+        $shadow-purple
+      );
+  
     }
   }
-
+  
   &__error {
     margin-top: 0.5rem;
     background-color: rgba(255, 0, 0, 0.08);

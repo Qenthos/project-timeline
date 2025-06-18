@@ -11,4 +11,37 @@ $color-blue: #00c3ff;
 $color-green: #00ff88;
 $color-white: #f0f0f0;
 $color-text: black;
+$color-primary: #5c6ac4;
+$color-red: #e63946;
+$color-white: #ffffff;
+$color-black: #000000;
+$color-light-gray: #f5f5f5;
+$color-gray: #444444;
+$color-dark-gray: #2c2c2c;
 
+
+$linear-gradient-orange: linear-gradient(to right, #ff7e5f, #feb47b);
+$linear-gradient-orange-hover: linear-gradient(to right, #feb47b, #ff7e5f);
+$shadow-orange: rgba(255, 126, 95, 0.4);
+
+
+$linear-gradient-purple: linear-gradient(to right, #c2a1f5, #b47bff);
+$linear-gradient-purple-hover: linear-gradient(to right, #b47bff, #c2a1f5);
+$shadow-purple: rgba(180, 123, 255, 0.3);
+
+
+$linear-gradient-yellow: linear-gradient(to right, #fceabb, #f8b500);
+$linear-gradient-yellow-hover: linear-gradient(to right, #f8b500, #fceabb);
+$shadow-yellow: rgba(248, 181, 0, 0.4);
+
+$linear-gradient-red: linear-gradient(to right, #ff6a6a, #ff3d3d);
+$linear-gradient-red-hover: linear-gradient(to right, #ff3d3d, #ff6a6a);
+$shadow-red: rgba(255, 61, 61, 0.4);
+
+$linear-gradient-blue: linear-gradient(to right, #6a11cb, #2575fc);
+$linear-gradient-blue-hover: linear-gradient(to right, #2575fc, #6a11cb);
+$shadow-blue: rgba(37, 117, 252, 0.4);
+
+$linear-gradient-green: linear-gradient(to right, #a8e063, #56ab2f);
+$linear-gradient-green-hover: linear-gradient(to right, #56ab2f, #a8e063);
+$shadow-green: rgba(86, 171, 47, 0.4);
