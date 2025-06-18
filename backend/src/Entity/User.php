@@ -53,6 +53,9 @@ class User
     public function __construct()
     {
         $this->games = new ArrayCollection();
+        $this->played_games = 0;
+        $this->score = 0;
+        $this->elo = ($this->score / $this->played_games) * 1000;
     }
 
     public function getId(): int

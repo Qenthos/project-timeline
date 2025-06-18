@@ -121,7 +121,6 @@ class UserController extends AbstractController
         $user->setPassword($data['password'] ?? null);
         $user->setScore($data['score'] ?? 0);
         $user->setPlayedGames($data['played_games'] ?? 0);
-        $user->setElo($data['elo'] ?? 1000);
         $user->setAdmin($data['admin'] ?? false);
         $user->setProfileBanner($PBrep->getBannerById($data['pfb'] ?? 1));
         $user->setProfilePicture($PPrep->getPictureById($data['pfp'] ?? 1));
@@ -168,8 +167,8 @@ class UserController extends AbstractController
         if (isset($data['score'])) {
             $user->setScore($data['score']);
         }
-        if (isset($data['elo'])) {
-            $user->setElo($data['elo']);
+        if (isset($data['elo']) && isset($data['score']) && isset($data['played_games'])) {
+            $user->setElo(($data['score'] / $data['played_games']) * 1000);
         }
         if (isset($data['pfp'])) {
             $pfp = $pfpRepo->find($data['pfp']);
