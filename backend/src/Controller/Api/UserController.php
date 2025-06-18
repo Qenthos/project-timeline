@@ -170,6 +170,7 @@ class UserController extends AbstractController
         if (isset($data['score']) && isset($data['played_games'])) {
             $user->setElo(($data['score'] / $data['played_games']) * 1000);
         }
+
         if (isset($data['pfp'])) {
             $pfp = $pfpRepo->find($data['pfp']);
             if ($pfp) {
