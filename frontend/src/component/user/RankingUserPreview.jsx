@@ -22,14 +22,24 @@ const RankingUserPreview = observer(({ user, index }) => {
         alt={`Photo de profil de ${user.username}`}
         className="ranking-user-card__profile-picture"
       />
-      <div className="ranking-user-card__info">
-        <p id={headingId} className="ranking-user-card__name">
-          {user.username}
-        </p>
-        <p className="ranking-user-card__score">
-          <strong>Score :</strong> {user.score}
-        </p>
-      </div>
+
+      <ul className="ranking-user-card__info">
+        <li>
+          <p id={headingId} className="ranking-user-card__name">
+            {user.username}
+          </p>
+        </li>
+        <li>
+          <p className="ranking-user-card__elo">
+            <strong>Elo :</strong> {user.elo}
+          </p>
+        </li>
+        <li>
+          <p className="ranking-user-card__score">
+            <strong>Score :</strong> {user.score}
+          </p>
+        </li>
+      </ul>
     </>
   );
 });

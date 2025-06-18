@@ -168,9 +168,11 @@ class UserController extends AbstractController
         if (isset($data['score'])) {
             $user->setScore($data['score']);
         }
+        
         if (isset($data['elo'])) {
             $user->setElo($data['elo']);
         }
+
         if (isset($data['pfp'])) {
             $pfp = $pfpRepo->find($data['pfp']);
             if ($pfp) {

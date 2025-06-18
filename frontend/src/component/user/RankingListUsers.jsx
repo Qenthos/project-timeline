@@ -8,7 +8,7 @@ const RankingListUsers = observer(({ users }) => {
     <>
       <ul className="ranking-list__users">
         {[...users]
-          .sort((a, b) => b.score - a.score)
+          .sort((a, b) => b.elo - a.elo)
           .map((user, index) => (
             <li className="ranking-list__item" key={user.id}>
               <RankingUserPreview user={user} index={index + 1}/>

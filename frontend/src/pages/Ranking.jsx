@@ -15,7 +15,7 @@ const Ranking = observer(() => {
       <Header />
       <main className="ranking">
         <section className="ranking__section">
-          <h1 className="ranking__title">Classement</h1>
+          <h1 className="ranking__title">Classement Elo</h1>
           <RankingListUsers users={users} />
         </section>
       </main>
