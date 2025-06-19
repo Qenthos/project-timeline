@@ -114,7 +114,7 @@ class UserController extends AbstractController
     public function createUser(Request $request, ProfileBannerRepository $PBrep, ProfilePictureRepository $PPrep): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-    
+
         $user = new User();
         $user->setUsername($data['username'] ?? null);
         $user->setEmail($data['email'] ?? null);
@@ -124,10 +124,10 @@ class UserController extends AbstractController
         $user->setAdmin($data['admin'] ?? false);
         $user->setProfileBanner($PBrep->getBannerById($data['pfb'] ?? 1));
         $user->setProfilePicture($PPrep->getPictureById($data['pfp'] ?? 1));
-    
+
         $this->entityManager->persist($user);
         $this->entityManager->flush();
-    
+
         $responseData = [
             'id' => $user->getId(),
             'username' => $user->getUsername(),
@@ -137,12 +137,12 @@ class UserController extends AbstractController
             'elo' => $user->getElo(),
             'admin' => $user->getAdmin(),
             'pfp' => $user->getProfilePicture()->getId(),
-            'pfb' => $user->getProfileBanner()->getId(),  
+            'pfb' => $user->getProfileBanner()->getId(),
         ];
-    
+
         return $this->json($responseData, 201);
     }
-    
+
 
     #[Route('api/user/{id}', name: 'updateUser', methods: ['PUT', 'PATCH'])]
     public function updateUser(int $id, Request $request, UserRepository $userRepo, ProfilePictureRepository $pfpRepo, ProfileBannerRepository $pfbRepo): JsonResponse
@@ -168,7 +168,7 @@ class UserController extends AbstractController
             $user->setScore($data['score']);
         }
         if (isset($data['score']) && isset($data['played_games'])) {
-            $user->setElo(($data['score'] / ($data['played_games'] +1)) * 1000);
+            $user->setElo(($data['score'] / ($data['played_games'] + 1)) * 1000);
         }
 
         if (isset($data['pfp'])) {
@@ -183,7 +183,7 @@ class UserController extends AbstractController
         if (isset($data['played_games'])) {
             $user->setPlayedGames($data['played_games']);
         }
-    
+
         if (isset($data['pfb'])) {
             $pfb = $pfbRepo->find($data['pfb']);
             if ($pfb) {
@@ -213,5 +213,55 @@ class UserController extends AbstractController
         $this->entityManager->flush();
 
         return $this->json(['message' => 'Utilisateur supprimé 🗑️']);
+    }
+
+    // CONNEXION :
+
+    #[Route('/api/users/login', name: 'api_user_login', methods: ['POST'])]
+    public function login(Request $request, EntityManagerInterface $em): JsonResponse
+    {
+        // Récupération du JSON
+        $data = json_decode($request->getContent(), true);
+
+        if (!isset($data['email']) || !isset($data['password'])) {
+            return new JsonResponse(['error' => 'Email et mot de passe requis.'], 400);
+        }
+
+        $email = $data['email'];
+        $password = $data['password'];
+
+        $user = $em->getRepository(User::class)->findOneBy(['email' => $email]);
+
+        if (!$user) {
+            return new JsonResponse(['error' => 'Utilisateur introuvable.'], 404);
+        }
+
+        if (!password_verify($password, $user->getPassword())) {
+            return new JsonResponse(['error' => 'Mot de passe incorrect.'], 401);
+        }
+
+        return new JsonResponse([
+            'message' => 'Vous êtes bien connectés',
+            'user' => [
+                'id' => $user->getId(),
+                'email' => $user->getEmail(),
+                'username' => $user->getUsername(),
+            ]
+        ]);
+    }
+
+    
+    #[Route('/api/user/{id}/ranking', name: 'api_user_ranking', methods: ['GET'])]
+    public function getUserRanking(int $id, UserRepository $userRepository): JsonResponse
+    {
+        $user = $userRepository->find($id);
+        $position = $userRepository->getUserRankingPosition($id);
+
+        return $this->json([
+            'id' => $id,
+            'position' => $position,
+            'score' => $user->getScore(),
+            'elo' => $user->getElo()
+        ]);
     }
 }

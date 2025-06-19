@@ -62,4 +62,16 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getUserRankingPosition(int $userId): ?int
+{
+    $qb = $this->createQueryBuilder('u')
+        ->select('COUNT(u2.id) + 1')
+        ->from($this->getEntityName(), 'u2')
+        ->where('u2.elo > u.elo')
+        ->andWhere('u.id = :userId')
+        ->setParameter('userId', $userId);
+
+    return $qb->getQuery()->getSingleScalarResult();
+}
 }

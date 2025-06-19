@@ -91,6 +91,30 @@ class AppFixtures extends Fixture
             $manager->persist($user);
         }
 
+        $profilePicture = new ProfilePicture();
+        $profilePicture->setImage("nathan.webp");
+        $profilePicture->setName("PP Nathan");
+        $manager->persist($profilePicture);
+
+        $profileBanner = new ProfileBanner();
+        $profileBanner->setImage("nathan-banner.webp");
+        $profileBanner->setName("Banner Nathan");
+        $manager->persist($profileBanner);
+
+        // Création de l'utilisateur Nathan
+        $user = new User();
+        $user->setUsername("NathanBaud")
+             ->setPassword("letsgo")
+             ->setEmail("nathan.baud@example.com")
+             ->setScore(1337)
+             ->setProfilePicture($profilePicture)
+             ->setProfileBanner($profileBanner)
+             ->setAdmin(true)
+             ->setPlayedGames(42)
+             ->setElo(1984);
+
+        $manager->persist($user);
+
 
         // Création de 10 utilisateurs
         // for ($i = 1; $i <= 10; $i++) {

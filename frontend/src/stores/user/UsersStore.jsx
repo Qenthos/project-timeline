@@ -108,33 +108,72 @@ export default class UsersStore {
     }
   }
 
+  // /**
+  //  * Login
+  //  * @param {*} email
+  //  * @param {*} password
+  //  */
+  // async login(email, password) {
+  //   try {
+  //     const response = await fetch(API_URL + "/login");
+
+  //     if (!response.ok) {
+  //       throw new Error("Erreur réseau");
+  //     }
+
+  //     const users = await response.json();
+
+  //     const userByEmail = users.find((u) => u.email === email);
+
+  //     if (!userByEmail) {
+  //       throw new Error("Adresse mail introuvable");
+  //     }
+
+  //     if (userByEmail.password !== password) {
+  //       throw new Error("Mot de passe incorrect");
+  //     }
+
+  //     runInAction(() => {
+  //       const user = new Users({ ...userByEmail, isConnected: true });
+
+  //       this._currentUser = user;
+
+  //       const exists = this._users.find((u) => u.id === user.id);
+  //       if (!exists) {
+  //         this._users.push(user);
+  //       }
+
+  //       localStorage.setItem("currentUser", JSON.stringify({ ...userByEmail }));
+  //     });
+  //   } catch (error) {
+  //     console.error("Erreur lors de la connexion :", error);
+  //     throw error;
+  //   }
+  // }
+
   /**
-   * Login
-   * @param {*} email
-   * @param {*} password
-   */
+ * Login
+ * @param {string} email
+ * @param {string} password
+ */
   async login(email, password) {
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(API_URL + "/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error("Erreur réseau");
-      }
-
-      const users = await response.json();
-
-      const userByEmail = users.find((u) => u.email === email);
-
-      if (!userByEmail) {
-        throw new Error("Adresse mail introuvable");
-      }
-
-      if (userByEmail.password !== password) {
-        throw new Error("Mot de passe incorrect");
+        throw new Error(data.error || "Erreur inconnue lors de la connexion");
       }
 
       runInAction(() => {
-        const user = new Users({ ...userByEmail, isConnected: true });
+        const user = new Users({ ...data.user, isConnected: true });
 
         this._currentUser = user;
 
@@ -143,8 +182,9 @@ export default class UsersStore {
           this._users.push(user);
         }
 
-        localStorage.setItem("currentUser", JSON.stringify({ ...userByEmail }));
+        localStorage.setItem("currentUser", JSON.stringify(data.user));
       });
+
     } catch (error) {
       console.error("Erreur lors de la connexion :", error);
       throw error;
