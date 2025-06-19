@@ -448,9 +448,51 @@ export default class UsersStore {
       });
   }
 
-  updateElo() {
+  /**
+ * Met à jour score + played_games + recalcul elo en une seule requête
+ */
+updateScoreAndPlayedGames(newScore) {
+  const user = this.getUserById(this._currentUser.id);
 
+  if (!user) {
+    console.error("Utilisateur non trouvé");
+    return;
   }
+
+  const updatedPlayedGames = (user.played_games || 0) + 1;
+
+  fetch(`http://localhost:8000/api/user/${user.id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      score: newScore,
+      played_games: updatedPlayedGames,
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        return response.text().then((text) => {
+          throw new Error(`Erreur ${response.status} : ${text}`);
+        });
+      }
+      return response.json();
+    })
+    .then((updatedUser) => {
+      runInAction(() => {
+        console.log(newScore)
+        user.score = updatedUser.score;
+        user.played_games = updatedUser.played_games;
+        user.elo = updatedUser.elo;
+      });
+      this.refreshCurrentUser();
+    })
+    .catch((err) => {
+      console.error("Erreur updateScoreAndPlayedGames :", err);
+    });
+}
+
 
   incrementPlayedGames() {
     const user = this.getUserById(this._currentUser.id);
@@ -459,8 +501,8 @@ export default class UsersStore {
       console.error("Utilisateur non trouvé");
       return;
     }
-
-    const updatedPlayedGames = user.played_games + 1;
+    console.log(user.played_games)
+    const updatedPlayedGames = (user.played_games || 0) + 1;
 
     fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
       method: "PATCH",
@@ -481,6 +523,7 @@ export default class UsersStore {
       })
       .then(() => {
         runInAction(() => {
+          console.log(user)
           user.played_games = updatedPlayedGames;
         });
         this.refreshCurrentUser();

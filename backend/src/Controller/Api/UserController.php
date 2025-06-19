@@ -167,13 +167,6 @@ class UserController extends AbstractController
         if (isset($data['score'])) {
             $user->setScore($data['score']);
         }
-        if (isset($data['score']) && isset($data['played_games'])) {
-
-            $playedGames = (int) $data['played_games'];
-            $elo = $playedGames > 0 ? ($data['score'] / $playedGames) * 10 : 100;
-            $user->setElo($elo);
-        }
-
         if (isset($data['pfp'])) {
             $pfp = $pfpRepo->find($data['pfp']);
             if ($pfp) {
@@ -194,6 +187,12 @@ class UserController extends AbstractController
             } else {
                 return $this->json(['error' => 'Profile banner not found'], 400);
             }
+        }
+        if (isset($data['score']) && isset($data['played_games'])) {
+            $playedGames = (int) $data['played_games'];
+            $score = (int) $data['score'];
+            $elo = $playedGames > 0 ? ($score / $playedGames) * 10 : 100;
+            $user->setElo($elo);
         }
 
         $this->entityManager->flush();
@@ -256,11 +255,12 @@ class UserController extends AbstractController
                 'id' => $user->getId(),
                 'email' => $user->getEmail(),
                 'username' => $user->getUsername(),
+                'played_games' => $user->getPlayedGames()
             ]
         ]);
     }
 
-    
+
     #[Route('/api/user/{id}/ranking', name: 'api_user_ranking', methods: ['GET'])]
     public function getUserRanking(int $id, UserRepository $userRepository): JsonResponse
     {
@@ -273,7 +273,5 @@ class UserController extends AbstractController
             'score' => $user->getScore(),
             'elo' => $user->getElo()
         ]);
-
-   
-}
+    }
 }

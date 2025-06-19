@@ -44,6 +44,8 @@ const Profil = observer(() => {
     return <p>Chargement du profil...</p>;
   }
 
+
+
   /**
    *Show / hide password
    * @param {*} setter
@@ -164,6 +166,7 @@ const Profil = observer(() => {
       setPositionLeaderboard(data.position)
     })
   })
+
 
   return !usersStore.isLoaded ? (
     <LoadingScreen message="Chargement de votre profil en cours..." />

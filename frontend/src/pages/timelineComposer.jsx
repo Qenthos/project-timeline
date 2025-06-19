@@ -145,11 +145,8 @@ const TimelineComposer = observer(() => {
           timer,
           difficulty,
           instruStore.nbBadResponse,
-          instruStore.nbGoodResponse
+          instruStore.nbGoodResponse,
         );
-        if (currentUser) {
-          usersStore.updateScore(currentUser.score + gameStore.state.score);
-        }
         localStorage.removeItem("tabIds");
       }
     }
