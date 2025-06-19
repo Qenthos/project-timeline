@@ -19,6 +19,7 @@ const TimelineComposer = observer(() => {
 
   const [loadingCards, setLoadingCards] = useState(true);
   const [isGameFinished, setIsGameFinished] = useState(false);
+  const [previousElo, setPreviousElo] = useState(null);
 
   if (!location.state) return <Navigate to="/settings-game" />;
 
@@ -37,7 +38,12 @@ const TimelineComposer = observer(() => {
    * Initialize a game
    */
   useEffect(() => {
-    gameStore.initializeGame({ timer, difficulty, isUnlimited, score: 100 });
+    if (currentUser) {
+      gameStore.initializeGame({ timer, difficulty, isUnlimited });
+      setPreviousElo(currentUser.elo);
+    } else {
+      gameStore.initializeGame({ timer, difficulty, isUnlimited, score: 100 });
+    }
   }, []);
 
   const instrumentExpoSlot = instruStore.instrumentsTimelineBySlot;
@@ -301,6 +307,14 @@ const TimelineComposer = observer(() => {
                   <li className="timeline__instruments-item">
                     <p className="timeline__instruments-score">
                       Score : +{gameStore.state.score}
+                    </p>
+                  </li>
+                )}
+
+                {currentUser && previousElo !== null && (
+                  <li className="timeline__instruments-item">
+                    <p className="timeline__instruments-score">
+                      Elo : {previousElo} → {currentUser.elo}
                     </p>
                   </li>
                 )}
