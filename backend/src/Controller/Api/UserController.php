@@ -168,7 +168,10 @@ class UserController extends AbstractController
             $user->setScore($data['score']);
         }
         if (isset($data['score']) && isset($data['played_games'])) {
-            $user->setElo(($data['score'] / ($data['played_games'] + 1)) * 1000);
+
+            $playedGames = (int) $data['played_games'];
+            $elo = $playedGames > 0 ? ($data['score'] / $playedGames) * 10 : 100;
+            $user->setElo($elo);
         }
 
         if (isset($data['pfp'])) {
@@ -195,7 +198,14 @@ class UserController extends AbstractController
 
         $this->entityManager->flush();
 
-        return $this->json(['message' => 'Utilisateur mis à jour']);
+        return $this->json([
+            'id' => $user->getId(),
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'score' => $user->getScore(),
+            'played_games' => $user->getPlayedGames(),
+            'elo' => $user->getElo(),
+        ]);
     }
 
     // DELETEE
@@ -263,5 +273,7 @@ class UserController extends AbstractController
             'score' => $user->getScore(),
             'elo' => $user->getElo()
         ]);
-    }
+
+   
+}
 }

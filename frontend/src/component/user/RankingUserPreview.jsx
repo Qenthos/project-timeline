@@ -31,12 +31,20 @@ const RankingUserPreview = observer(({ user, index }) => {
         </li>
         <li>
           <p className="ranking-user-card__elo">
-            <strong>Elo :</strong> {user.elo}
+            <strong>Elo : {user.elo}</strong>
           </p>
         </li>
         <li>
           <p className="ranking-user-card__score">
-            <strong>Score :</strong> {user.score}
+            <strong>Score : {user.score}</strong>
+          </p>
+        </li>
+        <li>
+          <p className="ranking-user-card__score">
+            <strong>
+              Partie{user.played_games === 1 ? "" : "s"} jouée
+              {user.played_games === 1 ? "" : "s"} : {user.played_games}
+            </strong>
           </p>
         </li>
       </ul>

@@ -448,6 +448,10 @@ export default class UsersStore {
       });
   }
 
+  updateElo() {
+
+  }
+
   incrementPlayedGames() {
     const user = this.getUserById(this._currentUser.id);
 
@@ -488,6 +492,49 @@ export default class UsersStore {
         );
       });
   }
+
+  updateElo() {
+    const user = this.getUserById(this._currentUser.id);
+  
+    if (!user || user.score == null || user.played_games == null) {
+      console.error("Données incomplètes pour l'ELO");
+      return;
+    }
+  
+    const updatedScore = user.score;
+    const updatedPlayedGames = user.played_games;
+  
+    fetch(`http://localhost:8000/api/user/${user.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        score: updatedScore,
+        played_games: updatedPlayedGames,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            throw new Error(`Erreur ${response.status} : ${text}`);
+          });
+        }
+        return response.json();
+      })
+      .then((updateUser) => {
+        runInAction(() => {
+          console.log(updateUser);
+          console.log(user)
+          user.elo = updateUser.elo;
+        });
+        this.refreshCurrentUser();
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la mise à jour de l'ELO :", error);
+      });
+  }
+  
 
   /**
    * Refresh date -> currentUser

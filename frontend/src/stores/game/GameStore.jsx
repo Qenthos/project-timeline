@@ -116,6 +116,7 @@ export default class GameStore {
     this.postGameToUser();
     if (this._usersStore.currentUser) {
       this._usersStore.incrementPlayedGames();
+      this._usersStore.updateElo();
     }
    
   }

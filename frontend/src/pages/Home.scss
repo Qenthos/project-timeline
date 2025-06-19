@@ -7,6 +7,11 @@
   align-items: center;
   justify-content: center;
   padding: 4rem 2rem;
+  gap: 3rem;
+
+  @include mobile-md {
+    flex-direction: row;
+  }
 
   &__section {
     width: 100%;
@@ -14,11 +19,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    // gap: 3rem;
-    background: rgba(255, 255, 255, 0.75);
+    box-shadow:  0 0 10px 10px rgba(0, 0, 0, 0.1);
     border-radius: 1rem;
     padding: 2.5rem 3rem;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    background-color: white;
   }
 
   &__title {
@@ -27,7 +32,7 @@
     text-align: center;
     color: #333;
     position: relative;
-    text-transform: uppercase;
+    text-transform: uppercase;  
 
     // &::after {
     //   content: "";
@@ -49,8 +54,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2rem;
-      margin-top: 2rem;
+      gap: 1.2rem;
+      margin-top: 1.5rem;
 
       @include mobile-md {
         flex-direction: row;
@@ -68,21 +73,6 @@
     }
   }
 
-  &__item {
-    &--first-list {
-      background-color: white;
-      border-radius: 1rem;
-      padding: 1.5rem 2rem;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-      &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-      }
-    }
-  }
-
   &__link {
     font-size: 2rem;
     font-weight: 700;
@@ -95,26 +85,34 @@
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 
     &--play {
-      background: linear-gradient(135deg, #7f00ff, #e100ff);
-      color: white;
-      box-shadow: 0 4px 14px rgba(127, 0, 255, 0.4);
-
-      &:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 24px rgba(127, 0, 255, 0.6);
-      }
+      height: 6rem;
+      font-size: 3rem;
+      align-content: center;
+      @include button-base(
+      $linear-gradient-purple,
+      $linear-gradient-purple-hover,
+      $shadow-purple
+    )
     }
 
     &--discover-instruments {
-      background: linear-gradient(135deg, #ff416c, #ff4b2b);
-      color: white;
-      box-shadow: 0 4px 14px rgba(255, 75, 43, 0.4);
-
-      &:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 24px rgba(255, 75, 43, 0.6);
-      }
+      height: 6rem;
+      font-size: 3rem;
+      align-content: center;
+      @include button-base(
+        $linear-gradient-red,
+        $linear-gradient-red-hover,
+        $shadow-red
+      )
     }
+  }
+
+  &__image {
+    height: fit-content;
+    box-shadow:  0 0 10px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    padding: 2.5rem 3rem;
+    background-color: white;
   }
 
   @include mobile-lg {

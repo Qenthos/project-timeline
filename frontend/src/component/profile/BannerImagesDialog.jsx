@@ -1,14 +1,30 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./BannerImagesDialog.scss";
 
 const BannerImagesDialog = ({ onSelected, onCancel }) => {
   const dialogRef = useRef(null);
 
-  const bannerImages = [
-    { id: 1, name: "PFP1", image: "wallpaper-un.jpg" },
-    { id: 2, name: "PFP2", image: "wallpaper-deux.jpg" },
-  ];
+  const [bannerImages, setBannerImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/banners")
+      .then((res) => res.json())
+      .then((data) => {
+        setBannerImages(data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error("Erreur API:", err);
+        setIsLoading(false);
+      });
+  }, []);
+
+  // const bannerImages = [
+  //   { id: 1, name: "PFP1", image: "wallpaper-un.jpg" },
+  //   { id: 2, name: "PFP2", image: "wallpaper-deux.jpg" },
+  // ];
 
   useEffect(() => {
     if (dialogRef.current) {
@@ -60,24 +76,29 @@ const BannerImagesDialog = ({ onSelected, onCancel }) => {
         <h2 id="banner-dialog__title" className="banner-dialog__title">
           Sélection photo de profil
         </h2>
-        <ul className="banner-dialog__gallery" role="list">
-          {bannerImages.map((img, index) => (
-            <li key={img.id}>
-              <button
-                type="button"
-                onClick={() => handleImageSelect(img.id)}
-                className="banner-dialog__image-btn"
-                aria-label={`Sélectionner l’image ${index + 1}`}
-              >
-                <img
-                  src={`/media/banner-images/${img.image}`}
-                  alt={`Image ${index + 1}`}
-                  className="banner-dialog__image"
-                />
-              </button>
-            </li>
-          ))}
-        </ul>
+
+        {isLoading ? (
+          <p className="profil-dialog__loading">Chargement en cours...</p>
+        ) : (
+          <ul className="banner-dialog__gallery" role="list">
+            {bannerImages.map((img, index) => (
+              <li key={img.id}>
+                <button
+                  type="button"
+                  onClick={() => handleImageSelect(img.id)}
+                  className="banner-dialog__image-btn"
+                  aria-label={`Sélectionner l’image ${index + 1}`}
+                >
+                  <img
+                    src={`/media/banner-images/${img.image}`}
+                    alt={`Image ${index + 1}`}
+                    className="banner-dialog__image"
+                  />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <div className="banner-dialog__actions">
           <button
