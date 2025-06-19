@@ -177,6 +177,13 @@ const TimelineComposer = observer(() => {
     setIsGameFinished(false);
   };
 
+  const difficultyMap = {
+    easy: "Facile",
+    normal: "Normal",
+    hard: "Difficile",
+    customize: "Personnalisée",
+  };
+
   return !isLoaded ? (
     <LoadingScreen message="Chargement des instruments en cours" />
   ) : (
@@ -184,16 +191,6 @@ const TimelineComposer = observer(() => {
       <Header />
       <main className="timeline">
         <section className="timeline__section">
-          {/* <h2 className="timeline__title">
-            {currentUser
-              ? `À vous de jouer ${currentUser.username}`
-              : "Vous jouez en tant qu'invité"}{" "}
-            !
-            <span className="timeline__subtitle">
-              (Vous avez {cards} cartes à placer {subtitleText})
-            </span>
-          </h2> */}
-
           <ul className="timeline__list-parameters">
             <li className="timeline__list-parameters-item">
               <h2 className="timeline__title">
@@ -208,13 +205,15 @@ const TimelineComposer = observer(() => {
                 Mode de jeu : trie par {modeGame}
               </p>
               <p className="timeline__list-parameters-text timeline__list-parameters-text--difficulty">
-                Difficulté : {difficulty}
+                Difficulté : {difficultyMap[difficulty] || difficulty}
               </p>
             </li>
             <li className="timeline__list-parameters-item">
               <p className="timeline__list-parameters-text timeline__list-parameters-text--gamemode">
                 <span>{instrumentsNotInExpo.length}</span>
-                cartes à poser
+                {instrumentsNotInExpo.length === 1
+                  ? " carte à poser"
+                  : " cartes à poser"}
               </p>
             </li>
             <li className="timeline__list-parameters-item timeline__list-parameters-item--timer ">
@@ -246,9 +245,19 @@ const TimelineComposer = observer(() => {
             {currentUser && (
               <li className="timeline__list-parameters-item timeline__list-parameters-item--score">
                 <p className="timeline__list-parameters-text timeline__list-parameters-text--score">
-                  <span>{currentUser.score}</span>
-                  points
+                  <span>{currentUser.elo}</span>
+                  elo
                 </p>
+              </li>
+            )}
+            {!currentUser && (
+              <li className="timeline__list-parameters-item timeline__list-parameters-item--score">
+                <Link
+                  to="/register"
+                  className="timeline__instruments-link-account"
+                >
+                  Créer un compte
+                </Link>
               </li>
             )}
           </ul>
@@ -288,13 +297,13 @@ const TimelineComposer = observer(() => {
                   </p>
                 </li>
 
-                <li className="timeline__instruments-item">
-                  {currentUser && (
+                {currentUser && (
+                  <li className="timeline__instruments-item">
                     <p className="timeline__instruments-score">
                       Score : +{gameStore.state.score}
                     </p>
-                  )}
-                </li>
+                  </li>
+                )}
 
                 <li className="timeline__instruments-item">
                   <p className="timeline__instruments-time">
@@ -317,11 +326,6 @@ const TimelineComposer = observer(() => {
                   >
                     Modifier les paramètres d'une partie
                   </Link>
-                  {!currentUser && (
-                    <Link to="/register" className="timeline__instruments-link">
-                      Créer un compte
-                    </Link>
-                  )}
                 </li>
               </ul>
             ) : (

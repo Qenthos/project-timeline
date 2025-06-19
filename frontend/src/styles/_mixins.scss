@@ -99,6 +99,8 @@
   background: $bg-gradient;
   color: white;
   box-shadow: 0 4px 12px $shadow-color;
+  // white-space: nowrap;
+  text-align: center;
 
   &:hover {
     background: $hover-gradient;

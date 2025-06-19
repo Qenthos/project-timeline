@@ -171,6 +171,7 @@ export default class Users {
   }
 
   set elo(value) {
+
     if (Number.isInteger(value) && value >= 0) {
       this._elo = value;
     } else {

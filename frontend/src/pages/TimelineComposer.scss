@@ -205,36 +205,37 @@ $light: #f5f6fa;
       color: $dark;
     }
 
-    &-link,
-    &-button {
-      text-decoration: none;
-      font-weight: bold;
-      padding: 0.8rem 1.2rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, background-color 0.2s ease;
-    }
+    // &-link,
+    // &-button {
+    //   font-weight: bold;
+    //   padding: 0.8rem 1.2rem;
+    //   border-radius: 0.5rem;
+    //   cursor: pointer;
+    //   transition: transform 0.2s ease, background-color 0.2s ease;
+    // }
 
     &-link {
-      background-color: $danger;
-      color: white;
-      border: none;
+      @include button-base(
+        $linear-gradient-red,
+        $linear-gradient-red-hover,
+        $shadow-red
+      )
+    }
 
-      &:hover {
-        background-color: darken($danger, 10%);
-        transform: scale(1.05);
-      }
+    &-link-account {
+      @include button-base(
+        $linear-gradient-blue,
+        $linear-gradient-blue-hover,
+        $shadow-blue
+      )
     }
 
     &-button {
-      background-color: $primary;
-      color: white;
-      border: none;
-
-      &:hover {
-        background-color: darken($primary, 10%);
-        transform: scale(1.05);
-      }
+      @include button-base(
+        $linear-gradient-purple,
+        $linear-gradient-purple-hover,
+        $shadow-purple
+      )
     }
 
     &-actions {

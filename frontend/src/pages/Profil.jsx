@@ -19,7 +19,6 @@ const Profil = observer(() => {
     email: "",
     password: "",
   });
-  
 
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showProfilPictureDialog, setShowProfilPictureDialog] = useState(false);
@@ -31,7 +30,7 @@ const Profil = observer(() => {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   useEffect(() => {
-    console.log(usersStore.currentUser)
+    console.log(usersStore.currentUser);
     if (usersStore.currentUser) {
       setEditedUser({
         username: usersStore.currentUser.username || "",
@@ -40,7 +39,6 @@ const Profil = observer(() => {
       });
     }
   }, [usersStore.currentUser]);
-  
 
   if (!usersStore.currentUser) {
     return <p>Chargement du profil...</p>;
@@ -165,9 +163,18 @@ const Profil = observer(() => {
       <main className="profile">
         <section className="profile__section">
           <div className="profile__banner-wrapper">
-            <p className="profile__score">
-              Score : {usersStore.currentUser.score}
-            </p>
+            <ul className="profile__score-list">
+              <li className="profile__score-item">
+                <p className="profile__score-text">
+                  Score : {usersStore.currentUser.score}
+                </p>
+              </li>
+              <li className="profile__score-item">
+                <p className="profile__score-text">
+                  Elo : {usersStore.currentUser.elo}
+                </p>
+              </li>
+            </ul>
 
             {showBannerImageDialog && (
               <BannerImagesDialog
@@ -336,7 +343,8 @@ const Profil = observer(() => {
               </li>
               <li className="profile__field">
                 <p className="profile__played-games">
-                  Nombre de parties jouées : {usersStore.currentUser.played_games}
+                  Nombre de parties jouées :{" "}
+                  {usersStore.currentUser.played_games}
                 </p>
               </li>
               <li className="profile__field">
@@ -359,9 +367,7 @@ const Profil = observer(() => {
                     onClick={() => setIsEditing(false)}
                     className="profile__cancel-btn"
                     value="Annuler"
-                  >
-                    
-                  </input>
+                  ></input>
                 </li>
               ) : (
                 <li className="profile__field">

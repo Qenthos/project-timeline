@@ -11,21 +11,25 @@
     align-items: center;
     padding: 2rem 1rem;
   }
-
-  &__score {
+  &__score-list {
     position: absolute;
     top: 1.2rem;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    z-index: 5;
+  }
+
+  &__score-item {
     background: #ffffff;
     border: 2px solid #00bcd4;
     border-radius: 1rem;
-    padding: 0.5rem 1.25rem;
-    font-size: 1.4rem;
+    padding: 0.4rem 1rem;
+    font-size: 1.2rem;
     color: #00bcd4;
     font-weight: 700;
     box-shadow: 0 0 12px #00bcd455;
-    z-index: 5;
   }
 
   &__banner-wrapper {
@@ -127,7 +131,7 @@
 
   &__form {
     margin-top: 6rem;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.9);
     border: 1px solid #ddd;
     border-radius: 1rem;
     padding: 2rem;
@@ -219,31 +223,25 @@
   }
 
   &__edit-btn {
-    background: #00bcd4;
-    color: white;
-
-    &:hover {
-      background: #00a5b5;
-    }
+    @include button-base(
+      $linear-gradient-blue,
+      $linear-gradient-blue-hover,
+      $shadow-blue
+    )
   }
 
   &__save-btn {
-    background: linear-gradient(to right, #00bcd4, #0077ff);
-    color: #fff;
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    &:hover:enabled {
-      box-shadow: 0 0 10px #00bcd455;
-    }
+    @include button-base(
+      $linear-gradient-blue,
+      $linear-gradient-blue-hover,
+      $shadow-blue
+    )
   }
 
   &__cancel-btn {
     background: #e0e0e0;
     color: #444;
+    margin: 0.5rem 0 0 0;
 
     &:hover {
       background: #ccc;
@@ -251,22 +249,11 @@
   }
 
   &__delete-account {
-    background: #ff5252;
-    color: white;
-    padding: 0.75rem 1.25rem;
-    border-radius: 0.5rem;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px #ff525255;
-
-    &:hover {
-      background: #e53935;
-      transform: scale(1.05);
-    }
-
-    &:active {
-      transform: scale(0.97);
-    }
+    @include button-base(
+      $linear-gradient-red,
+      $linear-gradient-red-hover,
+      $shadow-red
+    )
   }
 }
 

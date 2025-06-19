@@ -3,11 +3,16 @@ import { useNavigate } from "react-router";
 import "./SettingsGame.scss";
 import Header from "../component/Header";
 
-const SettingsGame = () => {
+const SettingsGame = () => {  
+  
+  //Tab of different game mode
+  const tabGameMode = ["Annee", "Poids", "Taille"];
+
   const [cards, setCards] = useState(5);
   const [timer, setTimer] = useState(30);
   const [difficulty, setDifficulty] = useState("easy");
-  const [modeGame, setModeGame] = useState("annee");
+  const [modeGame, setModeGame] = useState(tabGameMode[0]);
+
   const [isUnlimited, setIsUnlimited] = useState(false);
 
   let navigate = useNavigate();
@@ -38,20 +43,17 @@ const SettingsGame = () => {
    * Settings defaults depending on difficulty
    * @param {*} evt
    */
-  const handleParametersDifficulty = (evt) => {
-    const difficulty = evt.currentTarget.dataset.difficulty;
-    setDifficulty(difficulty);
+  const handleParametersDifficulty = (e) => {
+    const key = e.target.value;
+    setDifficulty(key);
 
-    const values = tabDifficulty[difficulty];
+    const values = tabDifficulty[key];
     if (values) {
       const { cards, timer } = values;
       setCards(cards);
       setTimer(timer);
     }
   };
-
-  //Tab of different game mode
-  const tabGameMode = ["Annee", "Poids", "Taille"];
 
   ///tab of different difficulty
   const difficulties = [
@@ -69,40 +71,49 @@ const SettingsGame = () => {
           <h1 className="settings__title">Paramètres de la partie</h1>
           <div className="settings__content">
             <h2 className="settings__instrument-title">Mode de jeux</h2>
-            <div className="settings__instrument-fieldset">
+            <ul className="settings__instrument-list">
               {tabGameMode.map((mode, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  onClick={() => setModeGame(mode)}
-                  className={`settings__instrument-card settings__instrument-card--${mode} ${
-                    modeGame === mode
-                      ? "settings__instrument-card--selected"
-                      : ""
-                  }`}
-                >
-                  <p className="settings__instrument-content">
-                    Trier par {mode.toLowerCase()}
-                  </p>
-                </button>
+                <li className="settings__instrument-item" key={index}>
+                  <input
+                    type="radio"
+                    id={`mode-${mode}`}
+                    name="gameMode"
+                    value={mode}
+                    checked={modeGame === mode}
+                    onChange={(e) => setModeGame(e.target.value)}
+                    className="settings__instrument-radio"
+                  />
+                  <label
+                    htmlFor={`mode-${mode}`}
+                    className={`settings__instrument-card settings__instrument-card--${mode}`}
+                  >
+                    <p className="settings__instrument-content">
+                      Trier par {mode.toLowerCase()}
+                    </p>
+                  </label>
+                </li>
               ))}
-            </div>
+            </ul>
 
             {/* Difficulté */}
             <div className="settings__options">
               <h2 className="settings__options-title">Difficulté</h2>
               <ul className="settings__difficulty-list">
                 {difficulties.map(({ key, label }) => (
-                  <li className={`settings__difficulty-item`} key={key}>
-                    <button
-                      type="button"
-                      onClick={handleParametersDifficulty}
+                  <li className="settings__difficulty-item" key={key}>
+                    <input
+                      type="radio"
+                      id={`difficulty-${key}`}
+                      name="difficulty"
+                      value={key}
+                      checked={difficulty === key}
+                      onChange={handleParametersDifficulty}
+                      className="settings__difficulty-radio"
                       data-difficulty={key}
-                      className={`settings__difficulty-button settings__difficulty-button--${key} ${
-                        key === difficulty
-                          ? "settings__difficulty-button--selected"
-                          : ""
-                      }`}
+                    />
+                    <label
+                      htmlFor={`difficulty-${key}`}
+                      className={`settings__difficulty-button settings__difficulty-button--${key}`}
                     >
                       <p className="settings__difficulty-label">{label}</p>
                       <ul className="settings__difficulty-details">
@@ -113,10 +124,11 @@ const SettingsGame = () => {
                           {tabDifficulty[key]?.timer ?? "-"} secondes
                         </li>
                       </ul>
-                    </button>
+                    </label>
                   </li>
                 ))}
               </ul>
+
               {difficulty === "customize" && (
                 <>
                   <h3 className="settings__parameter-title">Options</h3>
@@ -180,7 +192,7 @@ const SettingsGame = () => {
                             checked={isUnlimited}
                             onChange={(e) => setIsUnlimited(e.target.checked)}
                           />
-                           <label
+                          <label
                             htmlFor="unlimited-timer"
                             className="settings__checkbox-label"
                           >

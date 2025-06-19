@@ -114,7 +114,7 @@ class UserController extends AbstractController
     public function createUser(Request $request, ProfileBannerRepository $PBrep, ProfilePictureRepository $PPrep): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-    
+
         $user = new User();
         $user->setUsername($data['username'] ?? null);
         $user->setEmail($data['email'] ?? null);
@@ -124,10 +124,10 @@ class UserController extends AbstractController
         $user->setAdmin($data['admin'] ?? false);
         $user->setProfileBanner($PBrep->getBannerById($data['pfb'] ?? 1));
         $user->setProfilePicture($PPrep->getPictureById($data['pfp'] ?? 1));
-    
+
         $this->entityManager->persist($user);
         $this->entityManager->flush();
-    
+
         $responseData = [
             'id' => $user->getId(),
             'username' => $user->getUsername(),
@@ -137,12 +137,12 @@ class UserController extends AbstractController
             'elo' => $user->getElo(),
             'admin' => $user->getAdmin(),
             'pfp' => $user->getProfilePicture()->getId(),
-            'pfb' => $user->getProfileBanner()->getId(),  
+            'pfb' => $user->getProfileBanner()->getId(),
         ];
-    
+
         return $this->json($responseData, 201);
     }
-    
+
 
     #[Route('api/user/{id}', name: 'updateUser', methods: ['PUT', 'PATCH'])]
     public function updateUser(int $id, Request $request, UserRepository $userRepo, ProfilePictureRepository $pfpRepo, ProfileBannerRepository $pfbRepo): JsonResponse
@@ -168,7 +168,9 @@ class UserController extends AbstractController
             $user->setScore($data['score']);
         }
         if (isset($data['score']) && isset($data['played_games'])) {
-            $user->setElo(($data['score'] / ($data['played_games'] +1)) * 1000);
+            $playedGames = (int) $data['played_games'];
+            $elo = $playedGames > 0 ? ($data['score'] / $playedGames) * 10 : 100;
+            $user->setElo($elo);
         }
 
         if (isset($data['pfp'])) {
@@ -183,7 +185,7 @@ class UserController extends AbstractController
         if (isset($data['played_games'])) {
             $user->setPlayedGames($data['played_games']);
         }
-    
+
         if (isset($data['pfb'])) {
             $pfb = $pfbRepo->find($data['pfb']);
             if ($pfb) {
@@ -195,7 +197,14 @@ class UserController extends AbstractController
 
         $this->entityManager->flush();
 
-        return $this->json(['message' => 'Utilisateur mis à jour']);
+        return $this->json([
+            'id' => $user->getId(),
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'score' => $user->getScore(),
+            'played_games' => $user->getPlayedGames(),
+            'elo' => $user->getElo(),
+        ]);
     }
 
     // DELETEE
@@ -213,5 +222,35 @@ class UserController extends AbstractController
         $this->entityManager->flush();
 
         return $this->json(['message' => 'Utilisateur supprimé 🗑️']);
+    }
+
+    #[Route('api/cosmetics', name: "getAllCosmetics", methods: ['GET'])]
+    public function getAllCosmetics(
+        ProfilePictureRepository $profilePictureRepo,
+        ProfileBannerRepository $profileBannerRepo
+    ): JsonResponse {
+        $allProfilePictures = $profilePictureRepo->findAll();
+        $allProfileBanners = $profileBannerRepo->findAll();
+
+        $profilePicturesList = array_map(function ($pic) {
+            return [
+                'id' => $pic->getId(),
+                'name' => $pic->getName(),
+                'image' => $pic->getImage(),
+            ];
+        }, $allProfilePictures);
+
+        $profileBannersList = array_map(function ($banner) {
+            return [
+                'id' => $banner->getId(),
+                'name' => $banner->getName(),
+                'image' => $banner->getImage(),
+            ];
+        }, $allProfileBanners);
+
+        return $this->json([
+            'profilePictures' => $profilePicturesList,
+            'profileBanners' => $profileBannersList,
+        ]);
     }
 }
