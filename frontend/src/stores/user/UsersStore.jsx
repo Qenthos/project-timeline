@@ -62,7 +62,6 @@ export default class UsersStore {
    * @param {*} password
    */
   async createAccount(email, username, password) {
-    console.log(username);
     try {
       const response = await fetch(`http://localhost:8000/api/user`, {
         method: "POST",
@@ -157,6 +156,7 @@ export default class UsersStore {
  * @param {string} password
  */
   async login(email, password) {
+    console.log(password)
     try {
       const response = await fetch(API_URL + "/login", {
         method: "POST",
@@ -171,7 +171,7 @@ export default class UsersStore {
       if (!response.ok) {
         throw new Error(data.error || "Erreur inconnue lors de la connexion");
       }
-
+    
       runInAction(() => {
         const user = new Users({ ...data.user, isConnected: true });
 

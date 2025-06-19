@@ -155,6 +155,16 @@ const Profil = observer(() => {
     }
   };
 
+  const [positionLeaderbord, setPositionLeaderboard] = useState("");
+
+  useEffect(() => {
+    fetch(`http://localhost:8000/api/user/${usersStore.currentUser.id}/ranking`)
+    .then((response) => response.json())
+    .then((data) => {
+      setPositionLeaderboard(data.position)
+    })
+  })
+
   return !usersStore.isLoaded ? (
     <LoadingScreen message="Chargement de votre profil en cours..." />
   ) : (
@@ -172,6 +182,11 @@ const Profil = observer(() => {
               <li className="profile__score-item">
                 <p className="profile__score-text">
                   Elo : {usersStore.currentUser.elo}
+                </p>
+              </li>
+              <li className="profile__score-item">
+                <p className="profile__score-text">
+                  Position classement : {positionLeaderbord}{positionLeaderbord === 1 ? "er" : "ème"}
                 </p>
               </li>
             </ul>
