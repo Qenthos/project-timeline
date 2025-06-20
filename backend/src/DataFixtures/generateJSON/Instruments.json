@@ -542,7 +542,7 @@
   {
     "id": 46,
     "name": "Toms",
-    "image": "toms.webp",
+    "image": "tom.webp",
     "created": 1920,
     "weight_kg": 8,
     "height_cm": 40,
@@ -588,8 +588,9 @@
     "category": "percussion"
   },
   {
+    "id": 50,
     "name": "Diapason",
-    "image": "Diapason.webp",
+    "image": "diapason.webp",
     "created": 1711,
     "weight_kg": 0.03,
     "height_cm": 12,
@@ -757,7 +758,7 @@
   {
     "id": 64,
     "name": "Flûte traversière",
-    "image": "flûte traversière.webp",
+    "image": "flûte_traversière.webp",
     "created": -900,
     "weight_kg": 0.5,
     "height_cm": 67,
@@ -1057,7 +1058,7 @@
   {
     "id": 89,
     "name": "Grosse Caisse",
-    "image": "grosse Caisse.webp",
+    "image": "grosse_caisse.webp",
     "created": 1700,
     "weight_kg": 10,
     "height_cm": 90,
@@ -1104,7 +1105,7 @@
   },
   {
     "name": "Bottleneck",
-    "image": "Bottleneck.webp",
+    "image": "bottleneck.webp",
     "created": 1920,
     "weight_kg": 0.05,
     "height_cm": 7,
