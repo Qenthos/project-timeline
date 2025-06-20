@@ -266,7 +266,7 @@
   {
     "id": 23,
     "name": "Orgue d’église",
-    "image": "orgue_d’église.webp",
+    "image": "orgue_d_église.webp",
     "created": -300,
     "weight_kg": 3000,
     "height_cm": 800,
@@ -641,7 +641,7 @@
     "created": -1500,
     "weight_kg": 1,
     "height_cm": 50,
-    "description": "La trompette est un instrument à vent de la famille des cuivres, reconnaissable à son timbre brillant et puissant. Elle existe depuis l’Antiquité et a évolué jusqu’à la trompette à pistons moderne.",
+    "description": "La trompette est un instrument à vent de la famille des cuivres, reconnaissable à son timbre brillant et puissant. Elle existe depuis l’Antiquité et a évolué jusqu’à la trompette à pistons moderne dans les années 1800.",
     "anecdote": "La trompette a longtemps été utilisée pour les cérémonies militaires et royales avant de devenir un pilier du jazz et de la musique classique.",
     "origine": "Égypte ancienne / Europe",
     "category": "vent"
@@ -769,7 +769,7 @@
   {
     "id": 65,
     "name": "Flûte à bec",
-    "image": "flûte à bec.webp",
+    "image": "flûte_à_bec.webp",
     "created": 1300,
     "weight_kg": 0.2,
     "height_cm": 32,
