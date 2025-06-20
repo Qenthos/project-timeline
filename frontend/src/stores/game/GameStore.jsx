@@ -98,7 +98,7 @@ export default class GameStore {
     this.incrementCurrentIndex();
   }
 
-    finishGame(cards, timer, difficulty, nbBadResponse, nbGoodResponse) {
+  finishGame(cards, timer, difficulty, nbBadResponse, nbGoodResponse) {
     if (this._gamesStore.endGame) {
       return;
     }
@@ -115,10 +115,11 @@ export default class GameStore {
     );
     this.clearTimer();
     this.postGameToUser();
-
-    let finalScore = this._usersStore.currentUser.score + this._gamesStore.score;
-    this._usersStore.updateScoreAndPlayedGames(finalScore);
-   
+    if (this._usersStore.currentUser) {
+      let finalScore =
+        this._usersStore.currentUser.score + this._gamesStore.score;
+      this._usersStore.updateScoreAndPlayedGames(finalScore);
+    }
   }
 
   startNewRound() {

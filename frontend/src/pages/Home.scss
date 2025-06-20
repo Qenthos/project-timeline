@@ -19,7 +19,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow:  0 0 10px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
     border-radius: 1rem;
     padding: 2.5rem 3rem;
     height: fit-content;
@@ -30,24 +30,10 @@
     font-size: 4rem;
     font-weight: 800;
     text-align: center;
-    color: #333;
+    color: $color-title;
     position: relative;
-    text-transform: uppercase;  
-
-    // &::after {
-    //   content: "";
-    //   position: absolute;
-    //   bottom: -14px;
-    //   left: 50%;
-    //   transform: translateX(-50%);
-    //   width: 5rem;
-    //   height: 5px;
-    //   background: linear-gradient(90deg, $color-red, $color-purple);
-    //   border-radius: 3px;
-    // }
+    text-transform: uppercase;
   }
-
-
 
   &__list {
     &--primary-actions {
@@ -84,32 +70,33 @@
     width: 100%;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 
-    &--play {
-      height: 6rem;
-      font-size: 3rem;
-      align-content: center;
-      @include button-base(
-      $linear-gradient-purple,
-      $linear-gradient-purple-hover,
-      $shadow-purple
-    )
-    }
-
+    &--play,
     &--discover-instruments {
       height: 6rem;
       font-size: 3rem;
       align-content: center;
+    }
+
+    &--play {
+      @include button-base(
+        $linear-gradient-purple,
+        $linear-gradient-purple-hover,
+        $shadow-purple
+      );
+    }
+
+    &--discover-instruments {
       @include button-base(
         $linear-gradient-red,
         $linear-gradient-red-hover,
         $shadow-red
-      )
+      );
     }
   }
 
   &__image {
     height: fit-content;
-    box-shadow:  0 0 10px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.1);
     border-radius: 1rem;
     padding: 2.5rem 3rem;
     background-color: white;

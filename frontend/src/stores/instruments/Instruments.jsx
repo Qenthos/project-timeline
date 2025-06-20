@@ -9,6 +9,7 @@ export default class Instruments {
   _weight;
   _height;
   _description;
+  _clue;
 
   constructor({
     id,
@@ -19,6 +20,7 @@ export default class Instruments {
     weight,
     height,
     description,
+    clue = { year: 0, weight: 0, height: 0 },
   }) {
     this._id = id;
     this._name = name;
@@ -28,11 +30,10 @@ export default class Instruments {
     this._weight = weight;
     this._height = height;
     this._description = description;
-
+    this._clue = clue;
     makeAutoObservable(this);
   }
 
-  // Getters
   get id() {
     return this._id;
   }
@@ -65,7 +66,10 @@ export default class Instruments {
     return this._description;
   }
 
-  // Setters
+  get clue() {
+    return this._clue;
+  }
+
   set name(value) {
     if (typeof value === "string" && value.trim().length > 0) {
       this._name = value.trim();
@@ -129,6 +133,20 @@ export default class Instruments {
       this._description = value.trim();
     } else {
       throw new Error(`Description invalide : ${value}`);
+    }
+  }
+
+  set clue(value) {
+    if (
+      typeof value === "object" &&
+      value !== null &&
+      typeof value.weight === "number" &&
+      typeof value.height === "number" &&
+      typeof value.year === "number"
+    ) {
+      this._clue = value;
+    } else {
+      throw new Error(`Indice invalide : ${JSON.stringify(value)}`);
     }
   }
 }

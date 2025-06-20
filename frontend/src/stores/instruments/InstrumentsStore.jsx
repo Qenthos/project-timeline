@@ -1,14 +1,12 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import Instruments from "./Instruments";
 
-// const API_URL =
-//   "https://682de731746f8ca4a47b1b3a.mockapi.io/instruments/instruments";
-
 const API_URL = "http://localhost:8000/api/instruments";
 
 export default class InstrumentsStore {
   _instruments = [];
   _isLoaded = false;
+  _cluesCache = {};
 
   constructor() {
     makeAutoObservable(this);
@@ -50,8 +48,18 @@ export default class InstrumentsStore {
     return this._instruments.find((instrument) => instrument.id === id) || null;
   }
 
+  /**
+   * Update instrument
+   * @param {*} id
+   * @param {*} name
+   * @param {*} category
+   * @param {*} created
+   * @param {*} weight
+   * @param {*} height
+   * @param {*} description
+   */
   updateInstrument(id, name, category, created, weight, height, description) {
-    console.log(typeof id)
+    console.log(typeof id);
     fetch(`${API_URL}/${id}`, {
       method: "PUT",
       headers: {
@@ -76,7 +84,7 @@ export default class InstrumentsStore {
         }
         return response.json();
       })
-      .then((data) => {
+      .then(() => {
         runInAction(() => {
           const instrumentToUpdate = this.getInstrumentsById(Number(id));
           if (instrumentToUpdate) {
@@ -94,6 +102,10 @@ export default class InstrumentsStore {
       });
   }
 
+  /**
+   * Delete instrument
+   * @param {*} userId
+   */
   deleteInstrument(userId) {
     fetch(`${API_URL}/${userId}`, {
       method: "DELETE",
@@ -110,5 +122,49 @@ export default class InstrumentsStore {
       .catch((err) => {
         console.error(err);
       });
+  }
+
+  async fetchClue(type, id) {
+    const key = `${type}_${id}`;
+
+    if (this._cluesCache[key]) {
+      return this._cluesCache[key];
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/clues/${type}/${id}`
+      );
+      if (!response.ok) throw new Error("Clue not found");
+      const clue = await response.json();
+
+      runInAction(() => {
+        this._cluesCache[key] = clue;
+      });
+
+      return clue;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
+  async loadCluesForInstrument(instrument) {
+    if (!instrument.indice) return;
+
+    const { weight, height, year } = instrument.indice;
+    const [weightClue, heightClue, yearClue] = await Promise.all([
+      this.fetchClue("weight", weight),
+      this.fetchClue("height", height),
+      this.fetchClue("year", year),
+    ]);
+
+    runInAction(() => {
+      instrument.clues = {
+        weight: weightClue,
+        height: heightClue,
+        year: yearClue,
+      };
+    });
   }
 }

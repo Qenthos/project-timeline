@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { TimelineContext } from "./TimelineContext";
 
-// Hook pour accéder au store principal du contexte Timeline
+// store principal du contexte Timeline
 export const useTimelineStore = () => {
   const timelineStore = useContext(TimelineContext);
   if (!timelineStore) {
@@ -10,20 +10,20 @@ export const useTimelineStore = () => {
   return timelineStore;
 };
 
-// Hook pour accéder au sous-store des instruments
+// sous-store des instruments
 export const useInstrumentsStore = () => {
   const timelineStore = useTimelineStore();
   return timelineStore.instrumentsStore;
 };
 
 
-//Hook pour accéder au sous-store des utilisateurs
+//sous-store des utilisateurs
 export const useUsersStore = () => {
   const timelineStore = useTimelineStore();
   return timelineStore.usersStore;
 };
 
-//Hook pour accéder au sous-store des parties de jeux
+// sous-store des parties de jeux
 export const useGameStore = () => {
   const timelineStore = useTimelineStore();
   return timelineStore.gameStore;  

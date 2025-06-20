@@ -3,11 +3,26 @@
 
 /***0px***/
 
-$primary: #6c5ce7;
-$secondary: #00cec9;
-$danger: #ff7675;
-$dark: #2d3436;
-$light: #f5f6fa;
+.timeline__music-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: #3f3f3f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.timeline__music-toggle .icon {
+  font-size: 1.2rem;
+  color: white;
+}
+
+.timeline__music-toggle:hover {
+  background-color: #666;
+}
 
 .timeline {
   padding: 0.2rem 0 1rem 0;
@@ -28,7 +43,7 @@ $light: #f5f6fa;
   &__subtitle {
     display: block;
     font-size: 1rem;
-    color: #555;
+    color: $color-subtitle;
   }
 
   .timeline__list-parameters {
@@ -41,7 +56,7 @@ $light: #f5f6fa;
     background: rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(6px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  
+
     &-item {
       flex: 1 1 200px;
       min-width: 200px;
@@ -53,37 +68,30 @@ $light: #f5f6fa;
       flex-direction: column;
       justify-content: center;
       transition: transform 0.2s ease;
-  
+
       &:hover {
         transform: translateY(-3px);
       }
-  
+
       h2.timeline__title {
         font-size: 1.4rem;
         color: #6c5ce7;
         margin: 0;
         text-align: center;
       }
-  
+
       .timeline__subtitle {
         font-size: 0.9rem;
-        color: #666;
+        color: $color-subtitle;
         margin-top: 0.2rem;
       }
-  
-      p {
-        font-size: 1rem;
-        font-weight: 500;
-        color: #2d3436;
-        margin: 0;
-      }
-  
+
       .timeline__list-parameters-text--difficulty {
         color: #6c5ce7;
         align-items: start;
         margin: 0.5rem 0 0 0;
       }
-  
+
       .timeline__list-parameters-text--gamemode {
         color: #00cec9;
         display: flex;
@@ -95,7 +103,7 @@ $light: #f5f6fa;
           font-weight: bold;
         }
       }
-  
+
       .timeline__list-parameters-text--timer {
         color: #ff7675;
 
@@ -116,30 +124,24 @@ $light: #f5f6fa;
           text-align: center;
         }
       }
-  
+
       button {
         margin-top: 0.5rem;
         padding: 0.4rem 0.8rem;
         background-color: #2d3436;
         color: white;
-        border: none;
         border-radius: 6px;
         font-weight: bold;
         font-size: 0.9rem;
         cursor: pointer;
         transition: background-color 0.2s ease;
-  
+
         &:hover {
           background-color: #000;
         }
       }
     }
   }
-  
-
-  // &__list-parameters-text--timer {
-  //   margin: 0 0.5rem 0 0;
-  // }
 
   &__nb-place-card {
     padding: 10px 20px;
@@ -163,7 +165,6 @@ $light: #f5f6fa;
     justify-content: center;
     gap: 0.4rem;
     position: relative;
-    // width: 100%;
     height: 16rem;
 
     &-link {
@@ -185,7 +186,7 @@ $light: #f5f6fa;
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
   }
-  
+
   &__instruments {
     display: flex;
     flex-direction: column;
@@ -194,7 +195,6 @@ $light: #f5f6fa;
 
     padding: 1.5rem;
     border-radius: 1rem;
-    // box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
 
     &-message,
     &-result,
@@ -202,24 +202,15 @@ $light: #f5f6fa;
     &-time {
       font-size: 1.1rem;
       text-align: left;
-      color: $dark;
+      color: #2d3436;
     }
-
-    // &-link,
-    // &-button {
-    //   font-weight: bold;
-    //   padding: 0.8rem 1.2rem;
-    //   border-radius: 0.5rem;
-    //   cursor: pointer;
-    //   transition: transform 0.2s ease, background-color 0.2s ease;
-    // }
 
     &-link {
       @include button-base(
         $linear-gradient-red,
         $linear-gradient-red-hover,
         $shadow-red
-      )
+      );
     }
 
     &-link-account {
@@ -227,7 +218,7 @@ $light: #f5f6fa;
         $linear-gradient-blue,
         $linear-gradient-blue-hover,
         $shadow-blue
-      )
+      );
     }
 
     &-button {
@@ -235,7 +226,7 @@ $light: #f5f6fa;
         $linear-gradient-purple,
         $linear-gradient-purple-hover,
         $shadow-purple
-      )
+      );
     }
 
     &-actions {

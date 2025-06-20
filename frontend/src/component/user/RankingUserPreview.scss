@@ -24,12 +24,10 @@
   font-weight: 900;
   width: 3rem;
   text-align: center;
-  color: #333;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   animation: popIn 0.3s ease-in;
 }
 
-// Podium colors & glowing effect
 .podium--first {
   color: gold;
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
@@ -64,7 +62,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #333;
 }
 
 .ranking-user-card__name {

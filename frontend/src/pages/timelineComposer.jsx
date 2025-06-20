@@ -1,6 +1,6 @@
 import { useLocation, Link } from "react-router";
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { TimelineContext } from "../stores/TimelineContext";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -17,22 +17,46 @@ import "./TimelineComposer.scss";
 const TimelineComposer = observer(() => {
   const location = useLocation();
 
+  const audioRef = useRef(null);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(true);
+
   const [loadingCards, setLoadingCards] = useState(true);
   const [isGameFinished, setIsGameFinished] = useState(false);
   const [previousElo, setPreviousElo] = useState(null);
 
   if (!location.state) return <Navigate to="/settings-game" />;
 
-  const { timer, cards, isUnlimited, difficulty, modeGame } =
+  const { timer, cards, isUnlimited, difficulty, modeGame, clue } =
     location.state || {};
 
   const { gameStore, instruStore } = useContext(TimelineContext);
   const { isLoaded } = useInstrumentsStore();
   const usersStore = useUsersStore();
 
+ 
+
   const [showDragCard, setShowDragCard] = useState(true);
 
   const currentUser = usersStore.currentUser || null;
+
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (isMusicPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current
+          .play()
+          .catch((err) => console.log("Erreur lecture audio", err));
+      }
+      setIsMusicPlaying(!isMusicPlaying);
+    }
+  };
+
+  useEffect(() => {
+    // On écoute le premier clic utilisateur pour autoriser le navigateur à lire la musique
+    document.addEventListener("click", toggleMusic, { once: true });
+    return () => document.removeEventListener("click", toggleMusic);
+  }, []);
 
   /**
    * Initialize a game
@@ -59,6 +83,17 @@ const TimelineComposer = observer(() => {
 
   const currentInstrument =
     gameStore.state.selectedInstruments[gameStore.state.currentIndex];
+
+    useEffect(() => {
+      async function fetchClues() {
+        if (currentInstrument && clue) {
+          await instruStore.loadCluesForInstrument(currentInstrument);
+        }
+      }
+      fetchClues();
+    }, [currentInstrument, instruStore]);
+    console.log(clue)
+    
 
   /**
    * Handle local storage of timeline
@@ -145,7 +180,7 @@ const TimelineComposer = observer(() => {
           timer,
           difficulty,
           instruStore.nbBadResponse,
-          instruStore.nbGoodResponse,
+          instruStore.nbGoodResponse
         );
         localStorage.removeItem("tabIds");
       }
@@ -194,6 +229,30 @@ const TimelineComposer = observer(() => {
       <Header />
       <main className="timeline">
         <section className="timeline__section">
+          <div className="timeline__music">
+            <button
+              onClick={toggleMusic}
+              className={`timeline__music-toggle ${
+                isMusicPlaying ? "active" : "muted"
+              }`}
+              aria-label={
+                isMusicPlaying ? "Couper la musique" : "Activer la musique"
+              }
+            >
+              {isMusicPlaying ? (
+                <span className="icon">🔊</span>
+              ) : (
+                <span className="icon">🔇</span>
+              )}
+            </button>
+            <audio
+              ref={audioRef}
+              src="/media/audio/audio-jeu.mp3"
+              loop
+              autoPlay
+              hidden
+            />
+          </div>
           <ul className="timeline__list-parameters">
             <li className="timeline__list-parameters-item">
               <h2 className="timeline__title">
@@ -351,7 +410,18 @@ const TimelineComposer = observer(() => {
                   </p>
                 )}
                 {showDragCard && currentInstrument && (
-                  <DraggableInstrument instrument={currentInstrument} />
+                  <>
+                    {/* {currentInstrument.clues.weight && (
+                      <p>{currentInstrument.clues.weight.description}</p>
+                    )}
+                    {currentInstrument.clues.height && (
+                      <p>{currentInstrument.clues.height.description}</p>
+                    )}
+                    {currentInstrument.clues.year && (
+                      <p>{currentInstrument.clues.year.description}</p>
+                    )} */}
+                    <DraggableInstrument instrument={currentInstrument} />
+                  </>
                 )}
               </>
             )}
