@@ -24,7 +24,7 @@ export default class Users {
     createdAt,
     isConnected = false,
     played_games = 0,
-    elo = 1000,
+    elo = 100,
   }) {
     this._id = id;
     this._username = username;

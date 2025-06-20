@@ -105,21 +105,19 @@ export default class UsersStore {
     }
   }
 
-
   /**
- * Login
- * @param {string} email
- * @param {string} password
- */
+   * Login
+   * @param {string} email
+   * @param {string} password
+   */
   async login(email, password) {
-    console.log(password)
     try {
       const response = await fetch(API_URL + "/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
@@ -127,7 +125,7 @@ export default class UsersStore {
       if (!response.ok) {
         throw new Error(data.error || "Erreur inconnue lors de la connexion");
       }
-    
+
       runInAction(() => {
         const user = new Users({ ...data.user, isConnected: true });
 
@@ -140,7 +138,6 @@ export default class UsersStore {
 
         localStorage.setItem("currentUser", JSON.stringify(data.user));
       });
-
     } catch (error) {
       console.error("Erreur lors de la connexion :", error);
       throw error;
@@ -405,51 +402,66 @@ export default class UsersStore {
   }
 
   /**
- * Met à jour score + played_games + recalcul elo en une seule requête
- */
-updateScoreAndPlayedGames(newScore) {
-  const user = this.getUserById(this._currentUser.id);
+   * Met à jour score + played_games + recalcul elo en une seule requête
+   */
+  updateScoreAndPlayedGames(newScore) {
+    const user = this.getUserById(this._currentUser.id);
 
-  if (!user) {
-    console.error("Utilisateur non trouvé");
-    return;
+    if (!user) {
+      console.error("Utilisateur non trouvé");
+      return;
+    }
+
+    const updatedPlayedGames = (user.played_games || 0) + 1;
+
+    fetch(`http://localhost:8000/api/user/${user.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        score: newScore,
+        played_games: updatedPlayedGames,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            throw new Error(`Erreur ${response.status} : ${text}`);
+          });
+        }
+        return response.json();
+      })
+      .then((updatedUser) => {
+        runInAction(() => {
+          console.log(newScore);
+          user.score = updatedUser.score;
+          user.played_games = updatedUser.played_games;
+          user.elo = updatedUser.elo;
+        });
+        this.refreshCurrentUser();
+      })
+      .catch((err) => {
+        console.error("Erreur updateScoreAndPlayedGames :", err);
+      });
   }
 
-  const updatedPlayedGames = (user.played_games || 0) + 1;
+  /**
+   * 
+   * @returns 
+   */
+  async getPositionLeaderboard() {
+    const response = await fetch(
+      `http://localhost:8000/api/user/${this.currentUser.id}/ranking`
+    );
+    const data = await response.json();
+    return data;
+  }
 
-  fetch(`http://localhost:8000/api/user/${user.id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      score: newScore,
-      played_games: updatedPlayedGames,
-    }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        return response.text().then((text) => {
-          throw new Error(`Erreur ${response.status} : ${text}`);
-        });
-      }
-      return response.json();
-    })
-    .then((updatedUser) => {
-      runInAction(() => {
-        console.log(newScore)
-        user.score = updatedUser.score;
-        user.played_games = updatedUser.played_games;
-        user.elo = updatedUser.elo;
-      });
-      this.refreshCurrentUser();
-    })
-    .catch((err) => {
-      console.error("Erreur updateScoreAndPlayedGames :", err);
-    });
-}
-
-
+  /**
+   * 
+   * @returns 
+   */
   incrementPlayedGames() {
     const user = this.getUserById(this._currentUser.id);
 
@@ -457,7 +469,7 @@ updateScoreAndPlayedGames(newScore) {
       console.error("Utilisateur non trouvé");
       return;
     }
-    console.log(user.played_games)
+    console.log(user.played_games);
     const updatedPlayedGames = (user.played_games || 0) + 1;
 
     fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
@@ -479,7 +491,7 @@ updateScoreAndPlayedGames(newScore) {
       })
       .then(() => {
         runInAction(() => {
-          console.log(user)
+          console.log(user);
           user.played_games = updatedPlayedGames;
         });
         this.refreshCurrentUser();
@@ -494,15 +506,15 @@ updateScoreAndPlayedGames(newScore) {
 
   updateElo() {
     const user = this.getUserById(this._currentUser.id);
-  
+
     if (!user || user.score == null || user.played_games == null) {
       console.error("Données incomplètes pour l'ELO");
       return;
     }
-  
+
     const updatedScore = user.score;
     const updatedPlayedGames = user.played_games;
-  
+
     fetch(`http://localhost:8000/api/user/${user.id}`, {
       method: "PATCH",
       headers: {
@@ -524,7 +536,7 @@ updateScoreAndPlayedGames(newScore) {
       .then((updateUser) => {
         runInAction(() => {
           console.log(updateUser);
-          console.log(user)
+          console.log(user);
           user.elo = updateUser.elo;
         });
         this.refreshCurrentUser();
@@ -533,7 +545,6 @@ updateScoreAndPlayedGames(newScore) {
         console.error("Erreur lors de la mise à jour de l'ELO :", error);
       });
   }
-  
 
   /**
    * Refresh date -> currentUser

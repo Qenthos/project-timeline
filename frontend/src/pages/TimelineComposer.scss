@@ -3,6 +3,10 @@
 
 /***0px***/
 
+.timeline__music {
+  width: fit-content;
+}
+
 .timeline__music-toggle {
   width: 40px;
   height: 40px;
@@ -31,8 +35,9 @@
   max-width: 1280px;
 
   &__section {
-    display: grid;
-    gap: 1rem;
+    display:flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   &__title {
@@ -48,7 +53,6 @@
 
   &__indice-text {
     position: relative;
-    margin: 1rem auto;
     padding: 0.8rem 1.2rem;
     border-radius: 12px;
     font-size: 1.1rem;
@@ -230,8 +234,6 @@
     flex-direction: column;
     align-items: center;
     gap: 1.2rem;
-
-    padding: 1.5rem;
     border-radius: 1rem;
 
     &-message,
@@ -283,7 +285,7 @@
     padding: 30px;
     box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.18);
     border-radius: 1rem 1rem 0 0;
-    margin: 1rem 0 0 0;
+    margin: 1.2rem 0 0 0;
     background-color: white;
     // display: grid;
     // gap: 1rem;

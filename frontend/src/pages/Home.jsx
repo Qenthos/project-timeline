@@ -44,7 +44,7 @@ const Home = () => {
             </li>
             <li>
               <Link
-                to="/my-instruments"
+                to="/login"
                 className="home__link-account"
               >
                 Se connecter

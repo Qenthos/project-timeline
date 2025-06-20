@@ -32,6 +32,13 @@ const Instrument = ({ instrumentDrop, modeGame, status }) => {
       ? "rgba(244, 67, 54, 0.2)"
       : "rgba(158, 158, 158, 0.1)";
 
+      const modeLabels = {
+        annee: "Année de création",
+        taille: "Taille (cm)",
+        poids: "Poids (kg)",
+      };
+      
+
   return (
     <motion.div
       onClick={() => {
@@ -75,7 +82,7 @@ const Instrument = ({ instrumentDrop, modeGame, status }) => {
             <p className="card__text">{instrumentDrop.description}</p>
           </li>
           <li className="card__info">
-            <p className="card__text">Année de création : {mode}</p>
+          <p className="card__text">{modeLabels[modeGame] || "Valeur"} : {mode}</p>
           </li>
         </ul>
       )}

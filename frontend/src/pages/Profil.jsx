@@ -30,8 +30,33 @@ const Profil = observer(() => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
+  const [positionLeaderbord, setPositionLeaderboard] = useState("");
+
   useEffect(() => {
-    console.log(usersStore.currentUser);
+    if (!usersStore.currentUser) {
+      navigate("/");
+    }
+  }, [usersStore.currentUser]);
+
+  useEffect(() => {
+    const fetchPosition = async () => {
+      if (usersStore.currentUser) {
+        try {
+          const data = await usersStore.getPositionLeaderboard();
+          setPositionLeaderboard(data.position);
+        } catch (err) {
+          console.error(
+            "Erreur lors de la récupération de la position du joueur dans le classement:",
+            err
+          );
+        }
+      }
+    };
+
+    fetchPosition();
+  }, [usersStore.currentUser]);
+
+  useEffect(() => {
     if (usersStore.currentUser) {
       setEditedUser({
         username: usersStore.currentUser.username || "",
@@ -163,16 +188,6 @@ const Profil = observer(() => {
     usersStore.logout();
     navigate("/");
   };
-
-  const [positionLeaderbord, setPositionLeaderboard] = useState("");
-
-  useEffect(() => {
-    fetch(`http://localhost:8000/api/user/${usersStore.currentUser.id}/ranking`)
-      .then((response) => response.json())
-      .then((data) => {
-        setPositionLeaderboard(data.position);
-      });
-  });
 
   return !usersStore.isLoaded ? (
     <LoadingScreen message="Chargement de votre profil en cours..." />
