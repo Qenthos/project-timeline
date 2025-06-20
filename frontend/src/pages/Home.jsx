@@ -1,16 +1,23 @@
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 import { Link } from "react-router";
+import { useUsersStore } from "./../stores/useStore";
 import "./Home.scss";
 
 const Home = () => {
+  const { currentUser } = useUsersStore();
+  const username = currentUser?.username;
+
   return (
     <>
       <Header />
       <main className="home">
         <section className="home__section">
           <h1 className="home__title">InstruLine</h1>
-          <h2 className="home__sub-title">Prêt à relever le défi ?</h2>
+          <h2 className="home__sub-title">
+            Prêt à relever le défi {username ?? ""} ?
+          </h2>
+
           <ul className="home__list home__list--primary-actions">
             <li className="home__item home__item--first-list home__item--play">
               <Link to="/settings-game" className="home__link home__link--play">
