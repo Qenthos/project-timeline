@@ -15,8 +15,8 @@ const InstrumentPreview = observer(({
     <article className="instrument-card">
       <div className="instrument-card__image-wrapper">
         <img
-          src={instrument.image}
-          alt={instrument.name}
+        src={`/media/instru-cards/${instrument.image}`}
+        alt={instrument.name}
           className="instrument-card__image"
         />
       </div>

@@ -24,7 +24,7 @@ const DraggableInstrument = ({ instrument }) => {
       }}
     >
       <img
-        src={instrument.image}
+        src={`/media/instru_cards/${instrument.image}`}
         alt={instrument.name}
         draggable="false"
         className="draggable-instrument__image"
