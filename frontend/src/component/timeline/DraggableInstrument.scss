@@ -7,11 +7,12 @@
   background: $card-bg;
   border: 2px solid $card-border;
   box-shadow: 0 10px 20px $card-shadow;
-  overflow: hidden;
+  // overflow: hidden;
   cursor: grab;
   transition: all 0.3s ease;
   transform-origin: center;
   animation: pop-in 0.3s ease-out;
+  margin: 0 0 3.5rem 0;
 
   &:hover {
     transform: scale(1.05);
@@ -27,15 +28,13 @@
     padding: 1rem;
     border-bottom: 2px solid $card-border;
     transition: transform 0.3s ease;
-
-    &:hover {
-      transform: scale(1.05);
-    }
+    border-radius: 1rem 1rem 0 0;
   }
 
   &__name {
     font-size: 1rem;
     text-align: center;
+    border-radius: 0 0 1rem 1rem;
     padding: 0.7rem;
     font-weight: 600;
     background: linear-gradient(45deg, $card-border, $card-highlight);

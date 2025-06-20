@@ -40,7 +40,7 @@ export default class Instruments {
   }
 
   get image() {
-    return this._image;
+    return `/media/instru-cards/${this._image}`;
   }
 
   get category() {
