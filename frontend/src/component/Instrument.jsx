@@ -66,9 +66,7 @@ const Instrument = ({ instrumentDrop, modeGame, status }) => {
       {instrumentDrop && (
         <ul
           className="card__face card__face--back"
-          style={{
-            backgroundImage: `url(${instrumentDrop.image})`,
-          }}
+
         >
           <li className="card__info">
             <p className="card__text">{instrumentDrop.name}</p>

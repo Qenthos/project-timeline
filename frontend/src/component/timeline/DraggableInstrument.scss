@@ -5,8 +5,8 @@
   width: 160px;
   border-radius: 1rem;
   background: $card-bg;
-  border: 2px solid $card-border;
-  box-shadow: 0 10px 20px $card-shadow;
+  // border: 2px solid rgba(0, 0, 0, 0.874);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
   // overflow: hidden;
   cursor: grab;
   transition: all 0.3s ease;
@@ -22,23 +22,23 @@
 
   &__image {
     width: 100%;
-    aspect-ratio: 1 / 1;
+    // aspect-ratio: 1 / 1;
     object-fit: contain;
     background-color: #f9f9f9;
-    border-bottom: 2px solid $card-border;
+    // border-bottom: 2px solid rgba(0, 0, 0, 0.874);
     transition: transform 0.3s ease;
     border-radius: 1rem 1rem 0 0;
   }
 
   &__name {
-    font-size: 1rem;
+    font-size: 1.3rem;
     text-align: center;
     border-radius: 0 0 1rem 1rem;
     padding: 0.7rem;
     font-weight: 600;
-    background: linear-gradient(45deg, $card-border, $card-highlight);
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    // background: linear-gradient(45deg, $card-border, $card-highlight);
+    background-color: #fdfdfd;
+    color: black;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
   }
 }
