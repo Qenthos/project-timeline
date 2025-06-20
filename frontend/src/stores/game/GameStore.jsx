@@ -102,6 +102,7 @@ export default class GameStore {
     if (this._gamesStore.endGame) {
       return;
     }
+
     this._gamesStore.endGame = true;
     this.calculateTimeRemaining();
     this.calculateScore(
@@ -115,10 +116,10 @@ export default class GameStore {
     this.clearTimer();
     this.postGameToUser();
     if (this._usersStore.currentUser) {
-      this._usersStore.incrementPlayedGames();
-      this._usersStore.updateElo();
+      let finalScore =
+        this._usersStore.currentUser.score + this._gamesStore.score;
+      this._usersStore.updateScoreAndPlayedGames(finalScore);
     }
-   
   }
 
   startNewRound() {

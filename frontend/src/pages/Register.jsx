@@ -68,7 +68,7 @@ const Register = observer(() => {
     e.preventDefault();
     if (!passwordError) {
       try {
-        console.log(username, email)
+        console.log(username, email);
         await userStore.createAccount(email, username, password);
         navigate("/profil");
       } catch (error) {
@@ -116,6 +116,7 @@ const Register = observer(() => {
                     type="text"
                     name="username"
                     placeholder="Albator"
+                    autoComplete="username"
                     onChange={(e) => setUsername(e.target.value)}
                     required
                   />

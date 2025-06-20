@@ -2,8 +2,6 @@
 @use "../styles/_variables" as *;
 
 .profile {
-  //  background: linear-gradient(to bottom, #f0f4f8 0%, #ffffff 100%);
-  color: #222;
 
   &__section {
     display: flex;
@@ -30,6 +28,7 @@
     color: #00bcd4;
     font-weight: 700;
     box-shadow: 0 0 12px #00bcd455;
+    width: fit-content;
   }
 
   &__banner-wrapper {
@@ -81,7 +80,7 @@
     bottom: -70px;
     left: 50%;
     transform: translateX(-50%);
-    background: #fff;
+    background: white;
     cursor: pointer;
     overflow: hidden;
     transition: transform 0.3s;
@@ -166,7 +165,7 @@
     border-radius: 0.5rem;
     font-size: 1rem;
     background-color: #fdfdfd;
-    color: #222;
+    color: $color-input;
     width: 100%;
 
     &:read-only {
@@ -198,9 +197,14 @@
   }
 
   &__error {
-    color: #e53935;
-    font-size: 0.85rem;
-    margin-top: 0.3rem;
+    margin-top: 0.5rem;
+    background-color: rgba(255, 0, 0, 0.08);
+    border-left: 4px solid $color-red;
+    padding: 0.5rem 1rem;
+    color: $color-red;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
   }
 
   &__played-games,

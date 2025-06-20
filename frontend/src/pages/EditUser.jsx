@@ -9,13 +9,12 @@ const EditUser = observer(() => {
   const { userId } = useParams();
   let navigate = useNavigate();
 
-  const usersStore = useUsersStore();
-  const user = usersStore.getUserById(Number(userId));
-  console.log(user);
-
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [score, setScore] = useState("");
+
+  const usersStore = useUsersStore();
+  const user = usersStore.getUserById(Number(userId));
 
   useEffect(() => {
     if (user) {
@@ -125,36 +124,7 @@ const EditUser = observer(() => {
               onChange={(e) => setScore(e.target.value)}
             />
           </li>
-
-          {/* 
-            <li className="user-edit__item">
-                <label htmlFor="bannerImage" className="user-edit__label">
-                Photo de couverture (URL)
-                </label>
-                <input
-                type="url"
-                id="bannerImage"
-                name="bannerImage"
-                className="user-edit__input"
-                value={bannerImage}
-                onChange={(e) => setbannerImage(e.target.value)}
-                />
-            </li>
-
-            <li className="user-edit__item">
-                <label htmlFor="profilePicture" className="user-edit__label">Photo de profil (URL)</label>
-                <input
-                type="url"
-                id="profilePicture"
-                name="profilePicture"
-                className="user-edit__input"
-                value={profilePicture}
-                onChange={(e) => setprofilePicture(e.target.value)}
-                />
-            </li> 
-  */}
         </ul>
-
         <ul className="user-edit__actions">
           <li className="user-edit__action">
             <button

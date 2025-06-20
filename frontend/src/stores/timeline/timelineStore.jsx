@@ -110,34 +110,37 @@ export default class TimelineStore {
     }
   }
 
+  /**
+   * Sort card
+   * @param {*} indexDropped 
+   * @param {*} newInstrumentId 
+   * @param {*} mode 
+   */
   setInstrumentsSorted(indexDropped, newInstrumentId, mode) {
-    // Copier l’état actuel des cartes
+
     let current = [...this._idsTimeline];
 
-    // Supprimer le doublon si déjà présent
+  // Suppression de l'instrument s'il était déjà dans la timeline
     current = current.filter((id) => id !== newInstrumentId);
 
-    // Garder uniquement les éléments non nuls (compactage)
+  // enlever les nulls
     let compacted = current.filter((e) => e !== null);
 
     compacted.splice(indexDropped, 0, newInstrumentId);
 
-    // Compléter avec des `null` jusqu’à this._size
     while (compacted.length < this._size) {
       compacted.push(null);
     }
 
-    let currentIds = compacted; //tri du tab en enlevant les nulls entre les ids
+    let currentIds = compacted; 
 
-    // Mise à jour immédiate pour affichage instantané
+    // afficher
     this._idsTimeline = currentIds;
 
     // Récupérer les objets instruments à partir des ids non nuls
     const instruments = this._idsTimeline
       .map((id) => (id ? this._instrumentsStore.getInstrumentsById(id) : null))
       .filter(Boolean);
-
-      console.log(instruments)
 
     // Tri selon le mode
     instruments.sort((a, b) => {
@@ -153,7 +156,7 @@ export default class TimelineStore {
       this._highlightStatus = {};
     }
 
-    // Mise à jour des highlights
+    // Maj surlignement 
     this._idsTimeline.forEach((id, idx) => {
       if (!id) return;
       const isCorrect = id === sortedOrder[idx];

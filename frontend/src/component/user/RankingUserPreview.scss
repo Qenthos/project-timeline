@@ -20,16 +20,14 @@
 }
 
 .ranking-user-card__index {
-  font-size: 2.2rem;
+  font-size: 3rem;
   font-weight: 900;
   width: 3rem;
   text-align: center;
-  color: #333;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   animation: popIn 0.3s ease-in;
 }
 
-// Podium colors & glowing effect
 .podium--first {
   color: gold;
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
@@ -64,24 +62,35 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #333;
 }
 
 .ranking-user-card__name {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  margin: 0;
   text-transform: capitalize;
+  letter-spacing: 0.01rem;
 }
 
-.ranking-user-card__elo, .ranking-user-card__score  {
-  font-size: 1.1rem;
+
+.ranking-user-card__elo{
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: black;
+  margin: 0.2rem 0 0;
+}
+
+.ranking-user-card__nb-games, .ranking-user-card__score  {
+  font-size: 1rem;
   font-weight: 500;
   color: #666;
   margin: 0.2rem 0 0;
 }
 
-// Optional animation
+.ranking-user-card__info-data {
+  display: flex;
+  gap: 0.6rem;
+}
+
 @keyframes popIn {
   from {
     transform: scale(0.8);
@@ -90,21 +99,6 @@
   to {
     transform: scale(1);
     opacity: 1;
-  }
-}
-
-/*** Responsive tweaks ***/
-@include mobile-md {
-  .ranking-user-card {
-    padding: 1rem;
-  }
-
-  .ranking-user-card__name {
-    font-size: 1.2rem;
-  }
-
-  .ranking-user-card__score {
-    font-size: 1rem;
   }
 }
 

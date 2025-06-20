@@ -21,11 +21,6 @@ const BannerImagesDialog = ({ onSelected, onCancel }) => {
       });
   }, []);
 
-  // const bannerImages = [
-  //   { id: 1, name: "PFP1", image: "wallpaper-un.jpg" },
-  //   { id: 2, name: "PFP2", image: "wallpaper-deux.jpg" },
-  // ];
-
   useEffect(() => {
     if (dialogRef.current) {
       dialogRef.current.showModal();

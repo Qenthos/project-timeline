@@ -3,8 +3,7 @@ import { useNavigate } from "react-router";
 import "./SettingsGame.scss";
 import Header from "../component/Header";
 
-const SettingsGame = () => {  
-  
+const SettingsGame = () => {
   //Tab of different game mode
   const tabGameMode = ["Annee", "Poids", "Taille"];
 
@@ -12,7 +11,7 @@ const SettingsGame = () => {
   const [timer, setTimer] = useState(30);
   const [difficulty, setDifficulty] = useState("easy");
   const [modeGame, setModeGame] = useState(tabGameMode[0]);
-
+  const [clue, setClue] = useState(true);
   const [isUnlimited, setIsUnlimited] = useState(false);
 
   let navigate = useNavigate();
@@ -29,14 +28,15 @@ const SettingsGame = () => {
         isUnlimited: isUnlimited,
         difficulty: difficulty,
         modeGame: modeGame.toLowerCase(),
+        clue: clue,
       },
     });
   };
 
   const tabDifficulty = {
-    easy: { cards: 10, timer: 20 },
-    normal: { cards: 15, timer: 150 },
-    hard: { cards: 20, timer: 120 },
+    easy: { cards: 10, timer: 20, clue: true },
+    normal: { cards: 15, timer: 150, clue: false },
+    hard: { cards: 20, timer: 120, clue: false },
   };
 
   /**
@@ -49,15 +49,16 @@ const SettingsGame = () => {
 
     const values = tabDifficulty[key];
     if (values) {
-      const { cards, timer } = values;
+      const { cards, timer, clue } = values;
       setCards(cards);
       setTimer(timer);
+      setClue(clue);
     }
   };
 
   ///tab of different difficulty
   const difficulties = [
-    { key: "easy", label: "Facile" },
+    { key: "easy", label: "Facile - Indice" },
     { key: "normal", label: "Normal" },
     { key: "hard", label: "Difficile" },
     { key: "customize", label: "Personnaliser" },
@@ -123,6 +124,9 @@ const SettingsGame = () => {
                         <li className="settings__difficulty-detail">
                           {tabDifficulty[key]?.timer ?? "-"} secondes
                         </li>
+                        {/* <li className="settings__difficulty-detail">
+                          {tabDifficulty[key]?.clue ?? "-"} indice
+                        </li> */}
                       </ul>
                     </label>
                   </li>
@@ -201,6 +205,26 @@ const SettingsGame = () => {
                         </div>
                       </div>
                     </li>
+                    <li className="settings__parameter-item">
+                      <label htmlFor="enable-clues" className="settings__label">
+                        Activer les indices
+                      </label>
+                      <div className="settings__input-group-clue">
+                        <input
+                          className="settings__checkbox"
+                          type="checkbox"
+                          id="enable-clues"
+                          checked={clue}
+                          onChange={(e) => setClue(e.target.checked)}
+                        />
+                        <label
+                          htmlFor="enable-clues"
+                          className="settings__checkbox-label"
+                        >
+                          {clue ? "Indice activé" : "Indice désactivé"}
+                        </label>
+                      </div>
+                    </li>
                   </ul>
                 </>
               )}
@@ -222,6 +246,9 @@ const SettingsGame = () => {
                 <li>
                   <p>Temps : {isUnlimited ? "Illimité" : `${timer}s`}</p>
                 </li>
+                <li>
+                  <p>{clue ? "Indice activé" : "Indice désactivé"}</p>
+                </li>
               </ul>
               <button onClick={startParty} className="settings__start-button">
                 Commencer la partie
@@ -230,7 +257,7 @@ const SettingsGame = () => {
           </div>
         </section>
       </main>
-    </>
+    </> 
   );
 };
 

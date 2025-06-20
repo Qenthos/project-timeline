@@ -137,7 +137,7 @@ export default class Users {
   }
 
   set pfb(value) {
-    console.log(value)
+    console.log(value);
     if (Number.isInteger(value) && value > 0) {
       this._pfb = value;
     } else {
@@ -171,7 +171,6 @@ export default class Users {
   }
 
   set elo(value) {
-
     if (Number.isInteger(value) && value >= 0) {
       this._elo = value;
     } else {

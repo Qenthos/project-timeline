@@ -28,11 +28,9 @@ export default class Instruments {
     this._weight = weight;
     this._height = height;
     this._description = description;
-
     makeAutoObservable(this);
   }
 
-  // Getters
   get id() {
     return this._id;
   }
@@ -65,7 +63,6 @@ export default class Instruments {
     return this._description;
   }
 
-  // Setters
   set name(value) {
     if (typeof value === "string" && value.trim().length > 0) {
       this._name = value.trim();
@@ -131,4 +128,5 @@ export default class Instruments {
       throw new Error(`Description invalide : ${value}`);
     }
   }
+
 }

@@ -1,12 +1,6 @@
 @use "../../styles/_mixins" as *;
 @use "../../styles/_variables" as *;
 
-$card-bg: #ffffff;
-$card-border: #6c5ce7;
-$card-shadow: rgba(0, 0, 0, 0.1);
-$card-hover: #f0f0ff;
-$card-highlight: #ff7675;
-
 .draggable-instrument {
   width: 160px;
   border-radius: 1rem;
@@ -18,11 +12,6 @@ $card-highlight: #ff7675;
   transition: all 0.3s ease;
   transform-origin: center;
   animation: pop-in 0.3s ease-out;
-
-  // &:hover {
-  //   box-shadow: 0 0 15px rgba(108, 92, 231, 0.4);
-  // }
-  
 
   &:hover {
     transform: scale(1.05);
@@ -39,7 +28,6 @@ $card-highlight: #ff7675;
     border-bottom: 2px solid $card-border;
     transition: transform 0.3s ease;
 
-    // Optional animation
     &:hover {
       transform: scale(1.05);
     }
@@ -55,10 +43,7 @@ $card-highlight: #ff7675;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     border-top: 1px solid rgba(255, 255, 255, 0.2);
   }
-
-  
 }
-
 
 @keyframes pop-in {
   0% {

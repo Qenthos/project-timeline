@@ -6,7 +6,6 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  color: #111;
 
   &__section {
     background: rgba(255, 255, 255, 0.95);
@@ -103,10 +102,8 @@
     background-size: 200% 200%;
     background-position: 0% 50%;
     box-shadow: 0 10px 25px rgba(160, 64, 255, 0.196);
-    transition:
-      transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-      box-shadow 0.3s ease,
-      background-position 0.5s ease;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.3s ease, background-position 0.5s ease;
 
     &--Annee {
       background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
@@ -278,9 +275,10 @@
   }
 
   &__input-group {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 1.2rem;
+    // display: grid;
+    // grid-template-columns: 1fr auto;
+    display: flex;
+    gap: 1rem;
     align-items: center;
 
     @include mobile-md {
@@ -294,7 +292,6 @@
     height: 12px;
     border-radius: 8px;
     background: linear-gradient(to right, $color-purple, $color-red);
-    outline: none;
     transition: background 0.3s;
 
     &::-webkit-slider-thumb {
@@ -354,7 +351,7 @@
   &__checkbox-label {
     font-weight: 500;
     font-size: 1rem;
-    margin-left: 1rem;
+    margin-left: 0.6rem;
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
@@ -377,7 +374,6 @@
   &__start-button {
     background: $color-red;
     color: white;
-    border: none;
     border-radius: 1.2rem;
     padding: 1.2rem;
     font-size: 1.3rem;
@@ -395,6 +391,11 @@
     &:active {
       transform: translateY(-3px) scale(0.97);
     }
+  }
+
+  &__input-group-clue {
+    display: flex;
+    align-items: center;
   }
 
   &__list-recap {

@@ -1,12 +1,11 @@
 /**********VARIABLES TEXTUELLES**********/
-$font-text: 'Montserrat', 'sans-serif';
+$font-text: "Montserrat", "sans-serif";
 
 /**********VARIABLES COULEURS**********/
 $bg-primary: white;
-$primary-accentuate-color: #ffe500;
-$second-accentuate-color: #ffea2f;
-$color-red: #F30000;
-$color-purple: #6947FF;
+
+$color-red: #f30000;
+$color-purple: #6947ff;
 $color-blue: #00c3ff;
 $color-green: #00ff88;
 $color-white: #f0f0f0;
@@ -19,16 +18,26 @@ $color-light-gray: #f5f5f5;
 $color-gray: #444444;
 $color-dark-gray: #2c2c2c;
 
+$color-title: #333;
+$color-legend: #333;
+$color-fieldset: #333;
+$color-label: #555;
+$color-input: #222;
+$color-subtitle: #555;
+
+$card-bg: #ffffff;
+$card-border: #6c5ce7;
+$card-shadow: rgba(0, 0, 0, 0.1);
+$card-hover: #f0f0ff;
+$card-highlight: #ff7675;
 
 $linear-gradient-orange: linear-gradient(to right, #ff7e5f, #feb47b);
 $linear-gradient-orange-hover: linear-gradient(to right, #feb47b, #ff7e5f);
 $shadow-orange: rgba(255, 126, 95, 0.4);
 
-
 $linear-gradient-purple: linear-gradient(to right, #c2a1f5, #b47bff);
 $linear-gradient-purple-hover: linear-gradient(to right, #b47bff, #c2a1f5);
 $shadow-purple: rgba(180, 123, 255, 0.3);
-
 
 $linear-gradient-yellow: linear-gradient(to right, #fceabb, #f8b500);
 $linear-gradient-yellow-hover: linear-gradient(to right, #f8b500, #fceabb);
@@ -39,7 +48,11 @@ $linear-gradient-red-hover: linear-gradient(to right, #ff3d3d, #ff6a6a);
 $shadow-red: rgba(255, 61, 61, 0.4);
 
 $linear-gradient-blue: linear-gradient(to right, #00bcd4, #0077ff);
-$linear-gradient-blue-hover: linear-gradient(to right, #11d1ea, rgba(14, 14, 167, 0.467)ff);
+$linear-gradient-blue-hover: linear-gradient(
+  to right,
+  #11d1ea,
+  rgba(14, 14, 167, 0.467) ff
+);
 $shadow-blue: rgba(37, 117, 252, 0.4);
 
 $linear-gradient-green: linear-gradient(to right, #a8e063, #56ab2f);

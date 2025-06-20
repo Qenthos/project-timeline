@@ -1,11 +1,6 @@
 @use "../../styles/_mixins" as *;
 @use "../../styles/_variables" as *;
 
-$list-accent: #7c80ff; // violet pastel doux
-$list-bg: #f0f2f5; // fond clair
-$list-text: #333; // texte sombre doux
-$list-shadow: rgba(0, 0, 0, 0.1); // ombre soft
-
 .list {
   &__filter-instrument {
     display: flex;
@@ -16,7 +11,7 @@ $list-shadow: rgba(0, 0, 0, 0.1); // ombre soft
     padding: 1.5rem 2rem;
     background-color: white;
     border-radius: 12px;
-    box-shadow: 0 4px 15px $list-shadow;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     margin: 1rem auto 2rem;
     max-width: 800px;
   }
@@ -30,12 +25,11 @@ $list-shadow: rgba(0, 0, 0, 0.1); // ombre soft
 }
 
 .filter-instrument__button {
-  font-family: "Orbitron", sans-serif;
   padding: 0.8rem 1.8rem;
   border: 2px solid transparent;
   border-radius: 30px;
   background-color: #ffffff;
-  color: $list-text;
+  color: #333;
   font-size: 1rem;
   text-transform: uppercase;
   font-weight: 600;
@@ -46,7 +40,7 @@ $list-shadow: rgba(0, 0, 0, 0.1); // ombre soft
 
   &:hover,
   &:focus {
-    background-color: $list-accent;
+    background-color: #7c80ff;
     color: white;
     box-shadow: 0 4px 12px rgba(124, 128, 255, 0.4);
     transform: translateY(-2px);
@@ -58,7 +52,7 @@ $list-shadow: rgba(0, 0, 0, 0.1); // ombre soft
   }
 
   &--active {
-    background-color: $list-accent;
+    background-color: #7c80ff;
     color: white;
     box-shadow: 0 0 0 3px rgba(124, 128, 255, 0.3);
   }

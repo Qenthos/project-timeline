@@ -1,8 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import Users from "./Users";
 
-// const API_URL = "https://683866862c55e01d184d280a.mockapi.io/player/users";
-
 const API_URL = "http://localhost:8000/api/users";
 
 export default class UsersStore {
@@ -62,7 +60,6 @@ export default class UsersStore {
    * @param {*} password
    */
   async createAccount(email, username, password) {
-    console.log(username);
     try {
       const response = await fetch(`http://localhost:8000/api/user`, {
         method: "POST",
@@ -108,48 +105,6 @@ export default class UsersStore {
     }
   }
 
-  // /**
-  //  * Login
-  //  * @param {*} email
-  //  * @param {*} password
-  //  */
-  // async login(email, password) {
-  //   try {
-  //     const response = await fetch(API_URL + "/login");
-
-  //     if (!response.ok) {
-  //       throw new Error("Erreur réseau");
-  //     }
-
-  //     const users = await response.json();
-
-  //     const userByEmail = users.find((u) => u.email === email);
-
-  //     if (!userByEmail) {
-  //       throw new Error("Adresse mail introuvable");
-  //     }
-
-  //     if (userByEmail.password !== password) {
-  //       throw new Error("Mot de passe incorrect");
-  //     }
-
-  //     runInAction(() => {
-  //       const user = new Users({ ...userByEmail, isConnected: true });
-
-  //       this._currentUser = user;
-
-  //       const exists = this._users.find((u) => u.id === user.id);
-  //       if (!exists) {
-  //         this._users.push(user);
-  //       }
-
-  //       localStorage.setItem("currentUser", JSON.stringify({ ...userByEmail }));
-  //     });
-  //   } catch (error) {
-  //     console.error("Erreur lors de la connexion :", error);
-  //     throw error;
-  //   }
-  // }
 
   /**
  * Login
@@ -157,6 +112,7 @@ export default class UsersStore {
  * @param {string} password
  */
   async login(email, password) {
+    console.log(password)
     try {
       const response = await fetch(API_URL + "/login", {
         method: "POST",
@@ -171,7 +127,7 @@ export default class UsersStore {
       if (!response.ok) {
         throw new Error(data.error || "Erreur inconnue lors de la connexion");
       }
-
+    
       runInAction(() => {
         const user = new Users({ ...data.user, isConnected: true });
 
@@ -448,9 +404,51 @@ export default class UsersStore {
       });
   }
 
-  updateElo() {
+  /**
+ * Met à jour score + played_games + recalcul elo en une seule requête
+ */
+updateScoreAndPlayedGames(newScore) {
+  const user = this.getUserById(this._currentUser.id);
 
+  if (!user) {
+    console.error("Utilisateur non trouvé");
+    return;
   }
+
+  const updatedPlayedGames = (user.played_games || 0) + 1;
+
+  fetch(`http://localhost:8000/api/user/${user.id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      score: newScore,
+      played_games: updatedPlayedGames,
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        return response.text().then((text) => {
+          throw new Error(`Erreur ${response.status} : ${text}`);
+        });
+      }
+      return response.json();
+    })
+    .then((updatedUser) => {
+      runInAction(() => {
+        console.log(newScore)
+        user.score = updatedUser.score;
+        user.played_games = updatedUser.played_games;
+        user.elo = updatedUser.elo;
+      });
+      this.refreshCurrentUser();
+    })
+    .catch((err) => {
+      console.error("Erreur updateScoreAndPlayedGames :", err);
+    });
+}
+
 
   incrementPlayedGames() {
     const user = this.getUserById(this._currentUser.id);
@@ -459,8 +457,8 @@ export default class UsersStore {
       console.error("Utilisateur non trouvé");
       return;
     }
-
-    const updatedPlayedGames = user.played_games + 1;
+    console.log(user.played_games)
+    const updatedPlayedGames = (user.played_games || 0) + 1;
 
     fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
       method: "PATCH",
@@ -481,6 +479,7 @@ export default class UsersStore {
       })
       .then(() => {
         runInAction(() => {
+          console.log(user)
           user.played_games = updatedPlayedGames;
         });
         this.refreshCurrentUser();
