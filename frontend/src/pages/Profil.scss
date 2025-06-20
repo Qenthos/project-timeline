@@ -197,9 +197,14 @@
   }
 
   &__error {
-    color: #e53935;
-    font-size: 0.85rem;
-    margin-top: 0.3rem;
+    margin-top: 0.5rem;
+    background-color: rgba(255, 0, 0, 0.08);
+    border-left: 4px solid $color-red;
+    padding: 0.5rem 1rem;
+    color: $color-red;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
   }
 
   &__played-games,

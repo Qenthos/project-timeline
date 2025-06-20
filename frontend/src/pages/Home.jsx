@@ -1,4 +1,5 @@
 import Header from "../component/Header";
+import Footer from "../component/Footer";
 import { Link } from "react-router";
 import "./Home.scss";
 
@@ -35,6 +36,7 @@ const Home = () => {
           />
         </section>
       </main>
+      <Footer />
     </>
   );
 };

@@ -11,7 +11,7 @@ const SettingsGame = () => {
   const [timer, setTimer] = useState(30);
   const [difficulty, setDifficulty] = useState("easy");
   const [modeGame, setModeGame] = useState(tabGameMode[0]);
-  const [clue, setClue] = useState(false);
+  const [clue, setClue] = useState(true);
   const [isUnlimited, setIsUnlimited] = useState(false);
 
   let navigate = useNavigate();

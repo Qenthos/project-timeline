@@ -26,6 +26,11 @@
     backdrop-filter: blur(10px);
     width: 100%;
     max-width: 420px;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.01);
+    }
   }
 
   &__legend {
@@ -83,7 +88,7 @@
     position: absolute;
     width: 24px;
     height: 24px;
-    top: 56%;
+    top: 54%;
     right: 15px;
     cursor: pointer;
     background-image: url("/media/hide-password.svg");

@@ -24,7 +24,7 @@ const RankingUserPreview = observer(({ user, index }) => {
       />
 
       <ul className="ranking-user-card__info">
-        <li>
+        <li className="ranking-user-card__info-item">
           <p id={headingId} className="ranking-user-card__name">
             {user.username}
           </p>
@@ -34,12 +34,10 @@ const RankingUserPreview = observer(({ user, index }) => {
             <strong>Elo : {user.elo}</strong>
           </p>
         </li>
-        <li>
+        <li className="ranking-user-card__info-data">
           <p className="ranking-user-card__score">
             <strong>Score : {user.score}</strong>
           </p>
-        </li>
-        <li>
           <p className="ranking-user-card__score">
             <strong>
               Partie{user.played_games === 1 ? "" : "s"} jouée

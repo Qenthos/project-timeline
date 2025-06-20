@@ -33,8 +33,6 @@ const TimelineComposer = observer(() => {
   const { isLoaded } = useInstrumentsStore();
   const usersStore = useUsersStore();
 
- 
-
   const [showDragCard, setShowDragCard] = useState(true);
 
   const currentUser = usersStore.currentUser || null;
@@ -51,7 +49,6 @@ const TimelineComposer = observer(() => {
       setIsMusicPlaying(!isMusicPlaying);
     }
   };
-
   useEffect(() => {
     // On écoute le premier clic utilisateur pour autoriser le navigateur à lire la musique
     document.addEventListener("click", toggleMusic, { once: true });
@@ -84,16 +81,15 @@ const TimelineComposer = observer(() => {
   const currentInstrument =
     gameStore.state.selectedInstruments[gameStore.state.currentIndex];
 
-    useEffect(() => {
-      async function fetchClues() {
-        if (currentInstrument && clue) {
-          await instruStore.loadCluesForInstrument(currentInstrument);
-        }
-      }
-      fetchClues();
-    }, [currentInstrument, instruStore]);
-    console.log(clue)
-    
+  // useEffect(() => {
+  //   async function fetchClues() {
+  //     if (currentInstrument && clue) {
+  //       await instruStore.loadCluesForInstrument(currentInstrument);
+  //     }
+  //   }
+  //   fetchClues();
+  // }, [currentInstrument, instruStore]);
+  // console.log(clue);
 
   /**
    * Handle local storage of timeline
@@ -222,6 +218,16 @@ const TimelineComposer = observer(() => {
     customize: "Personnalisée",
   };
 
+  function getRangeHint(value, unit, minOffset = 0.1, maxOffset = 0.3) {
+    const offsetMin = value * minOffset;
+    const offsetMax = value * maxOffset;
+
+    const min = Math.max(0, (value - offsetMin).toFixed(1));
+    const max = (value + offsetMax).toFixed(1);
+
+    return `entre ${min} ${unit} et ${max} ${unit}`;
+  }
+
   return !isLoaded ? (
     <LoadingScreen message="Chargement des instruments en cours" />
   ) : (
@@ -229,30 +235,6 @@ const TimelineComposer = observer(() => {
       <Header />
       <main className="timeline">
         <section className="timeline__section">
-          <div className="timeline__music">
-            <button
-              onClick={toggleMusic}
-              className={`timeline__music-toggle ${
-                isMusicPlaying ? "active" : "muted"
-              }`}
-              aria-label={
-                isMusicPlaying ? "Couper la musique" : "Activer la musique"
-              }
-            >
-              {isMusicPlaying ? (
-                <span className="icon">🔊</span>
-              ) : (
-                <span className="icon">🔇</span>
-              )}
-            </button>
-            <audio
-              ref={audioRef}
-              src="/media/audio/audio-jeu.mp3"
-              loop
-              autoPlay
-              hidden
-            />
-          </div>
           <ul className="timeline__list-parameters">
             <li className="timeline__list-parameters-item">
               <h2 className="timeline__title">
@@ -283,6 +265,8 @@ const TimelineComposer = observer(() => {
                 <span>
                   {isUnlimited
                     ? "Temps illimité"
+                    : gameStore.state.timerRemaining === 0
+                    ? "Temps écoulé !"
                     : `${
                         gameStore.state.timerRemaining >= 60
                           ? `${Math.floor(
@@ -323,6 +307,30 @@ const TimelineComposer = observer(() => {
               </li>
             )}
           </ul>
+          <div className="timeline__music">
+            <button
+              onClick={toggleMusic}
+              className={`timeline__music-toggle ${
+                isMusicPlaying ? "active" : "muted"
+              }`}
+              aria-label={
+                isMusicPlaying ? "Couper la musique" : "Activer la musique"
+              }
+            >
+              {isMusicPlaying ? (
+                <span className="icon">🔊</span>
+              ) : (
+                <span className="icon">🔇</span>
+              )}
+            </button>
+            <audio
+              ref={audioRef}
+              src="/media/audio/audio-jeu.mp3"
+              loop
+              autoPlay
+              hidden
+            />
+          </div>
           <div className="timeline__instruments">
             {isGameFinished ? (
               <ul className="timeline__instruments-list">
@@ -411,15 +419,35 @@ const TimelineComposer = observer(() => {
                 )}
                 {showDragCard && currentInstrument && (
                   <>
-                    {/* {currentInstrument.clues.weight && (
-                      <p>{currentInstrument.clues.weight.description}</p>
+                    {clue ? (
+                      modeGame === "annee" ? (
+                        <p className="timeline__indice-text">
+                          Indice : {currentInstrument.name} est apparu dans les
+                          années{" "}
+                          {currentInstrument.created
+                            ? Math.floor(currentInstrument.created / 10) * 10
+                            : "Inconnue"}
+                        </p>
+                      ) : modeGame === "taille" ? (
+                        <p className="timeline__indice-text">
+                          Indice : {currentInstrument.name} mesure{" "}
+                          {currentInstrument.height
+                            ? getRangeHint(currentInstrument.height, "cm")
+                            : "Inconnue"}
+                        </p>
+                      ) : modeGame === "poids" ? (
+                        <p className="timeline__indice-text">
+                          Indice : {currentInstrument.name} pèse{" "}
+                          {currentInstrument.weight
+                            ? getRangeHint(currentInstrument.weight, "kg")
+                            : "Inconnu"}
+                        </p>
+                      ) : (
+                        <p>Aucun indice disponible</p>
+                      )
+                    ) : (
+                      ""
                     )}
-                    {currentInstrument.clues.height && (
-                      <p>{currentInstrument.clues.height.description}</p>
-                    )}
-                    {currentInstrument.clues.year && (
-                      <p>{currentInstrument.clues.year.description}</p>
-                    )} */}
                     <DraggableInstrument instrument={currentInstrument} />
                   </>
                 )}

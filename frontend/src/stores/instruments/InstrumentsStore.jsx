@@ -123,48 +123,4 @@ export default class InstrumentsStore {
         console.error(err);
       });
   }
-
-  async fetchClue(type, id) {
-    const key = `${type}_${id}`;
-
-    if (this._cluesCache[key]) {
-      return this._cluesCache[key];
-    }
-
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/clues/${type}/${id}`
-      );
-      if (!response.ok) throw new Error("Clue not found");
-      const clue = await response.json();
-
-      runInAction(() => {
-        this._cluesCache[key] = clue;
-      });
-
-      return clue;
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
-  }
-
-  async loadCluesForInstrument(instrument) {
-    if (!instrument.indice) return;
-
-    const { weight, height, year } = instrument.indice;
-    const [weightClue, heightClue, yearClue] = await Promise.all([
-      this.fetchClue("weight", weight),
-      this.fetchClue("height", height),
-      this.fetchClue("year", year),
-    ]);
-
-    runInAction(() => {
-      instrument.clues = {
-        weight: weightClue,
-        height: heightClue,
-        year: yearClue,
-      };
-    });
-  }
 }

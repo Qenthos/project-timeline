@@ -1,0 +1,73 @@
+@use "../styles/_mixins" as *;
+@use "../styles/_variables" as *;
+
+/***0px***/
+
+.footer {
+    padding: 1rem 2rem;
+    background-color: #f9f9f9; 
+    color: black; 
+    font-size: 0.9rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(55, 55, 55, 0.2);
+    margin: 0 20px 20px 20px;
+ 
+    &__nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    &__nav-list {
+        display: flex;
+        gap: 1rem;
+    }
+  
+    &__link {
+      color: #555;
+      transition: color 0.3s ease;
+  
+      &:hover,
+      &:focus {
+        color: #6c5ce7; 
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .footer {
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+  
+      &__nav {
+        justify-content: center;
+        gap: 1rem;
+      }
+    }
+  }
+
+  
+/***640px***/
+@include mobile-sm {
+}
+
+/*** 768px***/
+@include mobile-md {
+}
+
+/***1024px***/
+@include mobile-lg {
+}
+
+/***1280px***/
+@include mobile-xl {
+}
+
+/***1536px***/
+@include mobile-2xl {
+}
