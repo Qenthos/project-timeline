@@ -65,12 +65,18 @@
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
+    height: 23rem;
+    transition: transform 0.25s ease-in-out;
+
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 
   &__image {
-    max-height: 25rem;
     object-fit: contain;
     border-radius: 0.5rem;
+    height: 100%;
   }
 
   &__description {
@@ -78,10 +84,39 @@
     color: #374151;
   }
 
+  &__info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__subtitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.25rem;
+  }
+
+  &__text {
+    font-size: 0.875rem;
+    color: #374151;
+    line-height: 1.5;
+  }
+
   &__year {
     font-size: 0.875rem;
     font-weight: 600;
     color: #1f2937;
+    margin-top: 1rem;
   }
 }
 

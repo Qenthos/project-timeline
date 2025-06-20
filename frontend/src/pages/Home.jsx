@@ -33,6 +33,24 @@ const Home = () => {
               </Link>
             </li>
           </ul>
+          <ul className="home__list-account">
+            <li>
+              <Link
+                to="/register"
+                className="home__link-account"
+              >
+                Créer un compte
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/my-instruments"
+                className="home__link-account"
+              >
+                Se connecter
+              </Link>
+            </li>
+          </ul>
         </section>
 
         <section className="home__image">

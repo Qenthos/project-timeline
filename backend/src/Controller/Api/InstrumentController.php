@@ -54,8 +54,8 @@ class InstrumentController extends AbstractController
                 'name' => $instrument->getName(),
                 'image' => $instrument->getImage(),
                 'created' => $instrument->getCreated(),
-                'weight' => $instrument->getWeight(),
-                'height' => $instrument->getHeight(),
+                'weight' => (float) $instrument->getWeight(),
+                'height' => (float) $instrument->getHeight(),
                 'origine' => $instrument->getOrigine(),
                 'description' => $instrument->getDescription(),
                 'anecdote' => $instrument->getAnecdote(),
@@ -80,8 +80,8 @@ class InstrumentController extends AbstractController
                 'name' => $instrument->getName(),
                 'image' => $instrument->getImage(),
                 'created' => $instrument->getCreated(),
-                'weight' => $instrument->getWeight(),
-                'height' => $instrument->getHeight(),
+                'weight' => (float) $instrument->getWeight(),
+                'height' => (float) $instrument->getHeight(),
                 'origine' => $instrument->getOrigine(),
                 'description' => $instrument->getDescription(),
                 'anecdote' => $instrument->getAnecdote(),
@@ -107,8 +107,8 @@ class InstrumentController extends AbstractController
                 'name' => $instrument->getName(),
                 'image' => $instrument->getImage(),
                 'created' => $instrument->getCreated(),
-                'weight' => $instrument->getWeight(),
-                'height' => $instrument->getHeight(),
+                'weight' => (float) $instrument->getWeight(),
+                'height' => (float) $instrument->getHeight(),
                 'origine' => $instrument->getOrigine(),
                 'description' => $instrument->getDescription(),
                 'anecdote' => $instrument->getAnecdote(),
@@ -127,8 +127,14 @@ class InstrumentController extends AbstractController
         $instrument = new Instrument();
         $instrument->setName($data['name'] ?? '');
         $instrument->setCreated($data['created'] ?? null);
-        $instrument->setWeight($data['weight'] ?? null);
-        $instrument->setHeight($data['height'] ?? null);
+        if (isset($data['weight'])) {
+            $instrument->setWeight((float) $data['weight']);
+        }
+        
+        if (isset($data['height'])) {
+            $instrument->setHeight((float) $data['height']);
+        }
+        
         $instrument->setOrigine($data['origine'] ?? '');
         $instrument->setDescription($data['description'] ?? '');
         $instrument->setAnecdote($data['anecdote'] ?? '');
@@ -157,8 +163,8 @@ class InstrumentController extends AbstractController
 
         if (isset($data['name'])) $instrument->setName($data['name']);
         if (isset($data['created'])) $instrument->setCreated(intval($data['created']));
-        if (isset($data['weight'])) $instrument->setWeight(intval($data['weight']));
-        if (isset($data['height'])) $instrument->setHeight(intval($data['height']));
+        if (isset($data['weight'])) $instrument->setWeight((float)($data['weight']));
+        if (isset($data['height'])) $instrument->setHeight((float)($data['height']));
         if (isset($data['origine'])) $instrument->setOrigine($data['origine']);
         if (isset($data['description'])) $instrument->setDescription($data['description']);
         if (isset($data['anecdote'])) $instrument->setAnecdote($data['anecdote']);
@@ -172,7 +178,7 @@ class InstrumentController extends AbstractController
 
         $this->entityManager->flush();
 
-        return $this->json(['message' => 'Instrument mis à jour avec succès 🔧']);
+        return $this->json(['message' => 'Instrument mis à jour avec succès']);
     }
 
 
@@ -188,6 +194,6 @@ class InstrumentController extends AbstractController
         $this->entityManager->remove($instrument);
         $this->entityManager->flush();
 
-        return $this->json(['message' => 'Instrument supprimé avec succès 🗑']);
+        return $this->json(['message' => 'Instrument supprimé avec succès']);
     }
 }

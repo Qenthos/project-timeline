@@ -120,23 +120,29 @@ class Instrument
         return $this;
     }
 
-    public function getWeight() {
+    public function getWeight(): float
+    {
         return $this->weight_kg;
     }
-
-    public function setWeight($weight) {
+    
+    public function setWeight(float $weight): self
+    {
         $this->weight_kg = $weight;
-        return $this; 
+        return $this;
     }
+    
 
-    public function getHeight() {
+    public function getHeight(): float
+    {
         return $this->height_cm;
     }
-
-    public function setHeight($height) {
+    
+    public function setHeight(float $height): self
+    {
         $this->height_cm = $height;
         return $this;
     }
+    
 
     public function getOrigine() {
         return $this->origine;

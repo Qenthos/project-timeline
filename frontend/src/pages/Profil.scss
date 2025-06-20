@@ -2,7 +2,6 @@
 @use "../styles/_variables" as *;
 
 .profile {
-
   &__section {
     display: flex;
     flex-direction: column;
@@ -128,15 +127,44 @@
     }
   }
 
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 6rem 0 0 0;
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.075);
+  }
+
+  &__start-game {
+    width: fit-content !important;
+    @include button-base(
+      $linear-gradient-purple,
+      $linear-gradient-purple-hover,
+      $shadow-purple
+    );
+  }
+
+  &__logout {
+    width: fit-content !important;
+    @include button-base(
+      $linear-gradient-blue,
+      $linear-gradient-blue-hover,
+      $shadow-blue
+    );
+  }
+
   &__form {
-    margin-top: 6rem;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid #ddd;
+    margin-top: 2rem;
+    background: rgba(255, 255, 255, 1);
     border-radius: 1rem;
     padding: 2rem;
     width: 100%;
     max-width: 500px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   }
 
   &__fields {
@@ -231,7 +259,7 @@
       $linear-gradient-blue,
       $linear-gradient-blue-hover,
       $shadow-blue
-    )
+    );
   }
 
   &__save-btn {
@@ -239,7 +267,7 @@
       $linear-gradient-blue,
       $linear-gradient-blue-hover,
       $shadow-blue
-    )
+    );
   }
 
   &__cancel-btn {
@@ -257,7 +285,7 @@
       $linear-gradient-red,
       $linear-gradient-red-hover,
       $shadow-red
-    )
+    );
   }
 }
 

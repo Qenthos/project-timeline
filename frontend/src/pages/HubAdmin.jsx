@@ -8,6 +8,7 @@ const HubAdmin = observer(() => {
   let navigate = useNavigate();
 
   const { users } = useUsersStore();
+  const username = users?.username;
 
   return (
     <>
@@ -16,7 +17,7 @@ const HubAdmin = observer(() => {
         <section className="hub__section">
           <h1 className="hub__title">Hub administrateur</h1>
           <h2 className="hub__subtitle">
-            Bienvenue {users ? users.username : "invité"}
+            Bienvenue {username ?? ""}
           </h2>
           <ul className="hub__list">
             <li className="hub__item">

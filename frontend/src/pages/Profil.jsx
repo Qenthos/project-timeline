@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router";
 import { useUsersStore } from "./../stores/useStore";
+import { Link } from "react-router";
 import Header from "../component/Header";
 import LoadingScreen from "../component/LoadingScreen";
 import ConfirmDialog from "../component/ConfirmDialog";
@@ -43,8 +44,6 @@ const Profil = observer(() => {
   if (!usersStore.currentUser) {
     return <p>Chargement du profil...</p>;
   }
-
-
 
   /**
    *Show / hide password
@@ -157,16 +156,23 @@ const Profil = observer(() => {
     }
   };
 
+  /**
+   * Logout
+   */
+  const handleLogout = () => {
+    usersStore.logout();
+    navigate("/");
+  };
+
   const [positionLeaderbord, setPositionLeaderboard] = useState("");
 
   useEffect(() => {
     fetch(`http://localhost:8000/api/user/${usersStore.currentUser.id}/ranking`)
-    .then((response) => response.json())
-    .then((data) => {
-      setPositionLeaderboard(data.position)
-    })
-  })
-
+      .then((response) => response.json())
+      .then((data) => {
+        setPositionLeaderboard(data.position);
+      });
+  });
 
   return !usersStore.isLoaded ? (
     <LoadingScreen message="Chargement de votre profil en cours..." />
@@ -189,7 +195,8 @@ const Profil = observer(() => {
               </li>
               <li className="profile__score-item">
                 <p className="profile__score-text">
-                  Position classement : {positionLeaderbord}{positionLeaderbord === 1 ? "er" : "ème"}
+                  Position classement : {positionLeaderbord}
+                  {positionLeaderbord === 1 ? "er" : "ème"}
                 </p>
               </li>
             </ul>
@@ -231,6 +238,15 @@ const Profil = observer(() => {
                 onClick={() => setShowProfilPictureDialog(true)}
               />
             </div>
+          </div>
+
+          <div className="profile__buttons">
+            <Link className="profile__start-game" to="/settings-game">
+              Commencez une partie !
+            </Link>
+            <button className="profile__logout" onClick={handleLogout}>
+              Se déconnecter
+            </button>
           </div>
 
           <form className="profile__form" onSubmit={handleSave}>

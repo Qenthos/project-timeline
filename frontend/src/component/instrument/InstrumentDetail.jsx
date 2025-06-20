@@ -72,10 +72,28 @@ const InstrumentDetail = observer(({ instrument, onClose }) => {
               className="instrument-detail__image"
             />
           </div>
-
-          <p className="instrument-detail__description">{instrument.description}</p>
+          <ul className="instrument-detail__info-list">
+            <li className="instrument-detail__info-item">
+              <h3 className="instrument-detail__subtitle">Description</h3>
+              <p className="instrument-detail__text">
+                {instrument.description}
+              </p>
+            </li>
+            <li className="instrument-detail__info-item">
+              <h3 className="instrument-detail__subtitle">Anecdote</h3>
+              <p className="instrument-detail__text">{instrument.anecdote}</p>
+            </li>
+            <li className="instrument-detail__info-item">
+              <h3 className="instrument-detail__subtitle">Origine</h3>
+              <p className="instrument-detail__text">{instrument.origine}</p>
+            </li>
+            <li className="instrument-detail__info-item">
+              <h3 className="instrument-detail__subtitle">Catégorie</h3>
+              <p className="instrument-detail__text">{instrument.category}</p>
+            </li>
+          </ul>
           <p className="instrument-detail__year">
-            Année de création: {instrument.created}
+            Année de création : {instrument.created}
           </p>
         </div>
       </div>

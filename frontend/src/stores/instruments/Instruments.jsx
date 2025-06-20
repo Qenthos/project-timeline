@@ -5,10 +5,13 @@ export default class Instruments {
   _name;
   _image;
   _category;
+  _categoory;
   _created;
   _weight;
   _height;
   _description;
+  _anecdote;
+  _origine;
 
   constructor({
     id,
@@ -19,6 +22,8 @@ export default class Instruments {
     weight,
     height,
     description,
+    anecdote,
+    origine,
   }) {
     this._id = id;
     this._name = name;
@@ -28,9 +33,12 @@ export default class Instruments {
     this._weight = weight;
     this._height = height;
     this._description = description;
+    this._anecdote = anecdote;
+    this._origine = origine;
     makeAutoObservable(this);
   }
 
+  // Getters
   get id() {
     return this._id;
   }
@@ -61,6 +69,14 @@ export default class Instruments {
 
   get description() {
     return this._description;
+  }
+
+  get anecdote() {
+    return this._anecdote;
+  }
+
+  get origine() {
+    return this._origine;
   }
 
   set name(value) {
@@ -129,4 +145,19 @@ export default class Instruments {
     }
   }
 
+  set anecdote(value) {
+    if (typeof value === "string" && value.trim().length > 0) {
+      this._anecdote = value.trim();
+    } else {
+      throw new Error(`Anecdote invalide : ${value}`);
+    }
+  }
+
+  set origine(value) {
+    if (typeof value === "string" && value.trim().length > 0) {
+      this._origine = value.trim();
+    } else {
+      throw new Error(`Origine invalide : ${value}`);
+    }
+  }
 }
