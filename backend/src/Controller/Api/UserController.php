@@ -46,7 +46,10 @@ class UserController extends AbstractController
                 'bannerImage' => $user->getProfileBanner()->getId(),
                 'score' => $user->getScore(),
                 'played_games' => $user->getPlayedGames(),
-                'elo' => $user->getElo()
+                'elo' => $user->getElo(),
+                'games_won' => $user->getGamesWon(),
+                'games_lost' => $user->getGamesLost(),
+
             ];
         }
 
@@ -71,6 +74,9 @@ class UserController extends AbstractController
             'played_games' => $user->getPlayedGames(),
             'pfp' => $user->getProfilePicture()?->getId(),
             'pfb' => $user->getProfileBanner()?->getId(),
+            'games_won' => $user->getGamesWon(),
+'games_lost' => $user->getGamesLost(),
+
         ]);
     }
 
@@ -124,6 +130,10 @@ class UserController extends AbstractController
         $user->setAdmin($data['admin'] ?? false);
         $user->setProfileBanner($PBrep->getBannerById($data['pfb'] ?? 1));
         $user->setProfilePicture($PPrep->getPictureById($data['pfp'] ?? 1));
+        $user->setGamesWon($data['games_won'] ?? 0);
+$user->setGamesLost($data['games_lost'] ?? 0);
+
+
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
@@ -138,6 +148,8 @@ class UserController extends AbstractController
             'admin' => $user->getAdmin(),
             'pfp' => $user->getProfilePicture()->getId(),
             'pfb' => $user->getProfileBanner()->getId(),
+            'games_won' => $user->getGamesWon(),
+            'games_lost' => $user->getGamesLost(),
         ];
 
         return $this->json($responseData, 201);
@@ -176,6 +188,14 @@ class UserController extends AbstractController
             }
         }
 
+        if (isset($data['games_won'])) {
+            $user->setGamesWon($data['games_won']);
+        }
+        if (isset($data['games_lost'])) {
+            $user->setGamesLost($data['games_lost']);
+        }
+        
+
         if (isset($data['played_games'])) {
             $user->setPlayedGames($data['played_games']);
         }
@@ -204,6 +224,8 @@ class UserController extends AbstractController
             'score' => $user->getScore(),
             'played_games' => $user->getPlayedGames(),
             'elo' => $user->getElo(),
+            'games_won' => $user->getGamesWon(),
+            'games_lost' => $user->getGamesLost(),
         ]);
     }
 

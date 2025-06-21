@@ -47,8 +47,8 @@ class AppFixtures extends Fixture
 
             $manager->persist($banner);
             $profileBanners[] = $banner;
-        }   
-        
+        }
+
         // Création de PFP
         for ($i = 1; $i <= 11; $i++) {
             $pp = new ProfilePicture();
@@ -57,37 +57,41 @@ class AppFixtures extends Fixture
 
             $manager->persist($pp);
             $profilePicture[] = $pp;
-        } 
+        }
 
         // Création de 10 catégories
         for ($i = 1; $i <= 10; $i++) {
             $categorie = new Category("Categorie$i");
             $categorie
                 ->setDescription("Description fictive de la catégorie $i. C’est un genre d’instrument ou de jeu particulier, souvent utilisé dans les concours !")
-                ->setImage("image$i"); 
+                ->setImage("image$i");
             $manager->persist($categorie);
             $categories[] = $categorie;
         }
 
         $categorie = new Category("noCategory");
-            $categorie
-                ->setDescription("pas de categorie")
-                ->setImage("non_image"); 
-            $manager->persist($categorie);
+        $categorie
+            ->setDescription("pas de categorie")
+            ->setImage("non_image");
+        $manager->persist($categorie);
 
-        foreach ($usersData as $index=>$data) {
+        foreach ($usersData as $index => $data) {
             $user = new User();
             $user->setUsername($data["username"])
-                 ->setPassword($data["password"])
-                 ->setEmail($data["email"])
-                 ->setScore($data["score"])
-                 ->setProfilePicture($profilePicture[$index])
-                 ->setAdmin($data["admin"])
-                 ->setProfileBanner($profileBanners[$index])
-                 ->setPlayedGames($data["playedGames"])
-                 ->setElo($data["elo"]);
+                ->setPassword($data["password"])
+                ->setEmail($data["email"])
+                ->setScore($data["score"])
+                ->setProfilePicture($profilePicture[$index])
+                ->setAdmin($data["admin"])
+                ->setProfileBanner($profileBanners[$index])
+                ->setPlayedGames($data["playedGames"])
+                ->setGamesWon($data["gamesWon"] ?? 0)
+                ->setGamesLost($data["gamesLost"] ?? 0)
+                ->setElo($data["elo"]);
 
-                 $users[] = $user;
+
+
+            $users[] = $user;
             $manager->persist($user);
         }
 
@@ -103,6 +107,7 @@ class AppFixtures extends Fixture
 
         // Création de l'utilisateur Nathan
         $user = new User();
+        $user = new User();
         $user->setUsername("NathanBaud")
              ->setPassword("letsgo")
              ->setEmail("nathan.baud@example.com")
@@ -111,7 +116,10 @@ class AppFixtures extends Fixture
              ->setProfileBanner($profileBanner)
              ->setAdmin(true)
              ->setPlayedGames(42)
+             ->setGamesWon(25)
+             ->setGamesLost(17)
              ->setElo(1984);
+        
 
         $manager->persist($user);
 
@@ -138,7 +146,7 @@ class AppFixtures extends Fixture
             $game->setWin((bool)rand(0, 1))
                 ->setScore(rand(100, 1000))
                 ->setNbBad(rand(1, 10))
-                ->setGamemode($gamemode[rand(0, sizeof($gamemode)-1)])
+                ->setGamemode($gamemode[rand(0, sizeof($gamemode) - 1)])
                 ->setTimer(rand(30, 300))
                 ->setNbCards(rand(8, 50))
                 ->setDifficulty(['easy', 'normal', 'hard'][array_rand(['easy', 'normal', 'hard'])])
@@ -149,7 +157,7 @@ class AppFixtures extends Fixture
             $manager->persist($game);
         }
 
-        foreach ($instrumentsData as $index=>$data) {
+        foreach ($instrumentsData as $index => $data) {
             $categoryName = $data['category'];
 
             // On évite de recréer la même catégorie plusieurs fois

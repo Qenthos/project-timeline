@@ -77,6 +77,8 @@ export default class UsersStore {
           admin: false,
           played_games: 0,
           isConnected: true,
+          gamesWon: 0,
+          gamesLost: 0
         }),
       });
 
@@ -406,21 +408,22 @@ export default class UsersStore {
    */
   updateScoreAndPlayedGames(newScore) {
     const user = this.getUserById(this._currentUser.id);
-
+  
     if (!user) {
       console.error("Utilisateur non trouvé");
       return;
     }
-
+  
     const updatedPlayedGames = (user.played_games || 0) + 1;
-
+    const updatedScore = (user.score || 0) + newScore;
+  
     fetch(`http://localhost:8000/api/user/${user.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        score: newScore,
+        score: updatedScore,
         played_games: updatedPlayedGames,
       }),
     })
@@ -434,7 +437,7 @@ export default class UsersStore {
       })
       .then((updatedUser) => {
         runInAction(() => {
-          console.log(newScore);
+          console.log("Nouveau score cumulé :", updatedScore);
           user.score = updatedUser.score;
           user.played_games = updatedUser.played_games;
           user.elo = updatedUser.elo;
@@ -445,7 +448,7 @@ export default class UsersStore {
         console.error("Erreur updateScoreAndPlayedGames :", err);
       });
   }
-
+  
   /**
    * 
    * @returns 

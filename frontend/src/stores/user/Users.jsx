@@ -12,6 +12,8 @@ export default class Users {
   _isConnected;
   _played_games;
   _elo;
+  _gamesWon;
+  _gamesLost;
 
   constructor({
     id,
@@ -25,6 +27,8 @@ export default class Users {
     isConnected = false,
     played_games = 0,
     elo = 100,
+    gamesWon = 0,
+    gamesLost = 0,
   }) {
     this._id = id;
     this._username = username;
@@ -37,6 +41,8 @@ export default class Users {
     this._isConnected = isConnected;
     this._played_games = played_games;
     this._elo = elo;
+    this._gamesWon = gamesWon;
+    this._gamesLost = gamesLost;
 
     makeAutoObservable(this);
   }
@@ -93,6 +99,14 @@ export default class Users {
     return this._elo;
   }
 
+  get gamesWon() {
+    return this._gamesWon;
+  }
+
+  get gamesLost() {
+    return this._gamesLost;
+  }
+
   set username(value) {
     if (typeof value === "string" && value.trim().length > 0) {
       this._username = value.trim();
@@ -137,7 +151,6 @@ export default class Users {
   }
 
   set pfb(value) {
-    console.log(value);
     if (Number.isInteger(value) && value > 0) {
       this._pfb = value;
     } else {
@@ -147,7 +160,7 @@ export default class Users {
 
   set createdAt(value) {
     const date = new Date(value);
-    if (date.toString() !== "Date invalide") {
+    if (date.toString() !== "Invalid Date") {
       this._createdAt = date;
     } else {
       throw new Error(`Date invalide: ${value}`);
@@ -175,6 +188,22 @@ export default class Users {
       this._elo = value;
     } else {
       throw new Error(`Elo invalide : ${value}`);
+    }
+  }
+
+  set gamesWon(value) {
+    if (Number.isInteger(value) && value >= 0) {
+      this._gamesWon = value;
+    } else {
+      throw new Error(`Parties gagnées invalides : ${value}`);
+    }
+  }
+
+  set gamesLost(value) {
+    if (Number.isInteger(value) && value >= 0) {
+      this._gamesLost = value;
+    } else {
+      throw new Error(`Parties perdues invalides : ${value}`);
     }
   }
 }

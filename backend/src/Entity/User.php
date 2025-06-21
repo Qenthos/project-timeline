@@ -36,6 +36,12 @@ class User
     #[ORM\Column(type: 'integer')]
     private int $elo;
 
+    #[ORM\Column(type: 'integer')]
+    private int $games_won;
+
+    #[ORM\Column(type: 'integer')]
+    private int $games_lost;
+
     #[ORM\ManyToOne(targetEntity: ProfilePicture::class, inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
     private ProfilePicture $profilePicture;
@@ -141,6 +147,28 @@ class User
 
     public function isAdmin() {
         return $this->admin;
+    }
+
+    public function getGamesWon(): int
+    {
+        return $this->games_won;
+    }
+
+    public function setGamesWon(int $won): self
+    {
+        $this->games_won = $won;
+        return $this;
+    }
+
+    public function getGamesLost(): int
+    {
+        return $this->games_lost;
+    }
+
+    public function setGamesLost(int $lost): self
+    {
+        $this->games_lost = $lost;
+        return $this;
     }
 
     public function getProfilePicture(): ProfilePicture

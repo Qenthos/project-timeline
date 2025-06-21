@@ -121,11 +121,10 @@
 
   &__list-account {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 1rem;
 
     @include mobile-md {
-      flex-direction: row;
       gap: 2rem;
     }
   }

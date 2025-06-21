@@ -8,6 +8,8 @@
     "admin": false,
     "profileBanner": "banner1.jpg",
     "playedGames": 32,
+    "gamesWon": 20,
+    "gamesLost": 12,
     "elo": 1420
   },
   {
@@ -19,6 +21,8 @@
     "admin": false,
     "profileBanner": "banner2.jpg",
     "playedGames": 17,
+    "gamesWon": 10,
+    "gamesLost": 7,
     "elo": 1295
   },
   {
@@ -30,6 +34,8 @@
     "admin": true,
     "profileBanner": "banner3.jpg",
     "playedGames": 48,
+    "gamesWon": 30,
+    "gamesLost": 18,
     "elo": 1890
   },
   {
@@ -41,6 +47,8 @@
     "admin": false,
     "profileBanner": "banner4.jpg",
     "playedGames": 10,
+    "gamesWon": 4,
+    "gamesLost": 6,
     "elo": 1020
   },
   {
@@ -52,6 +60,8 @@
     "admin": false,
     "profileBanner": "banner5.jpg",
     "playedGames": 20,
+    "gamesWon": 12,
+    "gamesLost": 8,
     "elo": 1155
   },
   {
@@ -63,6 +73,8 @@
     "admin": true,
     "profileBanner": "banner6.jpg",
     "playedGames": 39,
+    "gamesWon": 26,
+    "gamesLost": 13,
     "elo": 1740
   },
   {
@@ -74,6 +86,8 @@
     "admin": false,
     "profileBanner": "banner7.jpg",
     "playedGames": 5,
+    "gamesWon": 1,
+    "gamesLost": 4,
     "elo": 880
   },
   {
@@ -85,6 +99,8 @@
     "admin": false,
     "profileBanner": "banner8.jpg",
     "playedGames": 14,
+    "gamesWon": 7,
+    "gamesLost": 7,
     "elo": 1310
   },
   {
@@ -96,6 +112,8 @@
     "admin": false,
     "profileBanner": "banner9.jpg",
     "playedGames": 47,
+    "gamesWon": 33,
+    "gamesLost": 14,
     "elo": 2005
   },
   {
@@ -107,6 +125,8 @@
     "admin": false,
     "profileBanner": "banner10.jpg",
     "playedGames": 29,
+    "gamesWon": 18,
+    "gamesLost": 11,
     "elo": 1600
   }
 ]
