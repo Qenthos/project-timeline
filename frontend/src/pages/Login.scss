@@ -5,6 +5,10 @@
 .login {
   text-align: center;
 
+  &__section {
+    align-content: center;
+  }
+
   &__title {
     text-transform: uppercase;
     color: $color-title;
@@ -139,7 +143,7 @@
     text-decoration: underline;
     text-align: center;
     color: #333;
-    
+
     &:hover {
       color: #ff7e5f;
     }

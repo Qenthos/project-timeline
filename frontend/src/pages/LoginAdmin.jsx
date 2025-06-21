@@ -71,14 +71,14 @@ const Admin = () => {
               )}
 
               <ul className="admin__buttons">
-                <li>
+                <li className="admin__buttons-item">
                   <input
                     type="reset"
                     value="Annuler"
                     className="admin__button admin__button--reset"
                   />
                 </li>
-                <li>
+                <li className="admin__buttons-item admin__button-item--submit" > 
                   <input
                     type="submit"
                     value="Se connecter"

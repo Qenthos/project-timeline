@@ -7,7 +7,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(247, 247, 241);
 
   &__section {
     max-width: 550px;
@@ -16,6 +15,7 @@
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    height: fit-content;
   }
 
   &__title {
@@ -78,22 +78,23 @@
     transition: background-color 0.2s ease;
 
     &--reset {
-      background-color: #ddd;
-
-      &:hover {
-        background-color: #bbb;
-      }
+      @include button-base(
+        $linear-gradient-gray,
+        $linear-gradient-gray-hover,
+        $shadow-gray
+      );
     }
 
     &--submit {
-      background-color: #5c6ac4;
-      color: white;
-      width: 16rem;
-
-      &:hover {
-        background-color: #434eb4;
-      }
+      @include button-base(
+        $linear-gradient-blue,
+        $linear-gradient-blue-hover,
+        $shadow-blue
+      );
     }
+  }
+  &__button-item--submit {
+    width: 100%;
   }
 }
 

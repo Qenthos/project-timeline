@@ -22,15 +22,24 @@ const Instrument = ({ instrumentDrop, modeGame, status }) => {
     }
   }, [modeGame, instrumentDrop]);
 
-  //Color style
   const borderColor =
-    status === true ? "#4caf50" : status === false ? "#f44336" : "#9e9e9e";
-  const backgroundColor =
-    status === true
-      ? "rgba(76, 175, 80, 0.2)"
-      : status === false
-      ? "rgba(244, 67, 54, 0.2)"
-      : "rgba(158, 158, 158, 0.1)";
+  status === true
+    ? "#4caf50"
+    : status === false
+    ? "#f44336"
+    : status === "default"
+    ? "#bdbdbd" 
+    : "#9e9e9e";
+
+const backgroundColor =
+  status === true
+    ? "rgba(76, 175, 80, 0.2)"
+    : status === false
+    ? "rgba(244, 67, 54, 0.2)"
+    : status === "default"
+    ? "rgba(200, 200, 200, 0.3)" 
+    : "rgba(158, 158, 158, 0.1)";
+
 
       const modeLabels = {
         annee: "Année de création",
@@ -93,7 +102,7 @@ const Instrument = ({ instrumentDrop, modeGame, status }) => {
 Instrument.propTypes = {
   instrumentDrop: PropTypes.object,
   modeGame: PropTypes.string.isRequired,
-  status: PropTypes.oneOf([true, false, null]),
+  status: PropTypes.oneOf([true, false, null, "default"]),
 };
 
 export default Instrument;

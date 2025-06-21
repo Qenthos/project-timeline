@@ -5,22 +5,18 @@ import "./Header.scss";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const usersStore = useUsersStore();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
-  /**
-   * Open / close menu
-   */
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
-  /**
-   * Logout
-   */
   const handleLogout = () => {
     usersStore.logout();
     navigate("/");
+    setMenuOpen(false);
+    setMobileMenuOpen(false);
   };
 
   const isConnected = usersStore.currentUser !== null;
@@ -28,24 +24,107 @@ const Header = () => {
   return (
     <header className="header">
       <nav className="header__nav" aria-label="Navigation principale">
-        <NavLink to="/" className="header__nav-item header__nav-item--home">
+        <NavLink to="/" className="header__nav-logo">
           Timeline
         </NavLink>
 
-        <div className="header__nav__group">
-          <NavLink
-            to="/ranking"
-            className="header__nav__item header__nav__item--ranking"
-          >
-            Classement
-          </NavLink>
+        {isConnected && (
+          <div className="header__nav__avatar header__nav__avatar--mobile">
+            <img
+              src={usersStore.currentUser.pfpUrl}
+              alt="Mon profil"
+              className="header__nav__avatar-img"
+              onClick={toggleMenu}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && toggleMenu()}
+            />
+            {menuOpen && (
+              <ul className="header__nav__dropdown">
+                <li className="header__nav__dropdown-item">
+                  <NavLink
+                    to="/profil"
+                    className="header__nav__dropdown-link"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    Voir profil
+                  </NavLink>
+                </li>
+                <li className="header__nav__dropdown-item">
+                  <button
+                    className="header__nav__dropdown-link"
+                    onClick={handleLogout}
+                  >
+                    Se déconnecter
+                  </button>
+                </li>
+              </ul>
+            )}
+          </div>
+        )}
 
-          {isConnected ? (
-            <li className="header__nav__avatar">
+        <button
+          className="header__burger"
+          onClick={toggleMobileMenu}
+          aria-label={mobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+          aria-expanded={mobileMenuOpen}
+        >
+          <img
+            src={
+              mobileMenuOpen
+                ? "/media/icones/close-menu-burger.svg"
+                : "/media/icones/icon-menu-burger.svg"
+            }
+            alt=""
+            className="header__burger-icon"
+          />
+        </button>
+
+        <ul
+          className={`header__nav__list ${
+            mobileMenuOpen ? "header__nav__list--open" : ""
+          }`}
+        >
+          <li className="header__nav__item">
+            <NavLink
+              className="header__nav__link header__nav__item--ranking"
+              to="/ranking"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Classement
+            </NavLink>
+          </li>
+
+          {!isConnected && (
+            <>
+              <li className="header__nav__item ">
+                <NavLink
+                  className=" header__nav__link header__nav__item--login"
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Connexion
+                </NavLink>
+              </li>
+              <li className="header__nav__item">
+                <NavLink
+                  className="header__nav__link header__nav__item--signup"
+                  to="/register"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Inscription
+                </NavLink>
+              </li>
+            </>
+          )}
+
+          {isConnected && (
+            <li className="header__nav__avatar header__nav__avatar--desktop">
               <img
-                src={
-                  usersStore.currentUser.pfpUrl
-                }
+                src={usersStore.currentUser.pfpUrl}
                 alt="Mon profil"
                 className="header__nav__avatar-img"
                 onClick={toggleMenu}
@@ -59,7 +138,10 @@ const Header = () => {
                     <NavLink
                       to="/profil"
                       className="header__nav__dropdown-link"
-                      onClick={() => setMenuOpen(false)}
+                      onClick={() => {
+                        setMenuOpen(false);
+                        setMobileMenuOpen(false);
+                      }}
                     >
                       Voir profil
                     </NavLink>
@@ -75,23 +157,8 @@ const Header = () => {
                 </ul>
               )}
             </li>
-          ) : (
-            <>
-              <NavLink
-                to="/login"
-                className="header__nav__item header__nav__item--login"
-              >
-                Connexion
-              </NavLink>
-              <NavLink
-                to="/register"
-                className="header__nav__item header__nav__item--signup"
-              >
-                Inscription
-              </NavLink>
-            </>
           )}
-        </div>
+        </ul>
       </nav>
     </header>
   );

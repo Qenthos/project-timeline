@@ -51,7 +51,7 @@ const Login = observer(() => {
     <>
       <Header />
       <main className="login">
-        <section>
+        <section className="login__section">
           <h1 className="login__title">Se connecter</h1>
           <form className="login__form" onSubmit={handleSubmit}>
             <fieldset className="login__fieldset">

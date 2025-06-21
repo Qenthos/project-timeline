@@ -64,7 +64,7 @@ export default class TimelineStore {
 
   setDefaultCard(card) {
     this._idsTimeline[0] = card.id;
-    this._highlightStatus[card.id] = true;
+    this._highlightStatus[card.id] = "default";
     this.saveTabIds();
   }
 
