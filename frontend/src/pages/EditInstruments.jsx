@@ -13,7 +13,6 @@ const EditInstrument = observer(() => {
   const instrument = instruStore.getInstrumentsById(Number(instruId));
 
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
   const [created, setYear] = useState("");
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
@@ -25,7 +24,6 @@ const EditInstrument = observer(() => {
   useEffect(() => {
     if (instrument) {
       setName(instrument.name);
-      setCategory(instrument.category);
       setYear(instrument.created);
       setWeight(instrument.weight);
       setHeight(instrument.height);
@@ -42,7 +40,6 @@ const EditInstrument = observer(() => {
     if (instruId) {
       const data = {
         name: name,
-        category: category,
         created: parseInt(created),
         weight: parseFloat(weight),
         height: parseFloat(height),
@@ -52,7 +49,6 @@ const EditInstrument = observer(() => {
         const updatedInstrument = await instruStore.updateInstrument(
           instruId,
           data.name,
-          data.category,
           data.created,
           data.weight,
           data.height,
@@ -112,22 +108,6 @@ const EditInstrument = observer(() => {
               onChange={(e) => setName(e.target.value)}
             />
           </li>
-
-          <li className="instrument-edit__item">
-            <label htmlFor="category" className="instrument-edit__label">
-              Catégorie
-            </label>
-            <input
-              type="text"
-              name="category"
-              className="instrument-edit__input"
-              minLength="3"
-              maxLength="50"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            />
-          </li>
-
           <li className="instrument-edit__item">
             <label htmlFor="created" className="instrument-edit__label">
               Année de création
