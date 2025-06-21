@@ -56,6 +56,7 @@ const backgroundColor =
       className={`card ${!instrumentDrop ? "card--disabled" : ""}`}
       animate={{ rotateY: flipped ? 180 : 0 }}
       transition={{ duration: 0.4 }}
+      title="Cliquez sur la carte pour voir la description associée."
     >
       {instrumentDrop && (
         <ul className="card__face card__face--front">

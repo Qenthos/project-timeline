@@ -437,7 +437,6 @@ export default class UsersStore {
       })
       .then((updatedUser) => {
         runInAction(() => {
-          console.log("Nouveau score cumulé :", updatedScore);
           user.score = updatedUser.score;
           user.played_games = updatedUser.played_games;
           user.elo = updatedUser.elo;
