@@ -97,13 +97,4 @@ class Category
         return $this;
     }
 
-    // public function removeGame(Game $game): self
-    // {
-    //     if ($this->games->removeElement($game)) {
-    //         if ($game->getCategorie() === $this) {
-    //             $game->setCategorie(null);
-    //         }
-    //     }
-    //     return $this;
-    // }
 }
