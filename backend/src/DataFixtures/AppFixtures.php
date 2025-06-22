@@ -174,8 +174,8 @@ class AppFixtures extends Fixture
             $instrument->setCategorie($categories[$categoryName]);
             $instrument->setImage($data['image']);
             $instrument->setCreated((int) $data['created']);
-            $instrument->setWeight((int) $data['weight_kg']);
-            $instrument->setHeight((int) $data['height_cm']);
+            $instrument->setWeight((float) $data['weight_kg']);
+            $instrument->setHeight((float) $data['height_cm']);
             $instrument->setOrigine($data['origine']);
             $instrument->setDescription($data['description']);
             $instrument->setAnecdote($data['anecdote']);
