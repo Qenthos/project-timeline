@@ -23,30 +23,28 @@ const Instrument = ({ instrumentDrop, modeGame, status }) => {
   }, [modeGame, instrumentDrop]);
 
   const borderColor =
-  status === true
-    ? "#4caf50"
-    : status === false
-    ? "#f44336"
-    : status === "default"
-    ? "#bdbdbd" 
-    : "#9e9e9e";
+    status === true
+      ? "#4caf50"
+      : status === false
+      ? "#f44336"
+      : status === "default"
+      ? "#bdbdbd"
+      : "#9e9e9e";
 
-const backgroundColor =
-  status === true
-    ? "rgba(76, 175, 80, 0.2)"
-    : status === false
-    ? "rgba(244, 67, 54, 0.2)"
-    : status === "default"
-    ? "rgba(200, 200, 200, 0.3)" 
-    : "rgba(158, 158, 158, 0.1)";
+  const backgroundColor =
+    status === true
+      ? "rgba(76, 175, 80, 0.2)"
+      : status === false
+      ? "rgba(244, 67, 54, 0.2)"
+      : status === "default"
+      ? "rgba(200, 200, 200, 0.3)"
+      : "rgba(158, 158, 158, 0.1)";
 
-
-      const modeLabels = {
-        annee: "Année de création",
-        taille: "Taille (cm)",
-        poids: "Poids (kg)",
-      };
-      
+  const modeLabels = {
+    annee: "Année de création",
+    taille: "Taille (cm)",
+    poids: "Poids (kg)",
+  };
 
   return (
     <motion.div
@@ -81,10 +79,7 @@ const backgroundColor =
         </ul>
       )}
       {instrumentDrop && (
-        <ul
-          className="card__face card__face--back"
-
-        >
+        <ul className="card__face card__face--back">
           <li className="card__info">
             <p className="card__text">{instrumentDrop.name}</p>
           </li>
@@ -92,7 +87,9 @@ const backgroundColor =
             <p className="card__text">{instrumentDrop.description}</p>
           </li>
           <li className="card__info">
-          <p className="card__text">{modeLabels[modeGame] || "Valeur"} : {mode}</p>
+            <p className="card__text">
+              {modeLabels[modeGame] || "Valeur"} : {mode}
+            </p>
           </li>
         </ul>
       )}

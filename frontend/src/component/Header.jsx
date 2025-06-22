@@ -12,6 +12,9 @@ const Header = () => {
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
+  /**
+   * Logout a current user
+   */
   const handleLogout = () => {
     usersStore.logout();
     navigate("/");

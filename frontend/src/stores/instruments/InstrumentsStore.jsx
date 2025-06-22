@@ -6,7 +6,7 @@ const API_URL = "http://localhost:8000/api/instruments";
 export default class InstrumentsStore {
   _instruments = [];
   _isLoaded = false;
-  _cluesCache = {};
+
 
   constructor() {
     makeAutoObservable(this);

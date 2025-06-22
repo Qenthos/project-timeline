@@ -183,6 +183,10 @@ export default class GameStore {
     }
   }
 
+  /**
+   * add game for an user
+   * @returns 
+   */
   async postGameToUser() {
     const userId = this._usersStore.currentUser?.id;
 

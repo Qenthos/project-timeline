@@ -96,7 +96,6 @@ const SettingsGame = () => {
               ))}
             </ul>
 
-            {/* Difficulté */}
             <div className="settings__options">
               <h2 className="settings__options-title">Difficulté</h2>
               <ul className="settings__difficulty-list">
@@ -124,9 +123,6 @@ const SettingsGame = () => {
                         <li className="settings__difficulty-detail">
                           {tabDifficulty[key]?.timer ?? "-"} secondes
                         </li>
-                        {/* <li className="settings__difficulty-detail">
-                          {tabDifficulty[key]?.clue ?? "-"} indice
-                        </li> */}
                       </ul>
                     </label>
                   </li>
@@ -137,7 +133,6 @@ const SettingsGame = () => {
                 <>
                   <h3 className="settings__parameter-title">Options</h3>
                   <ul className="settings__parameter-list">
-                    {/* Nombre d'instruments */}
                     <li className="settings__parameter-item">
                       <label
                         htmlFor="instrument-count"
@@ -168,7 +163,7 @@ const SettingsGame = () => {
                       </div>
                     </li>
 
-                    {/* Timer */}
+                   
                     <li className="settings__parameter-item">
                       <label htmlFor="game-timer" className="settings__label">
                         Timer

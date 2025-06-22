@@ -202,6 +202,11 @@ export default class UsersStore {
     }
   }
 
+  /**
+   * 
+   * @param {*} id 
+   * @returns 
+   */
   async getIsAdmin(id) {
     try {
       const response = await fetch(
@@ -506,6 +511,10 @@ export default class UsersStore {
       });
   }
 
+  /**
+   * update elo
+   * @returns 
+   */
   updateElo() {
     const user = this.getUserById(this._currentUser.id);
 
