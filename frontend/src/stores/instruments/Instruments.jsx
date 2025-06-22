@@ -38,7 +38,6 @@ export default class Instruments {
     makeAutoObservable(this);
   }
 
-  // Getters
   get id() {
     return this._id;
   }

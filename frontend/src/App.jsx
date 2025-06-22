@@ -41,7 +41,7 @@ const App = observer(() => {
           ></Route>
           <Route path="/profil" element={<Profil />}></Route>
           <Route path="/admin" element={<LoginAdmin />}></Route>
-          {/* <Route
+          <Route
           path="/hub-admin"
           element={
             <ProtectedRoute user={usersStore.currentUser}>
@@ -62,8 +62,8 @@ const App = observer(() => {
           <Route path="admin-manage-user" element={<AdminManageUser />}>
             <Route path="edit/:userId" element={<EditUser />} />
           </Route>
-        </Route> */}
-          <Route path="/hub-admin" element={<HubAdmin />}>
+        </Route>
+          {/* <Route path="/hub-admin" element={<HubAdmin />}>
             <Route
               index
               element={<Navigate to="admin-manage-instrument" replace />}
@@ -77,7 +77,7 @@ const App = observer(() => {
             <Route path="admin-manage-user" element={<AdminManageUser />}>
               <Route path="edit/:userId" element={<EditUser />} />
             </Route>
-          </Route>
+          </Route> */}
           <Route path="*" element={<Page404 />}></Route>
         </Routes>
       </BrowserRouter>

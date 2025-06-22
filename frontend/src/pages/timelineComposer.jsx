@@ -44,7 +44,7 @@ const TimelineComposer = observer(() => {
       } else {
         audioRef.current
           .play()
-          .catch((err) => console.log("Erreur lecture audio", err));
+          .catch((err) => console.error("Erreur lecture audio", err));
       }
       setIsMusicPlaying(!isMusicPlaying);
     }
@@ -81,15 +81,6 @@ const TimelineComposer = observer(() => {
   const currentInstrument =
     gameStore.state.selectedInstruments[gameStore.state.currentIndex];
 
-  // useEffect(() => {
-  //   async function fetchClues() {
-  //     if (currentInstrument && clue) {
-  //       await instruStore.loadCluesForInstrument(currentInstrument);
-  //     }
-  //   }
-  //   fetchClues();
-  // }, [currentInstrument, instruStore]);
-  // console.log(clue);
 
   /**
    * Handle local storage of timeline
@@ -188,6 +179,9 @@ const TimelineComposer = observer(() => {
     currentUser,
   ]);
 
+  /**
+   * Handle endgame
+   */
   useEffect(() => {
     if (gameStore.state.timerRemaining === 0 && !isGameFinished) {
       setIsGameFinished(true);

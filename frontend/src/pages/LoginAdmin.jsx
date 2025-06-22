@@ -12,6 +12,10 @@ const Admin = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  /**
+   * 
+   * @param {*} e 
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -66,9 +70,7 @@ const Admin = () => {
                 </li>
               </ul>
 
-              {errorMessage && (
-                <p className="admin__error">{errorMessage}</p>
-              )}
+              {errorMessage && <p className="admin__error">{errorMessage}</p>}
 
               <ul className="admin__buttons">
                 <li className="admin__buttons-item">
@@ -78,7 +80,7 @@ const Admin = () => {
                     className="admin__button admin__button--reset"
                   />
                 </li>
-                <li className="admin__buttons-item admin__button-item--submit" > 
+                <li className="admin__buttons-item admin__button-item--submit">
                   <input
                     type="submit"
                     value="Se connecter"
