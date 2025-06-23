@@ -8,9 +8,9 @@ import { TimelineContext } from "./TimelineContext";
 const instrumentStore = new InstrumentStore();
 const instruStore = new TimelineStore(instrumentStore);
 
-const games = new Game();
+const game = new Game();
 const userStore = new UserStore();
-const gameStore = new GameStore(games, userStore, instruStore);
+const gameStore = new GameStore(game, userStore, instruStore);
 
 const timeStore = {
   instrumentStore,

@@ -55,8 +55,8 @@ const Home = () => {
 
         <section className="home__image">
           <img
-            src="/media/piano-bg.jpg"
-            alt="Manette de jeu colorée"
+            src="/media/instruments-home.webp"
+            alt="Cartes d'instruments entassées"
             loading="lazy"
           />
         </section>
