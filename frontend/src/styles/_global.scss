@@ -133,15 +133,7 @@ textarea {
   font-size: 1rem;
 }
 
-/***Ecran à partir de 640px***/
-@include mobile-sm {
-}
-
-/***Ecran à partir de 768px***/
-@include mobile-md {
-}
-
-/***Ecran à partir de 1024px***/
+/***1024px***/
 @include mobile-lg {
   main {
     padding: 15px 0 15px 0;
@@ -154,12 +146,4 @@ textarea {
   h1 {
     font-size: 4rem;
   }
-}
-
-/***Ecran à partir de 1280px***/
-@include mobile-xl {
-}
-
-/***Ecran à partir de 1536px***/
-@include mobile-2xl {
 }

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
-import { useUsersStore } from "../../stores/useStore";
+import { useUserStore } from "../../stores/useStore";
 import "./Header.scss";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const usersStore = useUsersStore();
+  const usersStore = useUserStore();
   const navigate = useNavigate();
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -22,7 +22,8 @@ const Header = () => {
     setMobileMenuOpen(false);
   };
 
-  const isConnected = usersStore.currentUser !== null;
+  const isConnected = usersStore.currentUser?.id != null;
+
 
   return (
     <header className="header">

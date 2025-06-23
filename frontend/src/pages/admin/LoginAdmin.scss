@@ -1,0 +1,119 @@
+@use "../../styles/_mixins" as *;
+@use "../../styles/_variables" as *;
+
+/***0px***/
+
+.admin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__section {
+    max-width: 550px;
+    width: 100%;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    height: fit-content;
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 0 0 2rem 0;
+    color: black;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__legend {
+    font-weight: bold;
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+  }
+
+  &__list {
+    margin: 0 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__label {
+    font-weight: 500;
+    margin: 0 0 0.5rem 0;
+  }
+
+  &__input {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+
+    &:focus {
+      outline: 2px solid #5c6ac4;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  &__button {
+    padding: 0.75rem 1.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease;
+
+    &--reset {
+      @include button-base(
+        $linear-gradient-gray,
+        $linear-gradient-gray-hover,
+        $shadow-gray
+      );
+    }
+
+    &--submit {
+      @include button-base(
+        $linear-gradient-blue,
+        $linear-gradient-blue-hover,
+        $shadow-blue
+      );
+    }
+  }
+  &__button-item--submit {
+    width: 100%;
+  }
+}
+
+/***640px***/
+@include mobile-sm {
+}
+
+/*** 768px***/
+@include mobile-md {
+}
+
+/***1024px***/
+@include mobile-lg {
+}
+
+/***1280px***/
+@include mobile-xl {
+}
+
+/***1536px***/
+@include mobile-2xl {
+}

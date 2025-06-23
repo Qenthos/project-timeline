@@ -1,0 +1,310 @@
+@use "../../styles/_mixins" as *;
+@use "../../styles/_variables" as *;
+
+.profile {
+  &__section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+  }
+  &__score-list {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    z-index: 5;
+  }
+
+  &__score-item {
+    background: #ffffff;
+    border: 2px solid #00bcd4;
+    border-radius: 1rem;
+    padding: 0.4rem 1rem;
+    font-size: 1.2rem;
+    color: #00bcd4;
+    font-weight: 700;
+    box-shadow: 0 0 12px #00bcd455;
+    width: fit-content;
+  }
+
+  &__banner-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  &__banner-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.6rem;
+  }
+
+  &__banner {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    filter: brightness(0.95);
+    border: 4px solid white;
+  }
+
+  &__banner-edit-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+    color: #0077ff;
+    border: 1px solid #00bcd4;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+
+    &:hover {
+      background: #ffffff;
+      box-shadow: 0 0 10px #00bcd455;
+    }
+  }
+
+  &__avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 4px solid #00bcd4;
+    position: absolute;
+    bottom: -70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.3s;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    &:hover {
+      transform: translateX(-50%) scale(1.05);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("/media/icones/icon-edit.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0);
+      transition: background-color 0.3s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    &:hover::before {
+      background-color: rgba(0, 0, 0, 0.175);
+    }
+
+    &:hover::after {
+      opacity: 1;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 6rem 0 0 0;
+    background-color: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.075);
+  }
+
+  &__start-game {
+    width: fit-content !important;
+    @include button-base(
+      $linear-gradient-purple,
+      $linear-gradient-purple-hover,
+      $shadow-purple
+    );
+  }
+
+  &__logout {
+    width: fit-content !important;
+    @include button-base(
+      $linear-gradient-blue,
+      $linear-gradient-blue-hover,
+      $shadow-blue
+    );
+  }
+
+  &__form {
+    margin-top: 2rem;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 1rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  &__label {
+    font-size: 0.9rem;
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+    color: #0077ff;
+    text-transform: uppercase;
+  }
+
+  &__input {
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    background-color: #fdfdfd;
+    color: $color-input;
+    width: 100%;
+
+    &:read-only {
+      background-color: #f3f3f3;
+      color: #888;
+    }
+  }
+
+  &__password-container {
+    position: relative;
+  }
+
+  &__confirm-show-password {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image: url("/media/icones/hide-password.svg");
+
+    &.is-visible {
+      background-image: url("/media/icones/show-password.svg");
+    }
+  }
+
+  &__error {
+    margin-top: 0.5rem;
+    background-color: rgba(255, 0, 0, 0.08);
+    border-left: 4px solid $color-red;
+    padding: 0.5rem 1rem;
+    color: $color-red;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  &__played-games,
+  &__date-inscription {
+    font-size: 0.95rem;
+    color: #555;
+    font-style: italic;
+  }
+
+  &__edit-btn,
+  &__save-btn,
+  &__cancel-btn {
+    padding: 0.75rem;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  &__edit-btn {
+    @include button-base(
+      $linear-gradient-blue,
+      $linear-gradient-blue-hover,
+      $shadow-blue
+    );
+  }
+
+  &__save-btn {
+    @include button-base(
+      $linear-gradient-blue,
+      $linear-gradient-blue-hover,
+      $shadow-blue
+    );
+  }
+
+  &__cancel-btn {
+    background: #e0e0e0;
+    color: #444;
+    margin: 0.5rem 0 0 0;
+
+    &:hover {
+      background: #ccc;
+    }
+  }
+
+  &__delete-account {
+    @include button-base(
+      $linear-gradient-red,
+      $linear-gradient-red-hover,
+      $shadow-red
+    );
+  }
+}
+
+/***640px***/
+@include mobile-sm {
+}
+
+/*** 768px***/
+@include mobile-md {
+}
+
+/***1024px***/
+@include mobile-lg {
+}
+
+/***1280px***/
+@include mobile-xl {
+}
+
+/***1536px***/
+@include mobile-2xl {
+}

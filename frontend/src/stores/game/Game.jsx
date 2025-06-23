@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-export default class Games {
+export default class Game {
   _timer;
   _timerRemaining;
   _timeElapsed;

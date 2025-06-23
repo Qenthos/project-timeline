@@ -1,22 +1,22 @@
-import InstrumentsStore from "./instruments/InstrumentStore";
+import InstrumentStore from "./instrument/InstrumentStore";
 import TimelineStore from "./timeline/TimelineStore";
-import Games from "./game/Game";
+import Game from "./game/Game";
 import GameStore from "./game/GameStore";
-import UsersStore from "./user/UserStore";
+import UserStore from "./user/UserStore";
 import { TimelineContext } from "./TimelineContext";
 
-const instrumentsStore = new InstrumentsStore();
-const instruStore = new TimelineStore(instrumentsStore);
+const instrumentStore = new InstrumentStore();
+const instruStore = new TimelineStore(instrumentStore);
 
-const games = new Games();
-const usersStore = new UsersStore();
-const gameStore = new GameStore(games, usersStore, instruStore);
+const games = new Game();
+const userStore = new UserStore();
+const gameStore = new GameStore(games, userStore, instruStore);
 
 const timeStore = {
-  instrumentsStore,
+  instrumentStore,
   instruStore,
   gameStore,
-  usersStore
+  userStore
 };
 
 export const TimelineProvider = ({ children }) => {

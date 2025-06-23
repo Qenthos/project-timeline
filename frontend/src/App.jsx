@@ -1,7 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
-import { useUsersStore } from "./stores/useStore.js";
-import { useRef, useEffect } from "react";
+import { useUserStore } from "./stores/useStore";
 import {
   Home,
   Login,
@@ -23,7 +22,8 @@ import {
 import ProtectedRoute from "./component/user/ProtectedRoute.jsx";
 
 const App = observer(() => {
-  const {currentUser} = useUsersStore();
+  const userStore = useUserStore();
+  const currentUser = userStore?.currentUser;
 
   return (
     <>

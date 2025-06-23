@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-export default class Users {
+export default class User {
   _id;
   _username;
   _email;

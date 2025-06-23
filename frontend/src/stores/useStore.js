@@ -11,16 +11,16 @@ export const useTimelineStore = () => {
 };
 
 // sous-store des instruments
-export const useInstrumentsStore = () => {
+export const useInstrumentStore = () => {
   const timelineStore = useTimelineStore();
-  return timelineStore.instrumentsStore;
+  return timelineStore.instrumentStore;
 };
 
 
 //sous-store des utilisateurs
-export const useUsersStore = () => {
+export const useUserStore = () => {
   const timelineStore = useTimelineStore();
-  return timelineStore.usersStore;
+  return timelineStore.userStore;
 };
 
 // sous-store des parties de jeux

@@ -1,0 +1,161 @@
+@use "../../styles/_mixins" as *;
+@use "../../styles/_variables" as *;
+
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem;
+  gap: 4rem;
+
+  @include mobile-md {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 4rem 3rem;
+  }
+
+  &__section {
+    width: 100%;
+    max-width: 1000px;
+    background: rgba(255, 255, 255, 0.83);
+    border-radius: 1.25rem;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    gap: 2rem;
+    height: fit-content;
+
+    @include mobile-lg {
+      align-items: flex-start;
+      padding: 4rem;
+    }
+  }
+
+  &__title {
+    font-size: 4rem;
+    font-weight: 900;
+    text-align: center;
+    color: $color-title;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+
+    @include mobile-lg {
+      font-size: 6rem;
+      text-align: left;
+    }
+  }
+
+  &__sub-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #666;
+    margin-top: -1rem;
+
+    @include mobile-lg {
+      font-size: 2rem;
+    }
+  }
+
+  &__list {
+    &--primary-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.5rem;
+      width: 100%;
+
+      @include mobile-md {
+        flex-direction: row;
+      }
+    }
+  }
+
+  &__item {
+    width: 100%;
+
+    @include mobile-md {
+      width: auto;
+    }
+
+    &--first-list {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  &__link {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 1rem;
+    padding: 1.2rem 2rem;
+    display: inline-block;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    width: 100%;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    &--play {
+      @include button-base(
+        $linear-gradient-purple,
+        $linear-gradient-purple-hover,
+        $shadow-purple
+      );
+    }
+
+    &--discover-instruments {
+      @include button-base(
+        $linear-gradient-red,
+        $linear-gradient-red-hover,
+        $shadow-red
+      );
+    }
+  }
+
+  &__list-account {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+    @include mobile-md {
+      gap: 2rem;
+    }
+  }
+
+  &__link-account {
+    font-size: 1rem;
+    color: #555;
+    text-decoration: underline;
+    font-weight: 500;
+    transition: color 0.2s;
+
+    &:hover {
+      color: #000;
+    }
+  }
+
+  &__image {
+    display: none;
+
+    @include mobile-md {
+      height: fit-content;
+      display: block;
+      width: 45%;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 1rem;
+      object-fit: cover;
+      max-height: 500px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+  }
+}

@@ -3,7 +3,7 @@ import Users from "./User";
 
 const API_URL = "http://localhost:8000/api/users";
 
-export default class UsersStore {
+export default class UserStore {
   _users = [];
   _currentUser = null;
   _isLoaded = false;
