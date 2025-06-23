@@ -1,5 +1,5 @@
-import Header from "../component/Header";
-import Footer from "../component/Footer";
+import Header from "../component/header/Header";
+import Footer from "../component/footer/Footer";
 import { Link } from "react-router";
 import { useUsersStore } from "./../stores/useStore";
 import "./Home.scss";

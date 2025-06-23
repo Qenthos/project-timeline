@@ -40,20 +40,20 @@ class AppFixtures extends Fixture
         $gamemode = ["poids", "taille", "création"];
 
         // Création de Bannières
-        for ($i = 1; $i <= 11; $i++) {
+        for ($i = 1; $i <= 2; $i++) {
             $banner = new ProfileBanner();
             $banner->setName("Banner$i");
-            $banner->setImage("wallpaper-$i.jpg");
+            $banner->setImage("wallpaper-$i.webp");
 
             $manager->persist($banner);
             $profileBanners[] = $banner;
         }
 
         // Création de PFP
-        for ($i = 1; $i <= 11; $i++) {
+        for ($i = 1; $i <= 3; $i++) {
             $pp = new ProfilePicture();
             $pp->setName("PFP$i");
-            $pp->setImage("pdp-$i.png");
+            $pp->setImage("pdp-$i.webp");
 
             $manager->persist($pp);
             $profilePicture[] = $pp;
@@ -81,9 +81,9 @@ class AppFixtures extends Fixture
                 ->setPassword($data["password"])
                 ->setEmail($data["email"])
                 ->setScore($data["score"])
-                ->setProfilePicture($profilePicture[$index])
+                ->setProfilePicture($profilePicture[array_rand($profilePicture)])
                 ->setAdmin($data["admin"])
-                ->setProfileBanner($profileBanners[$index])
+                ->setProfileBanner($profileBanners[array_rand($profileBanners)])
                 ->setPlayedGames($data["playedGames"])
                 ->setGamesWon($data["gamesWon"] ?? 0)
                 ->setGamesLost($data["gamesLost"] ?? 0)
@@ -95,50 +95,6 @@ class AppFixtures extends Fixture
             $manager->persist($user);
         }
 
-        $profilePicture = new ProfilePicture();
-        $profilePicture->setImage("nathan.webp");
-        $profilePicture->setName("PP Nathan");
-        $manager->persist($profilePicture);
-
-        $profileBanner = new ProfileBanner();
-        $profileBanner->setImage("nathan-banner.webp");
-        $profileBanner->setName("Banner Nathan");
-        $manager->persist($profileBanner);
-
-        // Création de l'utilisateur Nathan
-        $user = new User();
-        $user = new User();
-        $user->setUsername("NathanBaud")
-             ->setPassword("letsgo")
-             ->setEmail("nathan.baud@example.com")
-             ->setScore(1337)
-             ->setProfilePicture($profilePicture)
-             ->setProfileBanner($profileBanner)
-             ->setAdmin(true)
-             ->setPlayedGames(42)
-             ->setGamesWon(25)
-             ->setGamesLost(17)
-             ->setElo(1984);
-        
-
-        $manager->persist($user);
-
-
-        // Création de 10 utilisateurs
-        // for ($i = 1; $i <= 10; $i++) {
-        //     $user = new User();
-        //     $user->setPseudo("Joueur_$i")
-        //         ->setPassword("hashed_password_$i") // à adapter selon encodage réel
-        //         ->setEmail("joueur$i@example.com")
-        //         ->setScore(rand(0, 1000))
-        //         ->setProfilePicture($profilePicture[$i])
-        //         ->setAdmin(false)
-        //         ->setProfileBanner($profileBanners[$i])
-        //         ->setPlayedGames(rand(0, 50))
-        //         ->setElo(rand(800, 2400));
-        //     $manager->persist($user);
-        //     $users[] = $user;
-        // }
 
         // Création de 30 parties aléatoires
         for ($i = 1; $i <= 30; $i++) {

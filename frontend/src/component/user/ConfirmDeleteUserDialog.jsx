@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useRef } from "react";
-import "./ConfirmDialog.scss";
+import "./ConfirmDeleteUserDialog.scss";
 
-const ConfirmDialog = ({ message, onConfirm, onCancel }) => {
+const ConfirmDeleteUserDialog = ({ message, onConfirm, onCancel }) => {
   const dialogRef = useRef(null);
 
   useEffect(() => {
@@ -75,10 +75,10 @@ const ConfirmDialog = ({ message, onConfirm, onCancel }) => {
   );
 };
 
-ConfirmDialog.propTypes = {
+ConfirmDeleteUserDialog.propTypes = {
   message: PropTypes.string.isRequired,
   onConfirm: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
 };
 
-export default ConfirmDialog;
+export default ConfirmDeleteUserDialog;

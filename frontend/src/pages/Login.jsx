@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { useUsersStore } from "./../stores/useStore";
-import Header from "../component/Header";
+import Header from "../component/header/Header";
 import "./Login.scss";
 
 const Login = observer(() => {

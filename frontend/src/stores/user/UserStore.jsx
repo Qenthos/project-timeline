@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import Users from "./Users";
+import Users from "./User";
 
 const API_URL = "http://localhost:8000/api/users";
 
@@ -153,54 +153,42 @@ export default class UsersStore {
    */
   async loginAdmin(email, password) {
     try {
-      const response = await fetch(API_URL);
-
+      const response = await fetch("http://localhost:8000/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+  
+      const data = await response.json();
+  
       if (!response.ok) {
-        throw new Error("Erreur réseau");
+        throw new Error(data.error || "Erreur inconnue");
       }
 
-      const users = await response.json();
-
-      const userByEmail = users.find((u) => u.email === email);
-
-      if (!userByEmail) {
-        throw new Error("Adresse mail introuvable");
-      }
-
-      if (userByEmail.password !== password) {
-        throw new Error("Mot de passe incorrect");
-      }
-
-      const isAdmin = await this.getIsAdmin(userByEmail.id);
-
-      if (!isAdmin) {
+      if (!data.user.admin) {
         throw new Error("Accès refusé : vous n'êtes pas administrateur");
       }
-
+  
       runInAction(() => {
-        const user = new Users({
-          ...userByEmail,
-          admin: true,
-          isConnected: true,
-        });
-
+        const user = new Users({ ...data.user, isConnected: true });
         this._currentUser = user;
-
+  
         const exists = this._users.find((u) => u.id === user.id);
         if (!exists) {
           this._users.push(user);
         }
-
-        localStorage.setItem(
-          "currentUser",
-          JSON.stringify({ ...userByEmail, admin: true })
-        );
+  
+        localStorage.setItem("currentUser", JSON.stringify(data.user));
       });
     } catch (error) {
       console.error("Erreur lors de la connexion admin :", error);
       throw error;
     }
   }
+  
+
 
   /**
    * 

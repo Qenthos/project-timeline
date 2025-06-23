@@ -2,8 +2,8 @@ import { useUsersStore } from "../stores/useStore";
 import { observer } from "mobx-react-lite";
 import "./Ranking.scss";
 import RankingListUsers from "../component/user/RankingListUsers";
-import Header from "../component/Header";
-import LoadingScreen from "../component/LoadingScreen";
+import Header from "../component/header/Header";
+import LoadingScreen from "../component/loading-screen/LoadingScreen";
 
 const Ranking = observer(() => {
   const { users, isLoaded } = useUsersStore();

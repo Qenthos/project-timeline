@@ -1,8 +1,8 @@
-import InstrumentsStore from "./instruments/InstrumentsStore";
-import TimelineStore from "./timeline/timelineStore";
-import Games from "./game/Games";
+import InstrumentsStore from "./instruments/InstrumentStore";
+import TimelineStore from "./timeline/TimelineStore";
+import Games from "./game/Game";
 import GameStore from "./game/GameStore";
-import UsersStore from "./user/usersStore";
+import UsersStore from "./user/UserStore";
 import { TimelineContext } from "./TimelineContext";
 
 const instrumentsStore = new InstrumentsStore();

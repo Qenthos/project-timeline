@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
-import { useUsersStore } from "./../stores/useStore";
+import { useUsersStore } from "../../stores/useStore";
 import "./Header.scss";
 
 const Header = () => {

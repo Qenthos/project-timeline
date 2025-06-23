@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import "./SettingsGame.scss";
-import Header from "../component/Header";
+import Header from "../component/header/Header";
 
 const SettingsGame = () => {
   //Tab of different game mode
   const tabGameMode = ["Annee", "Poids", "Taille"];
 
   const [cards, setCards] = useState(5);
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(100);
   const [difficulty, setDifficulty] = useState("easy");
   const [modeGame, setModeGame] = useState(tabGameMode[0]);
   const [clue, setClue] = useState(true);
@@ -34,7 +34,7 @@ const SettingsGame = () => {
   };
 
   const tabDifficulty = {
-    easy: { cards: 10, timer: 20, clue: true },
+    easy: { cards: 10, timer: 100, clue: true },
     normal: { cards: 15, timer: 150, clue: false },
     hard: { cards: 20, timer: 120, clue: false },
   };
@@ -163,7 +163,6 @@ const SettingsGame = () => {
                       </div>
                     </li>
 
-                   
                     <li className="settings__parameter-item">
                       <label htmlFor="game-timer" className="settings__label">
                         Timer
@@ -223,7 +222,6 @@ const SettingsGame = () => {
                   </ul>
                 </>
               )}
-
               <ul className="settings__list-recap">
                 <li>
                   <p>Mode de jeu : {modeGame}</p>
@@ -252,7 +250,7 @@ const SettingsGame = () => {
           </div>
         </section>
       </main>
-    </> 
+    </>
   );
 };
 

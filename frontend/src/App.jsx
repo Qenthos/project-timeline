@@ -20,10 +20,10 @@ import {
   AdminManageUser,
 } from "./pages";
 
-import ProtectedRoute from "./component/ProtectedRoute.jsx";
+import ProtectedRoute from "./component/user/ProtectedRoute.jsx";
 
 const App = observer(() => {
-  const usersStore = useUsersStore();
+  const {currentUser} = useUsersStore();
 
   return (
     <>
@@ -41,29 +41,14 @@ const App = observer(() => {
           ></Route>
           <Route path="/profil" element={<Profil />}></Route>
           <Route path="/admin" element={<LoginAdmin />}></Route>
-          {/* <Route
-          path="/hub-admin"
-          element={
-            <ProtectedRoute user={usersStore.currentUser}>
-              <HubAdmin />
-            </ProtectedRoute>
-          }
-        >
           <Route
-            index
-            element={<Navigate to="admin-manage-instrument" replace />}
-          />
-          <Route
-            path="admin-manage-instrument"
-            element={<AdminManageInstrument />}
+            path="/hub-admin"
+            element={
+              <ProtectedRoute user={currentUser}>
+                <HubAdmin />
+              </ProtectedRoute>
+            }
           >
-            <Route path="edit/:instruId" element={<EditInstrument />} />
-          </Route>
-          <Route path="admin-manage-user" element={<AdminManageUser />}>
-            <Route path="edit/:userId" element={<EditUser />} />
-          </Route>
-        </Route> */}
-          <Route path="/hub-admin" element={<HubAdmin />}>
             <Route
               index
               element={<Navigate to="admin-manage-instrument" replace />}
@@ -78,6 +63,21 @@ const App = observer(() => {
               <Route path="edit/:userId" element={<EditUser />} />
             </Route>
           </Route>
+          {/* <Route path="/hub-admin" element={<HubAdmin />}>
+            <Route
+              index
+              element={<Navigate to="admin-manage-instrument" replace />}
+            />
+            <Route
+              path="admin-manage-instrument"
+              element={<AdminManageInstrument />}
+            >
+              <Route path="edit/:instruId" element={<EditInstrument />} />
+            </Route>
+            <Route path="admin-manage-user" element={<AdminManageUser />}>
+              <Route path="edit/:userId" element={<EditUser />} />
+            </Route>
+          </Route> */}
           <Route path="*" element={<Page404 />}></Route>
         </Routes>
       </BrowserRouter>

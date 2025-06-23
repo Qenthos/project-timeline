@@ -3,7 +3,7 @@ import { Outlet } from "react-router";
 import { observer } from "mobx-react-lite";
 import { useInstrumentsStore } from "../stores/useStore";
 import ListInstruments from "../component/instrument/ListInstruments";
-import LoadingScreen from "../component/LoadingScreen";
+import LoadingScreen from "../component/loading-screen/LoadingScreen";
 import "./AdminManageInstrument.scss";
 
 const AdminManageInstrument = observer(() => {

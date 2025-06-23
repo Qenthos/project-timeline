@@ -2,7 +2,7 @@ import { useNavigate, Outlet } from "react-router";
 import { observer } from "mobx-react-lite";
 import { useUsersStore } from "../stores/useStore";
 import "./HubAdmin.scss";
-import Header from "../component/Header";
+import Header from "../component/header/Header";
 
 const HubAdmin = observer(() => {
   let navigate = useNavigate();

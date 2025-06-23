@@ -277,7 +277,8 @@ $user->setGamesLost($data['games_lost'] ?? 0);
                 'id' => $user->getId(),
                 'email' => $user->getEmail(),
                 'username' => $user->getUsername(),
-                'played_games' => $user->getPlayedGames()
+                'played_games' => $user->getPlayedGames(),
+                'admin' => $user->isAdmin(),
             ]
         ]);
     }

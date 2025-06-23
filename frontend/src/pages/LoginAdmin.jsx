@@ -1,4 +1,4 @@
-import Header from "../component/Header";
+import Header from "../component/header/Header";
 import { useNavigate } from "react-router";
 import { useUsersStore } from "./../stores/useStore";
 import { useState } from "react";
@@ -38,7 +38,6 @@ const Admin = () => {
           <h1 className="admin__title">Connexion : espace administrateur</h1>
           <form className="admin__form" onSubmit={handleSubmit}>
             <fieldset className="admin__fieldset">
-              <legend className="admin__legend">Formulaire</legend>
               <ul className="admin__list">
                 <li className="admin__item">
                   <label htmlFor="mail" className="admin__label">

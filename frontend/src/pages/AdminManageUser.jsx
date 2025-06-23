@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { useUsersStore } from "../stores/useStore";
 import ListUsers from "../component/user/ListUsers";
 import "./AdminManageUser.scss";
-import LoadingScreen from "../component/LoadingScreen";
+import LoadingScreen from "../component/loading-screen/LoadingScreen";
 
 const AdminManageUser = observer(() => {
   const navigate = useNavigate();

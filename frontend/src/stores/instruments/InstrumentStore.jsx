@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import Instruments from "./Instruments";
+import Instruments from "./Instrument";
 
 const API_URL = "http://localhost:8000/api/instruments";
 

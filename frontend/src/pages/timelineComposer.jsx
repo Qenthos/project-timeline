@@ -7,11 +7,11 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
 import { useUsersStore, useInstrumentsStore } from "../stores/useStore";
 import React from "react";
-import Header from "../component/Header";
-import LoadingScreen from "../component/LoadingScreen";
+import Header from "../component/header/Header";
+import LoadingScreen from "../component/loading-screen/LoadingScreen";
 import DroppableZoneTimeline from "../component/timeline/DroppableZoneTimeline";
 import DraggableInstrument from "../component/timeline/DraggableInstrument";
-import Instrument from "../component/Instrument";
+import Instrument from "../component/instrument/Instrument";
 import "./TimelineComposer.scss";
 
 const TimelineComposer = observer(() => {

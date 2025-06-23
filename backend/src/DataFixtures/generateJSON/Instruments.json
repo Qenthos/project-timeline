@@ -1326,16 +1326,5 @@
     "anecdote": "Le kazoo a été popularisé aux États-Unis au début du XXe siècle et reste un instrument ludique apprécié des enfants et des musiciens amateurs.",
     "origine": "États-Unis",
     "category": "vent"
-  },
-  {
-    "name": "Bang",
-    "image": "bang.webp",
-    "created": -1000,
-    "weight_kg": 0.5,
-    "height_cm": 30,
-    "description": "Le bang, aussi appelé bong ou pipe à eau, est un accessoire utilisé principalement pour fumer du cannabis ou d'autres herbes. Il se compose d'un vase rempli d'eau, d'un plongeur, d'un foyer pour placer la substance à fumer, et d'une cheminée par laquelle la fumée est aspirée après avoir été refroidie par l'eau.",
-    "anecdote": "Le mot 'bang' vient du thaï 'baung', désignant un tube de bambou. Les bangs existent dans une grande variété de formes et de matériaux, du verre au plastique, et sont appréciés pour la douceur de la fumée produite. Certains modèles permettent d'ajouter des glaçons pour un effet encore plus frais.",
-    "origine": "Asie du Sud-Est",
-    "category": "accessoire"
   }
 ]

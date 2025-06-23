@@ -68,7 +68,7 @@ const InstrumentDetail = observer(({ instrument, onClose }) => {
           <div className="instrument-detail__image-container">
             <img
               src={instrument.image}
-              alt=""
+              alt={instrument.name}
               className="instrument-detail__image"
             />
           </div>
@@ -91,10 +91,24 @@ const InstrumentDetail = observer(({ instrument, onClose }) => {
               <h3 className="instrument-detail__subtitle">Catégorie</h3>
               <p className="instrument-detail__text">{instrument.category}</p>
             </li>
+            <li className="instrument-detail__info-item">
+              {" "}
+              <p className="instrument-detail__year">
+                Année de création : {instrument.created}
+              </p>
+            </li>
+            <li className="instrument-detail__info-item">
+              <p className="instrument-detail__year">
+                Poids : {instrument.weight} kilos
+              </p>
+            </li>
+            <li className="instrument-detail__info-item">
+              {" "}
+              <p className="instrument-detail__year">
+                Taille : {instrument.height} centimètres
+              </p>
+            </li>
           </ul>
-          <p className="instrument-detail__year">
-            Année de création : {instrument.created}
-          </p>
         </div>
       </div>
     </dialog>

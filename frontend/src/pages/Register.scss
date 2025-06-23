@@ -100,14 +100,14 @@
     transform: translateY(-50%);
     width: 24px;
     height: 24px;
-    background-image: url("/media/hide-password.svg");
+    background-image: url("/media/icones/hide-password.svg");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
     cursor: pointer;
 
     &.is-visible {
-      background-image: url("/media/show-password.svg");
+      background-image: url("/media/icones/show-password.svg");
     }
 
     &:hover {

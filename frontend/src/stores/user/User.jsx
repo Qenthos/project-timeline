@@ -72,7 +72,7 @@ export default class Users {
   }
 
   get pfpUrl() {
-    return `/media/profile-pictures/pdp-${this._pfp}.png`;
+    return `/media/profile-pictures/pdp-${this._pfp}.webp`;
   }
 
   get pfb() {
@@ -80,7 +80,7 @@ export default class Users {
   }
 
   get pfbUrl() {
-    return `/media/banner-images/wallpaper-${this._pfb}.jpg`;
+    return `/media/banner-images/wallpaper-${this._pfb}.webp`;
   }
 
   get createdAt() {
