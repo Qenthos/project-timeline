@@ -2,16 +2,17 @@ import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import "./DraggableInstrument.scss";
 
-const DraggableInstrument = ({ instrument }) => {
+const DraggableInstrument = ({ instrument, isPaused }) => {
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: "instrument",
-      item: { id: instrument.id, },
+      item: { id: instrument.id },
+      canDrag: !isPaused, 
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
     }),
-    [instrument]
+    [instrument, isPaused]
   );
 
   return (
@@ -21,6 +22,7 @@ const DraggableInstrument = ({ instrument }) => {
       style={{
         opacity: isDragging ? 0 : 1,
         zIndex: isDragging ? 1000 : "auto",
+        pointerEvents: isPaused ? "none" : "auto", 
       }}
     >
       <img
@@ -36,9 +38,11 @@ const DraggableInstrument = ({ instrument }) => {
 
 DraggableInstrument.propTypes = {
   instrument: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
   }).isRequired,
+  isPaused: PropTypes.bool, // Ajouté ici
 };
 
 export default DraggableInstrument;

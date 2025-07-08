@@ -442,7 +442,7 @@ const TimelineComposer = observer(() => {
                     ) : (
                       ""
                     )}
-                    <DraggableInstrument instrument={currentInstrument} />
+                    <DraggableInstrument instrument={currentInstrument} isPaused={gameStore.state.isPaused}/>
                   </>
                 )}
               </>

@@ -74,6 +74,11 @@ const Instrument = ({ instrumentDrop, modeGame, status }) => {
               style={{ borderColor, backgroundColor }}
             >
               {mode}
+              {modeGame === "taille"
+                ? " cm"
+                : modeGame === "poids"
+                ? " kg"
+                : ""}
             </p>
           </li>
         </ul>
@@ -89,6 +94,11 @@ const Instrument = ({ instrumentDrop, modeGame, status }) => {
           <li className="card__info">
             <p className="card__text">
               {modeLabels[modeGame] || "Valeur"} : {mode}
+              {modeGame === "taille"
+                ? " cm"
+                : modeGame === "poids"
+                ? " kg"
+                : ""}
             </p>
           </li>
         </ul>
