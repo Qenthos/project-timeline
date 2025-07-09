@@ -1,11 +1,14 @@
-import { useLocation, Link } from "react-router";
+import { Link } from "react-router";
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useRef, useState } from "react";
-import { TimelineContext } from "../../stores/TimelineContext";
+import { useEffect, useRef, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
-import { useAuthStore, useInstrumentStore } from "../../stores/useStore";
+import {
+  useAuthStore,
+  useInstrumentStore,
+  useGameStore,
+} from "../../stores/useStore";
 import React from "react";
 import Header from "../../component/header/Header";
 import LoadingScreen from "../../component/loading-screen/LoadingScreen";
@@ -16,34 +19,46 @@ import "./TimelineComposer.scss";
 
 const TimelineComposer = observer(() => {
   const audioRef = useRef(null);
-  const [isMusicPlaying, setIsMusicPlaying] = useState(true);
-
   const [loadingCards, setLoadingCards] = useState(true);
   const [isGameFinished, setIsGameFinished] = useState(false);
   const [previousElo, setPreviousElo] = useState(null);
 
-  const { gameStore, instruStore } = useContext(TimelineContext);
-  const { isLoaded } = useInstrumentStore();
+  const gameStore = useGameStore();
+  const { isLoaded, instruments } = useInstrumentStore();
+  // const instrumentStore = useInstrumentStore();
   const usersStore = useAuthStore();
 
   const [showDragCard, setShowDragCard] = useState(true);
+
+  // const isLoaded = gameStore._instrumentsStore.instruments.length > 0;
 
   const { timerGame, cards, isUnlimited, difficulty, mode, clue } =
     gameStore.state;
   const currentUser = usersStore.currentUser || null;
 
+  const isMusicPlaying = gameStore.isMusicPlaying;
   const toggleMusic = () => {
     if (audioRef.current) {
-      if (isMusicPlaying) {
+      if (gameStore.isMusicPlaying) {
         audioRef.current.pause();
       } else {
         audioRef.current
           .play()
           .catch((err) => console.error("Erreur lecture audio", err));
       }
-      setIsMusicPlaying(!isMusicPlaying);
+      gameStore.toggleMusic();
     }
   };
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+    if (gameStore.isMusicPlaying) {
+      audioRef.current.play().catch(() => {});
+    } else {
+      audioRef.current.pause();
+    }
+  }, [gameStore.isMusicPlaying]);
+  
 
   /**
    * Initialize a game
@@ -57,23 +72,24 @@ const TimelineComposer = observer(() => {
       clue,
       mode,
     };
-  
+
     if (!currentUser) gameSettings.score = 100;
-  
+
     gameStore.initializeGame(gameSettings);
-  
+
     if (currentUser) {
       setPreviousElo(currentUser.elo);
     }
   }, []);
-  
 
-  const instrumentExpoSlot = instruStore.instrumentsTimelineBySlot;
+  const instrumentExpoSlot = gameStore.instrumentsTimelineBySlot;
   const instrumentsNotInExpo = gameStore.state.selectedInstruments
-    .filter((instrument) => !instruStore.existsInTimeline(instrument.id))
+    .filter((instrument) => !gameStore.existsInTimeline(instrument.id))
     .slice(0, cards);
 
-  const allInstruments = instruStore._instrumentsStore.instruments;
+  const allInstruments = instruments;
+  console.log(allInstruments);
+  // console.log(allInstruments)
 
   //Compatibily device and mobile
   const isToucheDevice = window.matchMedia("(pointer: coarse)").matches;
@@ -90,11 +106,11 @@ const TimelineComposer = observer(() => {
 
     const sauvegarde = localStorage.getItem("tabIds");
     if (!sauvegarde) {
-      instruStore.reset();
+      gameStore.resetTimeline();
     }
 
     //Size timeline
-    instruStore.setSizeTimeline(cards + 1);
+    gameStore.setSizeTimeline(cards + 1);
 
     gameStore.startNewRound();
     const init = async () => {
@@ -166,8 +182,8 @@ const TimelineComposer = observer(() => {
           cards,
           timerGame,
           difficulty,
-          instruStore.nbBadResponse,
-          instruStore.nbGoodResponse
+          gameStore.nbBadResponse,
+          gameStore.nbGoodResponse
         );
         localStorage.removeItem("tabIds");
       }
@@ -189,8 +205,8 @@ const TimelineComposer = observer(() => {
         cards,
         timerGame,
         difficulty,
-        instruStore.nbBadResponse,
-        instruStore.nbGoodResponse
+        gameStore.nbBadResponse,
+        gameStore.nbGoodResponse
       );
     }
   }, [gameStore.state.timerRemaining, isGameFinished]);
@@ -199,7 +215,7 @@ const TimelineComposer = observer(() => {
    * Reset game : states by defaults
    */
   const resetGame = () => {
-    instruStore.reset();
+    gameStore.resetTimeline();
     gameStore.startNewRound();
     setRandomDefaultCard();
     setIsGameFinished(false);
@@ -348,16 +364,16 @@ const TimelineComposer = observer(() => {
                 <li className="timeline__instruments-item">
                   <p className="timeline__instruments-result">
                     {`Nombre d'erreur${
-                      instruStore.nbBadResponse > 1 ? "s" : ""
-                    } : ${instruStore.nbBadResponse}`}
+                      gameStore.nbBadResponse > 1 ? "s" : ""
+                    } : ${gameStore.nbBadResponse}`}
                   </p>
                 </li>
 
                 <li className="timeline__instruments-item">
                   <p className="timeline__instruments-result">
                     {`Nombre de bonne réponse${
-                      instruStore.nbGoodResponse > 1 ? "s" : ""
-                    } : ${instruStore.nbGoodResponse}`}
+                      gameStore.nbGoodResponse > 1 ? "s" : ""
+                    } : ${gameStore.nbGoodResponse}`}
                   </p>
                 </li>
 
@@ -461,7 +477,7 @@ const TimelineComposer = observer(() => {
                   <DroppableZoneTimeline
                     index={zoneIndex}
                     onDrop={(zoneIndex, idInstrument) => {
-                      instruStore.setInstrumentsSorted(
+                      gameStore.setInstrumentsSorted(
                         zoneIndex,
                         idInstrument,
                         mode
@@ -475,7 +491,7 @@ const TimelineComposer = observer(() => {
                     key={`carte-${zoneIndex}`}
                     draggable
                     modeGame={mode}
-                    status={instruStore.highlightStatus?.[id] ?? null}
+                    status={gameStore.highlightStatus?.[id] ?? null}
                   />
                 </React.Fragment>
               );
