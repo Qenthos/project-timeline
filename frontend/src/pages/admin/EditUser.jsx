@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { useUserStore } from "./../../stores/useStore";
+import { useLeaderboardStore } from "./../../stores/useStore";
 import "./EditUser.scss";
 
 const EditUser = observer(() => {
@@ -13,16 +13,24 @@ const EditUser = observer(() => {
   const [email, setEmail] = useState("");
   const [score, setScore] = useState("");
 
-  const usersStore = useUserStore();
+  const usersStore = useLeaderboardStore();
   const user = usersStore.getUserById(Number(userId));
 
   useEffect(() => {
+    // if (!usersStore.isLoaded) {
+      usersStore.loadUsers();
+    // }
+  }, []);
+  
+
+  useEffect(() => {
     if (user) {
-      setUsername(user.username);
-      setEmail(user.email);
-      setScore(user.score);
+      if (username !== user.username) setUsername(user.username);
+      if (email !== user.email) setEmail(user.email);
+      if (score !== user.score) setScore(user.score);
     }
   }, [user]);
+  
 
   /**
    * Edit a user
@@ -81,8 +89,8 @@ const EditUser = observer(() => {
       <h2 className="user-edit__title">Modifier l'utilisateur : {username}</h2>
 
       <form onSubmit={handleSubmit} className="user-edit__form">
-        <ul className="user-edit__list">
-          <li className="user-edit__item">
+        <div className="user-edit__list">
+          <div className="user-edit__item">
             <label htmlFor="username" className="user-edit__label">
               Pseudo
             </label>
@@ -94,9 +102,9 @@ const EditUser = observer(() => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-          </li>
+          </div>
 
-          <li className="user-edit__item">
+          <div className="user-edit__item">
             <label htmlFor="email" className="user-edit__label">
               Adresse e-mail
             </label>
@@ -108,9 +116,9 @@ const EditUser = observer(() => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-          </li>
+          </div>
 
-          <li className="user-edit__item">
+          <div className="user-edit__item">
             <label htmlFor="score" className="user-edit__label">
               Score
             </label>
@@ -123,10 +131,10 @@ const EditUser = observer(() => {
               value={score}
               onChange={(e) => setScore(e.target.value)}
             />
-          </li>
-        </ul>
-        <ul className="user-edit__actions">
-          <li className="user-edit__action">
+          </div>
+        </div>
+        <div className="user-edit__actions">
+          <div className="user-edit__action">
             <button
               type="button"
               onClick={handleReset}
@@ -134,16 +142,16 @@ const EditUser = observer(() => {
             >
               Annuler
             </button>
-          </li>
-          <li className="user-edit__action">
+          </div>
+          <div className="user-edit__action">
             <button
               type="submit"
               className="user-edit__button user-edit__button--submit"
             >
               Enregistrer
             </button>
-          </li>
-          <li className="user-edit__action">
+          </div>
+          <div className="user-edit__action">
             <button
               type="button"
               onClick={handleDelete}
@@ -151,8 +159,8 @@ const EditUser = observer(() => {
             >
               Supprimer l'utilisateur
             </button>
-          </li>
-        </ul>
+          </div>
+        </div>
       </form>
     </section>
   );

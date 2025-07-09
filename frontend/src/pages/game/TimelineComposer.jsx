@@ -5,7 +5,7 @@ import { TimelineContext } from "../../stores/TimelineContext";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
-import { useUserStore, useInstrumentStore } from "../../stores/useStore";
+import { useAuthStore, useInstrumentStore } from "../../stores/useStore";
 import React from "react";
 import Header from "../../component/header/Header";
 import LoadingScreen from "../../component/loading-screen/LoadingScreen";
@@ -15,8 +15,6 @@ import Instrument from "../../component/instrument/Instrument";
 import "./TimelineComposer.scss";
 
 const TimelineComposer = observer(() => {
-  const location = useLocation();
-
   const audioRef = useRef(null);
   const [isMusicPlaying, setIsMusicPlaying] = useState(true);
 
@@ -24,17 +22,14 @@ const TimelineComposer = observer(() => {
   const [isGameFinished, setIsGameFinished] = useState(false);
   const [previousElo, setPreviousElo] = useState(null);
 
-  if (!location.state) return <Navigate to="/settings-game" />;
-
-  const { timer, cards, isUnlimited, difficulty, modeGame, clue } =
-    location.state || {};
-
   const { gameStore, instruStore } = useContext(TimelineContext);
   const { isLoaded } = useInstrumentStore();
-  const usersStore = useUserStore();
+  const usersStore = useAuthStore();
 
   const [showDragCard, setShowDragCard] = useState(true);
 
+  const { timerGame, cards, isUnlimited, difficulty, mode, clue } =
+    gameStore.state;
   const currentUser = usersStore.currentUser || null;
 
   const toggleMusic = () => {
@@ -49,23 +44,29 @@ const TimelineComposer = observer(() => {
       setIsMusicPlaying(!isMusicPlaying);
     }
   };
-  useEffect(() => {
-    // On écoute le premier clic utilisateur pour autoriser le navigateur à lire la musique
-    document.addEventListener("click", toggleMusic, { once: true });
-    return () => document.removeEventListener("click", toggleMusic);
-  }, []);
 
   /**
    * Initialize a game
    */
   useEffect(() => {
+    const gameSettings = {
+      timer: timerGame,
+      difficulty,
+      isUnlimited,
+      cards,
+      clue,
+      mode,
+    };
+  
+    if (!currentUser) gameSettings.score = 100;
+  
+    gameStore.initializeGame(gameSettings);
+  
     if (currentUser) {
-      gameStore.initializeGame({ timer, difficulty, isUnlimited });
       setPreviousElo(currentUser.elo);
-    } else {
-      gameStore.initializeGame({ timer, difficulty, isUnlimited, score: 100 });
     }
   }, []);
+  
 
   const instrumentExpoSlot = instruStore.instrumentsTimelineBySlot;
   const instrumentsNotInExpo = gameStore.state.selectedInstruments
@@ -80,7 +81,6 @@ const TimelineComposer = observer(() => {
 
   const currentInstrument =
     gameStore.state.selectedInstruments[gameStore.state.currentIndex];
-
 
   /**
    * Handle local storage of timeline
@@ -143,7 +143,7 @@ const TimelineComposer = observer(() => {
   };
 
   const subtitleText =
-    modeDescriptions[modeGame] || "Placez-les dans le bon ordre !";
+    modeDescriptions[mode] || "Placez-les dans le bon ordre !";
 
   /**
    * Condition to verify if a game is finish :
@@ -164,7 +164,7 @@ const TimelineComposer = observer(() => {
         setIsGameFinished(true);
         gameStore.finishGame(
           cards,
-          timer,
+          timerGame,
           difficulty,
           instruStore.nbBadResponse,
           instruStore.nbGoodResponse
@@ -187,7 +187,7 @@ const TimelineComposer = observer(() => {
       setIsGameFinished(true);
       gameStore.finishGame(
         cards,
-        timer,
+        timerGame,
         difficulty,
         instruStore.nbBadResponse,
         instruStore.nbGoodResponse
@@ -240,7 +240,7 @@ const TimelineComposer = observer(() => {
             </li>
             <li className="timeline__list-parameters-item">
               <p className="timeline__list-parameters-text timeline__list-parameters-text--difficulty">
-                Mode de jeu : trie par {modeGame}
+                Mode de jeu : trie par {mode}
               </p>
               <p className="timeline__list-parameters-text timeline__list-parameters-text--difficulty">
                 Difficulté : {difficultyMap[difficulty] || difficulty}
@@ -402,7 +402,7 @@ const TimelineComposer = observer(() => {
               </ul>
             ) : (
               <>
-                {modeGame !== "survival" && (
+                {mode !== "survival" && (
                   <p
                     className={`timeline__nb-place-card ${
                       !loadingCards ? "timeline__nb-place-card--hidden" : ""
@@ -414,7 +414,7 @@ const TimelineComposer = observer(() => {
                 {showDragCard && currentInstrument && (
                   <>
                     {clue ? (
-                      modeGame === "annee" ? (
+                      mode === "annee" ? (
                         <p className="timeline__indice-text">
                           Indice : {currentInstrument.name} est apparu dans les
                           années{" "}
@@ -422,14 +422,14 @@ const TimelineComposer = observer(() => {
                             ? Math.floor(currentInstrument.created / 10) * 10
                             : "Inconnue"}
                         </p>
-                      ) : modeGame === "taille" ? (
+                      ) : mode === "taille" ? (
                         <p className="timeline__indice-text">
                           Indice : {currentInstrument.name} mesure{" "}
                           {currentInstrument.height
                             ? getRangeHint(currentInstrument.height, "cm")
                             : "Inconnue"}
                         </p>
-                      ) : modeGame === "poids" ? (
+                      ) : mode === "poids" ? (
                         <p className="timeline__indice-text">
                           Indice : {currentInstrument.name} pèse{" "}
                           {currentInstrument.weight
@@ -442,7 +442,10 @@ const TimelineComposer = observer(() => {
                     ) : (
                       ""
                     )}
-                    <DraggableInstrument instrument={currentInstrument} isPaused={gameStore.state.isPaused}/>
+                    <DraggableInstrument
+                      instrument={currentInstrument}
+                      isPaused={gameStore.state.isPaused}
+                    />
                   </>
                 )}
               </>
@@ -461,7 +464,7 @@ const TimelineComposer = observer(() => {
                       instruStore.setInstrumentsSorted(
                         zoneIndex,
                         idInstrument,
-                        modeGame
+                        mode
                       );
                       handleDrop();
                     }}
@@ -471,7 +474,7 @@ const TimelineComposer = observer(() => {
                     instrumentDrop={instrument}
                     key={`carte-${zoneIndex}`}
                     draggable
-                    modeGame={modeGame}
+                    modeGame={mode}
                     status={instruStore.highlightStatus?.[id] ?? null}
                   />
                 </React.Fragment>

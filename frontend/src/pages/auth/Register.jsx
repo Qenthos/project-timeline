@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUserStore } from "../../stores/useStore";
+import { useAuthStore } from "../../stores/useStore";
 import { useNavigate } from "react-router";
 import { observer } from "mobx-react-lite";
 import Header from "../../component/header/Header";
@@ -18,7 +18,7 @@ const Register = observer(() => {
 
   let navigate = useNavigate();
 
-  const userStore = useUserStore();
+  const userStore = useAuthStore();
 
   /**
    * Get password from first input
@@ -92,22 +92,23 @@ const Register = observer(() => {
               {/* <legend className="register__legend">
                 Formulaire de création
               </legend> */}
-              <ul className="register__list">
-                <li className="register__item">
-                  <label className="register__label" htmlFor="mail">
+              <div className="register__list">
+                <div className="register__item">
+                  <label className="register__label" htmlFor="email">
                     Adresse e-mail
                   </label>
                   <input
                     className="register__input"
                     type="email"
-                    name="mail"
+                    name="email"
+                    id="email"
                     placeholder="exemple@domaine.com"
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
-                </li>
+                </div>
 
-                <li className="register__item">
+                <div className="register__item">
                   <label className="register__label" htmlFor="username">
                     Pseudo
                   </label>
@@ -115,14 +116,15 @@ const Register = observer(() => {
                     className="register__input"
                     type="text"
                     name="username"
+                    id="username"
                     placeholder="Albator"
                     autoComplete="username"
                     onChange={(e) => setUsername(e.target.value)}
                     required
                   />
-                </li>
+                </div>
 
-                <li className="register__item">
+                <div className="register__item">
                   <label className="register__label" htmlFor="password">
                     Mot de passe
                   </label>
@@ -155,11 +157,11 @@ const Register = observer(() => {
                           ? "Masquer le mot de passe"
                           : "Afficher le mot de passe"
                       }
-                    ></button>
+                    />
                   </div>
-                </li>
+                </div>
 
-                <li className="register__item">
+                <div className="register__item">
                   <label className="register__label" htmlFor="confirm_password">
                     Confirmer le mot de passe
                   </label>
@@ -199,26 +201,22 @@ const Register = observer(() => {
                   {passwordError && (
                     <p className="register__error">{passwordError}</p>
                   )}
-                </li>
-              </ul>
+                </div>
+              </div>
 
-              <ul className="register__buttons">
-                <li className="register__button-item">
-                  <input
-                    className="register__button register__button--reset"
-                    type="reset"
-                    value="Annuler"
-                  />
-                </li>
-                <li className="register__button-item register__button-item--submit">
-                  <input
-                    className="register__button register__button--submit"
-                    type="submit"
-                    value="Créer un compte"
-                    disabled={passwordError}
-                  />
-                </li>
-              </ul>
+              <div className="register__buttons">
+                <input
+                  className="register__button register__button--reset"
+                  type="reset"
+                  value="Annuler"
+                />
+                <input
+                  className="register__button register__button--submit"
+                  type="submit"
+                  value="Créer un compte"
+                  disabled={passwordError}
+                />
+              </div>
             </fieldset>
           </form>
         </section>

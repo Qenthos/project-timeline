@@ -77,7 +77,7 @@ const EditInstrument = observer(() => {
         window.alert("Erreur lors de la suppression");
       }
     }
-  }
+  };
 
   /**
    * Back page
@@ -93,8 +93,8 @@ const EditInstrument = observer(() => {
       </h2>
 
       <form onSubmit={handleSubmit} className="instrument-edit__form">
-        <ul className="instrument-edit__list">
-          <li className="instrument-edit__item">
+        <div className="instrument-edit__list">
+          <div className="instrument-edit__item">
             <label htmlFor="name" className="instrument-edit__label">
               Nom de l'instrument
             </label>
@@ -107,8 +107,8 @@ const EditInstrument = observer(() => {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-          </li>
-          <li className="instrument-edit__item">
+          </div>
+          <div className="instrument-edit__item">
             <label htmlFor="created" className="instrument-edit__label">
               Année de création
             </label>
@@ -120,9 +120,9 @@ const EditInstrument = observer(() => {
               value={created}
               onChange={(e) => setYear(e.target.value)}
             />
-          </li>
+          </div>
 
-          <li className="instrument-edit__item">
+          <div className="instrument-edit__item">
             <label htmlFor="weight" className="instrument-edit__label">
               Poids (en kg)
             </label>
@@ -136,9 +136,9 @@ const EditInstrument = observer(() => {
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
             />
-          </li>
+          </div>
 
-          <li className="instrument-edit__item">
+          <div className="instrument-edit__item">
             <label htmlFor="height" className="instrument-edit__label">
               Taille (en cm)
             </label>
@@ -152,9 +152,9 @@ const EditInstrument = observer(() => {
               value={height}
               onChange={(e) => setHeight(e.target.value)}
             />
-          </li>
+          </div>
 
-          <li className="instrument-edit__item">
+          <div className="instrument-edit__item">
             <label htmlFor="description" className="instrument-edit__label">
               Description
             </label>
@@ -167,11 +167,11 @@ const EditInstrument = observer(() => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-          </li>
-        </ul>
+          </div>
+        </div>
 
-        <ul className="instrument-edit__actions">
-          <li className="instrument-edit__action">
+        <div className="instrument-edit__actions">
+          <div className="instrument-edit__action">
             <button
               type="button"
               onClick={handleReset}
@@ -179,16 +179,16 @@ const EditInstrument = observer(() => {
             >
               Annuler
             </button>
-          </li>
-          <li className="instrument-edit__action">
+          </div>
+          <div className="instrument-edit__action">
             <button
               type="submit"
               className="instrument-edit__button instrument-edit__button--submit"
             >
               Enregistrer les modifications
             </button>
-          </li>
-          <li className="instrument-edit__action">
+          </div>
+          <div className="instrument-edit__action">
             <button
               type="button"
               onClick={handleDelete}
@@ -196,8 +196,8 @@ const EditInstrument = observer(() => {
             >
               Supprimer l'instrument
             </button>
-          </li>
-        </ul>
+          </div>
+        </div>
       </form>
     </section>
   );

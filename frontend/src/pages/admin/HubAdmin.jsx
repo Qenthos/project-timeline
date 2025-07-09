@@ -1,13 +1,13 @@
 import { useNavigate, Outlet } from "react-router";
 import { observer } from "mobx-react-lite";
-import { useUserStore } from "../../stores/useStore";
+import { useAuthStore } from "../../stores/useStore";
 import Header from "../../component/header/Header";
 import "./HubAdmin.scss";
 
 const HubAdmin = observer(() => {
   let navigate = useNavigate();
 
-  const { users } = useUserStore();
+  const { users } = useAuthStore();
   const username = users?.username;
 
   return (

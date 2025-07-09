@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
-import { useUserStore } from "./stores/useStore";
 import {
   Home,
   Login,
@@ -19,36 +18,31 @@ import {
   AdminManageUser,
 } from "./pages";
 
-import ProtectedRoute from "./component/user/ProtectedRoute.jsx";
+import UserRoute from "./component/user/UserRoute";
+import AdminRoute from "./component/admin/AdminRoute";
 
 const App = observer(() => {
-  const userStore = useUserStore();
-  const currentUser = userStore?.currentUser;
-
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/ranking" element={<Ranking />}></Route>
-          <Route path="/settings-game" element={<SettingsGame />}></Route>
-          <Route path="/my-instruments" element={<MyInstruments />}></Route>
-          <Route
-            path="/timeline-composer"
-            element={<TimelineComposer />}
-          ></Route>
-          <Route path="/profil" element={<Profil />}></Route>
-          <Route path="/admin" element={<LoginAdmin />}></Route>
-          <Route
-            path="/hub-admin"
-            element={
-              <ProtectedRoute user={currentUser}>
-                <HubAdmin />
-              </ProtectedRoute>
-            }
-          >
+    <BrowserRouter>
+      <Routes>
+        {/* Public */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/ranking" element={<Ranking />} />
+        <Route path="/admin" element={<LoginAdmin />} />
+
+        {/* User logged */}
+        <Route element={<UserRoute />}>
+          <Route path="/profil" element={<Profil />} />
+          <Route path="/settings-game" element={<SettingsGame />} />
+          <Route path="/my-instruments" element={<MyInstruments />} />
+          <Route path="/timeline-composer" element={<TimelineComposer />} />
+        </Route>
+
+        {/* Admin */}
+        <Route element={<AdminRoute />}>
+          <Route path="/hub-admin" element={<HubAdmin />}>
             <Route
               index
               element={<Navigate to="admin-manage-instrument" replace />}
@@ -63,25 +57,11 @@ const App = observer(() => {
               <Route path="edit/:userId" element={<EditUser />} />
             </Route>
           </Route>
-          {/* <Route path="/hub-admin" element={<HubAdmin />}>
-            <Route
-              index
-              element={<Navigate to="admin-manage-instrument" replace />}
-            />
-            <Route
-              path="admin-manage-instrument"
-              element={<AdminManageInstrument />}
-            >
-              <Route path="edit/:instruId" element={<EditInstrument />} />
-            </Route>
-            <Route path="admin-manage-user" element={<AdminManageUser />}>
-              <Route path="edit/:userId" element={<EditUser />} />
-            </Route>
-          </Route> */}
-          <Route path="*" element={<Page404 />}></Route>
-        </Routes>
-      </BrowserRouter>
-    </>
+        </Route>
+
+        <Route path="*" element={<Page404 />} />
+      </Routes>
+    </BrowserRouter>
   );
 });
 

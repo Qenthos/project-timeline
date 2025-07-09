@@ -57,6 +57,7 @@
     align-items: start;
     width: 100%;
     position: relative;
+    margin: 0 0 1rem 0;
   }
 
   &__label {
@@ -110,6 +111,7 @@
     margin-top: 1.5rem;
     position: relative;
     padding-bottom: 1.2rem;
+    gap: 1rem;
 
     &::after {
       position: absolute;

@@ -18,10 +18,16 @@ export const useInstrumentStore = () => {
 
 
 //sous-store des utilisateurs
-export const useUserStore = () => {
+export const useAuthStore = () => {
   const timelineStore = useTimelineStore();
-  return timelineStore.userStore;
+  return timelineStore.authStore;
 };
+
+export const useLeaderboardStore = () => {
+  const timelineStore = useTimelineStore();
+  return timelineStore.leaderboardStore;
+};
+
 
 // sous-store des parties de jeux
 export const useGameStore = () => {

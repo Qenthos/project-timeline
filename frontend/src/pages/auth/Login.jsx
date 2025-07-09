@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
-import { useUserStore } from "../../stores/useStore";
+import { useAuthStore } from "../../stores/useStore";
 import Header from "../../component/header/Header";
 import "./Login.scss";
 
@@ -12,7 +12,7 @@ const Login = observer(() => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const usersStore = useUserStore();
+  const usersStore = useAuthStore();
   let navigate = useNavigate();
 
   /**
@@ -55,77 +55,75 @@ const Login = observer(() => {
           <h1 className="login__title">Se connecter</h1>
           <form className="login__form" onSubmit={handleSubmit}>
             <fieldset className="login__fieldset">
-              {/* <legend className="login__legend">Formulaire de connexion</legend> */}
-              <ul className="login__list">
-                <li className="login__item">
-                  <label className="login__label" htmlFor="mail">
-                    Adresse mail
-                  </label>
-                  <input
-                    className="login__input"
-                    id="mail"
-                    type="email"
-                    name="mail"
-                    autoComplete="email"
-                    placeholder="exemple@domaine.com"
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </li>
-                <li className="login__item">
-                  <label className="login__label" htmlFor="password">
-                    Mot de passe
-                  </label>
-                  <input
-                    className="login__input login__input--password"
-                    id="password"
-                    autoComplete="current-password"
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    placeholder="Mot de passe"
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    aria-describedby="togglePasswordLabel"
-                  />
-                  <button
-                    type="button"
-                    className={`login__show-password ${
-                      showPassword ? "is-visible" : ""
-                    }`}
-                    onClick={toggleShowPassword}
-                    aria-label={
-                      showPassword
-                        ? "Masquer le mot de passe"
-                        : "Afficher le mot de passe"
-                    }
-                    id="togglePasswordLabel"
-                  ></button>
-                </li>
-              </ul>
+              <div className="login__item">
+                <label className="login__label" htmlFor="email">
+                  Adresse mail
+                </label>
+                <input
+                  className="login__input"
+                  id="email"
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  placeholder="exemple@domaine.com"
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="login__item">
+                <label className="login__label" htmlFor="password">
+                  Mot de passe
+                </label>
+                <input
+                  className="login__input login__input--password"
+                  id="password"
+                  autoComplete="current-password"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Mot de passe"
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  aria-describedby="togglePasswordLabel"
+                />
+                <button
+                  type="button"
+                  className={`login__show-password ${
+                    showPassword ? "is-visible" : ""
+                  }`}
+                  onClick={toggleShowPassword}
+                  aria-label={
+                    showPassword
+                      ? "Masquer le mot de passe"
+                      : "Afficher le mot de passe"
+                  }
+                  id="togglePasswordLabel"
+                />
+              </div>
+
               {errorMessage && (
                 <p
                   className="login__error"
                   style={{ color: "red", marginTop: "1rem" }}
+                  role="alert"
                 >
                   {errorMessage}
                 </p>
               )}
-              <ul className="login__buttons">
-                <li className="login__button-item">
-                  <input
-                    className="login__button login__button--reset"
-                    type="reset"
-                    value="Annuler"
-                  />
-                </li>
-                <li className="login__button-item">
-                  <input
-                    className="login__button login__button--submit"
-                    type="submit"
-                    value="Se connecter"
-                  />
-                </li>
-              </ul>
+
+              <div className="login__buttons">
+                <input
+                  className="login__button login__button--reset"
+                  type="reset"
+                  value="Annuler"
+                />
+                <input
+                  className="login__button login__button--submit"
+                  type="submit"
+                  value="Se connecter"
+                />
+              </div>
+
               <Link to="/register" className="login__link-register">
                 Créer mon compte
               </Link>

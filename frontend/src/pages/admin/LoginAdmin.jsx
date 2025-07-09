@@ -1,12 +1,12 @@
 import Header from "../../component/header/Header";
 import { useNavigate } from "react-router";
-import { useUserStore } from "../../stores/useStore";
+import { useAuthStore } from "../../stores/useStore";
 import { useState } from "react";
 import "./LoginAdmin.scss";
 
 const Admin = () => {
   const navigate = useNavigate();
-  const usersStore = useUserStore();
+  const usersStore = useAuthStore();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

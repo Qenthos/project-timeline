@@ -5,9 +5,9 @@ export default class GameStore {
   _timerInterval = null;
   _timelineStore;
 
-  constructor(gamesStore, usersStore, timelineStore) {
+  constructor(gamesStore, authStore, timelineStore) {
     this._gamesStore = gamesStore;
-    this._usersStore = usersStore;
+    this._authStore = authStore;
     this._timelineStore = timelineStore;
     makeAutoObservable(this);
   }
@@ -28,19 +28,48 @@ export default class GameStore {
     return this._gamesStore;
   }
 
-  initializeGame({
-    timer = 30,
-    difficulty = "easy",
-    isUnlimited = false,
-    score = 100,
-  } = {}) {
-    const stateGame = this._gamesStore;
-    stateGame.timerGame = timer;
-    stateGame.timerRemaining = timer;
-    stateGame.difficulty = difficulty;
-    stateGame.isUnlimited = isUnlimited;
-    stateGame.score = score;
-    this.resetGame(timer);
+  initializeGame(settings = {}) {
+    const defaults = {
+      timer: 80,
+      difficulty: "easy",
+      isUnlimited: false,
+      score: 100,
+      clue: true,
+      mode: "poids",
+      cards: 10,
+    };
+    console.log(settings);
+    const config = { ...defaults, ...settings };
+    console.log(config);
+    console.log(config.cards);
+    this.setupGame({
+      timer: config.timer,
+      cards: config.cards,
+      isUnlimited: config.isUnlimited,
+      difficulty: config.difficulty,
+      clue: config.clue,
+      mode: config.mode,
+    });
+
+    this.resetGame(config.timer, config.score);
+  }
+
+  setupGame({ timer, cards, isUnlimited, difficulty, clue, mode }) {
+    this._gamesStore.timerGame = timer;
+    this._gamesStore.timerRemaining = timer;
+    this._gamesStore.score = 100;
+    this._gamesStore.cards = cards;
+    this._gamesStore.isUnlimited = isUnlimited;
+    this._gamesStore.difficulty = difficulty;
+    this._gamesStore.clue = clue;
+    this._gamesStore.mode = mode;
+    this._gamesStore.selectedInstruments = [];
+    this._gamesStore.nbBadResponse = 0;
+    this._gamesStore.nbGoodResponse = 0;
+    this._gamesStore.endGame = false;
+    this._gamesStore.win = false;
+    this._gamesStore.currentIndex = 0;
+    this._gamesStore.timeElapsed = 0;
   }
 
   calculateScore(cards, timer, difficulty, nbBadResponse, nbGoodResponse, win) {
@@ -115,10 +144,10 @@ export default class GameStore {
     );
     this.clearTimer();
     this.postGameToUser();
-    if (this._usersStore.currentUser) {
+    if (this._authStore.currentUser) {
       let finalScore =
-        this._usersStore.currentUser.score + this._gamesStore.score;
-      this._usersStore.updateScoreAndPlayedGames(finalScore);
+        this._authStore.currentUser.score + this._gamesStore.score;
+      this._authStore.updateScoreAndPlayedGames(finalScore);
     }
   }
 
@@ -185,10 +214,10 @@ export default class GameStore {
 
   /**
    * add game for an user
-   * @returns 
+   * @returns
    */
   async postGameToUser() {
-    const userId = this._usersStore.currentUser?.id;
+    const userId = this._authStore.currentUser?.id;
 
     if (!userId) {
       console.warn("Utilisateur introuvable");

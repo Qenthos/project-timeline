@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useGameStore } from "../../stores/useStore";
 import "./SettingsGame.scss";
 import Header from "../../component/header/Header";
 
@@ -15,22 +16,24 @@ const SettingsGame = () => {
   const [isUnlimited, setIsUnlimited] = useState(false);
 
   let navigate = useNavigate();
+  const gameStore = useGameStore();
 
   /**
    * change page and send data settings
    */
   const startParty = () => {
     localStorage.removeItem("tabIds");
-    navigate("/timeline-composer", {
-      state: {
-        timer: timer,
-        cards: cards,
-        isUnlimited: isUnlimited,
-        difficulty: difficulty,
-        modeGame: modeGame.toLowerCase(),
-        clue: clue,
-      },
+    console.log(timer, cards, isUnlimited, difficulty, clue)
+    gameStore.initializeGame({
+      timer,
+      cards,
+      isUnlimited,
+      difficulty,
+      clue,
+      mode: modeGame.toLowerCase(),
     });
+
+    navigate("/timeline-composer");
   };
 
   const tabDifficulty = {

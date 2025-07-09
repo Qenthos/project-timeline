@@ -1,4 +1,5 @@
-import { useUserStore } from "../../stores/useStore";
+import { useLeaderboardStore } from "../../stores/useStore";
+import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import "./Ranking.scss";
 import RankingListUsers from "../../component/user/RankingListUsers";
@@ -6,9 +7,13 @@ import Header from "../../component/header/Header";
 import LoadingScreen from "../../component/loading-screen/LoadingScreen";
 
 const Ranking = observer(() => {
-  const { users, isLoaded } = useUserStore();
+  const leaderboardStore = useLeaderboardStore();
 
-  return !isLoaded ? (
+  useEffect(() => {
+    leaderboardStore.loadUsers();
+  }, []);  
+
+  return !leaderboardStore.isLoaded ? (
     <LoadingScreen message="Chargement des utilisateurs en cours..." />
   ) : (
     <>
@@ -16,7 +21,7 @@ const Ranking = observer(() => {
       <main className="ranking">
         <section className="ranking__section">
           <h1 className="ranking__title">Classement Elo</h1>
-          <RankingListUsers users={users} />
+          <RankingListUsers users={leaderboardStore.users} />
         </section>
       </main>
     </>

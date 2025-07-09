@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router";
-import { useUserStore } from "../../stores/useStore";
+import { useAuthStore, useLeaderboardStore } from "../../stores/useStore";
 import { Link } from "react-router";
 import Header from "../../component/header/Header";
 import LoadingScreen from "../../component/loading-screen/LoadingScreen";
@@ -11,7 +11,8 @@ import BannerImagesDialog from "../../component/profile/BannerImagesDialog";
 import "./Profil.scss";
 
 const Profil = observer(() => {
-  const usersStore = useUserStore();
+  const usersStore = useAuthStore();
+  const leaderbordStore = useLeaderboardStore();
   let navigate = useNavigate();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -42,7 +43,7 @@ const Profil = observer(() => {
     const fetchPosition = async () => {
       if (usersStore.currentUser) {
         try {
-          const data = await usersStore.getPositionLeaderboard();
+          const data = await leaderbordStore.getPositionLeaderboard(usersStore.currentUser.id);
           setPositionLeaderboard(data.position);
         } catch (err) {
           console.error(
@@ -62,8 +63,7 @@ const Profil = observer(() => {
         username: usersStore.currentUser.username || "",
         email: usersStore.currentUser.email || "",
         password: "",
-      });
-    }
+      });    }
   }, [usersStore.currentUser]);
 
   if (!usersStore.currentUser) {
@@ -81,13 +81,17 @@ const Profil = observer(() => {
   /**
    * Delete user and close popup
    */
-  const handleDelete = () => {
-    const { id } = usersStore.currentUser;
-    usersStore.deleteUser(id);
-    usersStore.logout();
-    setShowConfirmDialog(false);
-    navigate("/");
+  const handleDelete = async () => {
+    try {
+      await usersStore.deleteOwnAccount();
+      setShowConfirmDialog(false);
+      navigate("/");
+    } catch (error) {
+      console.error("Erreur lors de la suppression du compte :", error);
+      alert("Une erreur est survenue lors de la suppression.");
+    }
   };
+  
 
   /**
    * Close popup

@@ -1,578 +1,578 @@
-import { makeAutoObservable, runInAction } from "mobx";
-import Users from "./User";
+// import { makeAutoObservable, runInAction } from "mobx";
+// import Users from "./User";
 
-const API_URL = "http://localhost:8000/api/users";
+// const API_URL = "http://localhost:8000/api/users";
 
-export default class UserStore {
-  _users = [];
-  _currentUser = null;
-  _isLoaded = false;
+// export default class UserStore {
+//   _users = [];
+//   _currentUser = null;
+//   _isLoaded = false;
 
-  constructor() {
-    makeAutoObservable(this);
-    this.loadUsers();
-    const saved = localStorage.getItem("currentUser");
-    if (saved) {
-      this._currentUser = new Users(JSON.parse(saved));
-    }
-  }
+//   constructor() {
+//     makeAutoObservable(this);
+//     this.loadUsers();
+//     const saved = localStorage.getItem("currentUser");
+//     if (saved) {
+//       this._currentUser = new Users(JSON.parse(saved));
+//     }
+//   }
 
-  get currentUser() {
-    return this._currentUser;
-  }
+//   get currentUser() {
+//     return this._currentUser;
+//   }
 
-  /**
-   * Load data users
-   */
-  async loadUsers() {
-    try {
-      const response = await fetch(API_URL);
-      const data = await response.json();
-      runInAction(() => {
-        this._users = data.map((user) => new Users(user));
-        this._isLoaded = true;
-      });
-    } catch (error) {
-      throw new Error("Erreur de chargement : " + error);
-    }
-  }
+//   /**
+//    * Load data users
+//    */
+//   async loadUsers() {
+//     try {
+//       const response = await fetch(API_URL);
+//       const data = await response.json();
+//       runInAction(() => {
+//         this._users = data.map((user) => new Users(user));
+//         this._isLoaded = true;
+//       });
+//     } catch (error) {
+//       throw new Error("Erreur de chargement : " + error);
+//     }
+//   }
 
-  get isLoaded() {
-    return this._isLoaded;
-  }
+//   get isLoaded() {
+//     return this._isLoaded;
+//   }
 
-  get users() {
-    return this._users;
-  }
+//   get users() {
+//     return this._users;
+//   }
 
-  get usersCount() {
-    return this._users.length;
-  }
+//   get usersCount() {
+//     return this._users.length;
+//   }
 
-  getUserById(id) {
-    return this._users.find((user) => user.id === id) || null;
-  }
+//   getUserById(id) {
+//     return this._users.find((user) => user.id === id) || null;
+//   }
 
-  /**
-   * Create account
-   * @param {*} mail
-   * @param {*} pseudo
-   * @param {*} password
-   */
-  async createAccount(email, username, password) {
-    try {
-      const response = await fetch(`http://localhost:8000/api/user`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          username: username,
-          password: password,
-          pfp: 1,
-          pfb: 1,
-          score: 0,
-          elo: 0,
-          admin: false,
-          played_games: 0,
-          isConnected: true,
-          gamesWon: 0,
-          gamesLost: 0
-        }),
-      });
+//   /**
+//    * Create account
+//    * @param {*} mail
+//    * @param {*} pseudo
+//    * @param {*} password
+//    */
+//   async createAccount(email, username, password) {
+//     try {
+//       const response = await fetch(`http://localhost:8000/api/user`, {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           email: email,
+//           username: username,
+//           password: password,
+//           pfp: 1,
+//           pfb: 1,
+//           score: 0,
+//           elo: 0,
+//           admin: false,
+//           played_games: 0,
+//           isConnected: true,
+//           gamesWon: 0,
+//           gamesLost: 0
+//         }),
+//       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Erreur ${response.status} : ${errorText}`);
-      }
+//       if (!response.ok) {
+//         const errorText = await response.text();
+//         throw new Error(`Erreur ${response.status} : ${errorText}`);
+//       }
 
-      const data = await response.json();
-      console.log(data);
+//       const data = await response.json();
+//       console.log(data);
 
-      runInAction(() => {
-        const newUser = new Users(data);
-        this._users.push(newUser);
-        if (this._currentUser) {
-          this.logout();
-        }
-        this._currentUser = newUser;
-        localStorage.setItem("currentUser", JSON.stringify(data));
-      });
+//       runInAction(() => {
+//         const newUser = new Users(data);
+//         this._users.push(newUser);
+//         if (this._currentUser) {
+//           this.logout();
+//         }
+//         this._currentUser = newUser;
+//         localStorage.setItem("currentUser", JSON.stringify(data));
+//       });
 
-      return data;
-    } catch (err) {
-      console.error(err);
-      throw err;
-    }
-  }
+//       return data;
+//     } catch (err) {
+//       console.error(err);
+//       throw err;
+//     }
+//   }
 
-  /**
-   * Login
-   * @param {string} email
-   * @param {string} password
-   */
-  async login(email, password) {
-    try {
-      const response = await fetch(API_URL + "/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+//   /**
+//    * Login
+//    * @param {string} email
+//    * @param {string} password
+//    */
+//   async login(email, password) {
+//     try {
+//       const response = await fetch(API_URL + "/login", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ email, password }),
+//       });
 
-      const data = await response.json();
+//       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || "Erreur inconnue lors de la connexion");
-      }
+//       if (!response.ok) {
+//         throw new Error(data.error || "Erreur inconnue lors de la connexion");
+//       }
 
-      runInAction(() => {
-        const user = new Users({ ...data.user, isConnected: true });
+//       runInAction(() => {
+//         const user = new Users({ ...data.user, isConnected: true });
 
-        this._currentUser = user;
+//         this._currentUser = user;
 
-        const exists = this._users.find((u) => u.id === user.id);
-        if (!exists) {
-          this._users.push(user);
-        }
+//         const exists = this._users.find((u) => u.id === user.id);
+//         if (!exists) {
+//           this._users.push(user);
+//         }
 
-        localStorage.setItem("currentUser", JSON.stringify(data.user));
-      });
-    } catch (error) {
-      console.error("Erreur lors de la connexion :", error);
-      throw error;
-    }
-  }
+//         localStorage.setItem("currentUser", JSON.stringify(data.user));
+//       });
+//     } catch (error) {
+//       console.error("Erreur lors de la connexion :", error);
+//       throw error;
+//     }
+//   }
 
-  /**
-   * Login Administrateur
-   * @param {*} email
-   * @param {*} password
-   */
-  async loginAdmin(email, password) {
-    try {
-      const response = await fetch("http://localhost:8000/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+//   /**
+//    * Login Administrateur
+//    * @param {*} email
+//    * @param {*} password
+//    */
+//   async loginAdmin(email, password) {
+//     try {
+//       const response = await fetch("http://localhost:8000/api/users/login", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ email, password }),
+//       });
   
-      const data = await response.json();
+//       const data = await response.json();
   
-      if (!response.ok) {
-        throw new Error(data.error || "Erreur inconnue");
-      }
+//       if (!response.ok) {
+//         throw new Error(data.error || "Erreur inconnue");
+//       }
 
-      if (!data.user.admin) {
-        throw new Error("Accès refusé : vous n'êtes pas administrateur");
-      }
+//       if (!data.user.admin) {
+//         throw new Error("Accès refusé : vous n'êtes pas administrateur");
+//       }
   
-      runInAction(() => {
-        const user = new Users({ ...data.user, isConnected: true });
-        this._currentUser = user;
+//       runInAction(() => {
+//         const user = new Users({ ...data.user, isConnected: true });
+//         this._currentUser = user;
   
-        const exists = this._users.find((u) => u.id === user.id);
-        if (!exists) {
-          this._users.push(user);
-        }
+//         const exists = this._users.find((u) => u.id === user.id);
+//         if (!exists) {
+//           this._users.push(user);
+//         }
   
-        localStorage.setItem("currentUser", JSON.stringify(data.user));
-      });
-    } catch (error) {
-      console.error("Erreur lors de la connexion admin :", error);
-      throw error;
-    }
-  }
+//         localStorage.setItem("currentUser", JSON.stringify(data.user));
+//       });
+//     } catch (error) {
+//       console.error("Erreur lors de la connexion admin :", error);
+//       throw error;
+//     }
+//   }
   
 
 
-  /**
-   * 
-   * @param {*} id 
-   * @returns 
-   */
-  async getIsAdmin(id) {
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/user/isAdmin/${id}`
-      );
-      if (!response.ok) {
-        throw new Error("Erreur lors de la récupération du statut admin");
-      }
-      const data = await response.json();
-      return data.admin ?? false;
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  }
+//   /**
+//    * 
+//    * @param {*} id 
+//    * @returns 
+//    */
+//   async getIsAdmin(id) {
+//     try {
+//       const response = await fetch(
+//         `http://localhost:8000/api/user/isAdmin/${id}`
+//       );
+//       if (!response.ok) {
+//         throw new Error("Erreur lors de la récupération du statut admin");
+//       }
+//       const data = await response.json();
+//       return data.admin ?? false;
+//     } catch (error) {
+//       console.error(error);
+//       return false;
+//     }
+//   }
 
-  /**
-   * Logout of an account
-   */
-  logout() {
-    if (this._currentUser) {
-      this._currentUser.isConnected = false;
-      localStorage.removeItem("currentUser");
-      this._currentUser = null;
-    }
-  }
+//   /**
+//    * Logout of an account
+//    */
+//   logout() {
+//     if (this._currentUser) {
+//       this._currentUser.isConnected = false;
+//       localStorage.removeItem("currentUser");
+//       this._currentUser = null;
+//     }
+//   }
 
-  /**
-   * Update user
-   * @param {*} id
-   * @param {*} username
-   * @param {*} email
-   */
-  updateUser(id, username, email, score, password) {
-    fetch(`http://localhost:8000/api/user/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        email,
-        score,
-        password,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => {
-            throw new Error(`Erreur ${response.status} : ${text}`);
-          });
-        }
-        return response.json();
-      })
+//   /**
+//    * Update user
+//    * @param {*} id
+//    * @param {*} username
+//    * @param {*} email
+//    */
+//   updateUser(id, username, email, score, password) {
+//     fetch(`http://localhost:8000/api/user/${id}`, {
+//       method: "PATCH",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         username,
+//         email,
+//         score,
+//         password,
+//       }),
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           return response.text().then((text) => {
+//             throw new Error(`Erreur ${response.status} : ${text}`);
+//           });
+//         }
+//         return response.json();
+//       })
 
-      .then((data) => {
-        runInAction(() => {
-          const userToUpdate = this.getUserById(Number(id));
+//       .then((data) => {
+//         runInAction(() => {
+//           const userToUpdate = this.getUserById(Number(id));
 
-          if (userToUpdate) {
-            userToUpdate.username = username;
-            userToUpdate.email = email;
-            userToUpdate.score = score;
-            userToUpdate.password = password;
-          }
-        });
-        this.refreshCurrentUser();
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la mise à jour :", error);
-      });
-  }
+//           if (userToUpdate) {
+//             userToUpdate.username = username;
+//             userToUpdate.email = email;
+//             userToUpdate.score = score;
+//             userToUpdate.password = password;
+//           }
+//         });
+//         this.refreshCurrentUser();
+//       })
+//       .catch((error) => {
+//         console.error("Erreur lors de la mise à jour :", error);
+//       });
+//   }
 
-  /**
-   * Delete user
-   * @param {*} userId
-   */
-  deleteUser(userId) {
-    fetch(`http://localhost:8000/api/user/${userId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erreur lors de la suppression");
-        }
-        alert("Utilisateur supprimé");
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
+//   /**
+//    * Delete user
+//    * @param {*} userId
+//    */
+//   deleteUser(userId) {
+//     fetch(`http://localhost:8000/api/user/${userId}`, {
+//       method: "DELETE",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           throw new Error("Erreur lors de la suppression");
+//         }
+//         alert("Utilisateur supprimé");
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//       });
+//   }
 
-  /**
-   * Update score
-   * @param {*} score
-   */
-  updateScore(score) {
-    fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        score: score,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erreur lors de la création du compte");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        runInAction(() => {
-          const userToUpdate = this.getUserById(this._currentUser.id);
-          if (userToUpdate) {
-            userToUpdate.score = score;
-          }
-        });
-        this.refreshCurrentUser();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
+//   /**
+//    * Update score
+//    * @param {*} score
+//    */
+//   updateScore(score) {
+//     fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
+//       method: "PATCH",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         score: score,
+//       }),
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           throw new Error("Erreur lors de la création du compte");
+//         }
+//         return response.json();
+//       })
+//       .then((data) => {
+//         runInAction(() => {
+//           const userToUpdate = this.getUserById(this._currentUser.id);
+//           if (userToUpdate) {
+//             userToUpdate.score = score;
+//           }
+//         });
+//         this.refreshCurrentUser();
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//       });
+//   }
 
-  /**
-   *
-   * @param {*} profilePicture
-   */
-  updateProfilPicture(profilePicture) {
-    fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        pfp: profilePicture,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(
-            "Erreur lors de la modification de la photo de profil"
-          );
-        }
-        return response.json();
-      })
-      .then((data) => {
-        runInAction(() => {
-          const userToUpdate = this.getUserById(this._currentUser.id);
-          if (userToUpdate) {
-            userToUpdate.pfp = profilePicture;
-          }
-        });
-        this.refreshCurrentUser();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
+//   /**
+//    *
+//    * @param {*} profilePicture
+//    */
+//   updateProfilPicture(profilePicture) {
+//     fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
+//       method: "PATCH",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         pfp: profilePicture,
+//       }),
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           throw new Error(
+//             "Erreur lors de la modification de la photo de profil"
+//           );
+//         }
+//         return response.json();
+//       })
+//       .then((data) => {
+//         runInAction(() => {
+//           const userToUpdate = this.getUserById(this._currentUser.id);
+//           if (userToUpdate) {
+//             userToUpdate.pfp = profilePicture;
+//           }
+//         });
+//         this.refreshCurrentUser();
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//       });
+//   }
 
-  /**
-   * Update banner
-   * @param {*} bannerImage
-   */
-  updateBannerImage(bannerImage) {
-    fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        pfb: bannerImage,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(
-            "Erreur lors de la modification de la photo de profil"
-          );
-        }
-        return response.json();
-      })
-      .then((data) => {
-        runInAction(() => {
-          const userToUpdate = this.getUserById(this._currentUser.id);
-          if (userToUpdate) {
-            userToUpdate.pfb = bannerImage;
-          }
-        });
-        this.refreshCurrentUser();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
+//   /**
+//    * Update banner
+//    * @param {*} bannerImage
+//    */
+//   updateBannerImage(bannerImage) {
+//     fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
+//       method: "PATCH",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         pfb: bannerImage,
+//       }),
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           throw new Error(
+//             "Erreur lors de la modification de la photo de profil"
+//           );
+//         }
+//         return response.json();
+//       })
+//       .then((data) => {
+//         runInAction(() => {
+//           const userToUpdate = this.getUserById(this._currentUser.id);
+//           if (userToUpdate) {
+//             userToUpdate.pfb = bannerImage;
+//           }
+//         });
+//         this.refreshCurrentUser();
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//       });
+//   }
 
-  /**
-   * Met à jour score + played_games + recalcul elo en une seule requête
-   */
-  updateScoreAndPlayedGames(newScore) {
-    const user = this.getUserById(this._currentUser.id);
+//   /**
+//    * Met à jour score + played_games + recalcul elo en une seule requête
+//    */
+//   updateScoreAndPlayedGames(newScore) {
+//     const user = this.getUserById(this._currentUser.id);
   
-    if (!user) {
-      console.error("Utilisateur non trouvé");
-      return;
-    }
+//     if (!user) {
+//       console.error("Utilisateur non trouvé");
+//       return;
+//     }
   
-    const updatedPlayedGames = (user.played_games || 0) + 1;
-    const updatedScore = (user.score || 0) + newScore;
+//     const updatedPlayedGames = (user.played_games || 0) + 1;
+//     const updatedScore = (user.score || 0) + newScore;
   
-    fetch(`http://localhost:8000/api/user/${user.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        score: updatedScore,
-        played_games: updatedPlayedGames,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => {
-            throw new Error(`Erreur ${response.status} : ${text}`);
-          });
-        }
-        return response.json();
-      })
-      .then((updatedUser) => {
-        runInAction(() => {
-          user.score = updatedUser.score;
-          user.played_games = updatedUser.played_games;
-          user.elo = updatedUser.elo;
-        });
-        this.refreshCurrentUser();
-      })
-      .catch((err) => {
-        console.error("Erreur updateScoreAndPlayedGames :", err);
-      });
-  }
+//     fetch(`http://localhost:8000/api/user/${user.id}`, {
+//       method: "PATCH",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         score: updatedScore,
+//         played_games: updatedPlayedGames,
+//       }),
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           return response.text().then((text) => {
+//             throw new Error(`Erreur ${response.status} : ${text}`);
+//           });
+//         }
+//         return response.json();
+//       })
+//       .then((updatedUser) => {
+//         runInAction(() => {
+//           user.score = updatedUser.score;
+//           user.played_games = updatedUser.played_games;
+//           user.elo = updatedUser.elo;
+//         });
+//         this.refreshCurrentUser();
+//       })
+//       .catch((err) => {
+//         console.error("Erreur updateScoreAndPlayedGames :", err);
+//       });
+//   }
   
-  /**
-   * 
-   * @returns 
-   */
-  async getPositionLeaderboard() {
-    const response = await fetch(
-      `http://localhost:8000/api/user/${this.currentUser.id}/ranking`
-    );
-    const data = await response.json();
-    return data;
-  }
+//   /**
+//    * 
+//    * @returns 
+//    */
+//   async getPositionLeaderboard() {
+//     const response = await fetch(
+//       `http://localhost:8000/api/user/${this.currentUser.id}/ranking`
+//     );
+//     const data = await response.json();
+//     return data;
+//   }
 
-  /**
-   * 
-   * @returns 
-   */
-  incrementPlayedGames() {
-    const user = this.getUserById(this._currentUser.id);
+//   /**
+//    * 
+//    * @returns 
+//    */
+//   incrementPlayedGames() {
+//     const user = this.getUserById(this._currentUser.id);
 
-    if (!user) {
-      console.error("Utilisateur non trouvé");
-      return;
-    }
-    console.log(user.played_games);
-    const updatedPlayedGames = (user.played_games || 0) + 1;
+//     if (!user) {
+//       console.error("Utilisateur non trouvé");
+//       return;
+//     }
+//     console.log(user.played_games);
+//     const updatedPlayedGames = (user.played_games || 0) + 1;
 
-    fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        played_games: updatedPlayedGames,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => {
-            throw new Error(`Erreur ${response.status} : ${text}`);
-          });
-        }
-        return response.json();
-      })
-      .then(() => {
-        runInAction(() => {
-          console.log(user);
-          user.played_games = updatedPlayedGames;
-        });
-        this.refreshCurrentUser();
-      })
-      .catch((error) => {
-        console.error(
-          "Erreur lors de l'incrémentation de played_games :",
-          error
-        );
-      });
-  }
+//     fetch(`http://localhost:8000/api/user/${this._currentUser.id}`, {
+//       method: "PATCH",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         played_games: updatedPlayedGames,
+//       }),
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           return response.text().then((text) => {
+//             throw new Error(`Erreur ${response.status} : ${text}`);
+//           });
+//         }
+//         return response.json();
+//       })
+//       .then(() => {
+//         runInAction(() => {
+//           console.log(user);
+//           user.played_games = updatedPlayedGames;
+//         });
+//         this.refreshCurrentUser();
+//       })
+//       .catch((error) => {
+//         console.error(
+//           "Erreur lors de l'incrémentation de played_games :",
+//           error
+//         );
+//       });
+//   }
 
-  /**
-   * update elo
-   * @returns 
-   */
-  updateElo() {
-    const user = this.getUserById(this._currentUser.id);
+//   /**
+//    * update elo
+//    * @returns 
+//    */
+//   updateElo() {
+//     const user = this.getUserById(this._currentUser.id);
 
-    if (!user || user.score == null || user.played_games == null) {
-      console.error("Données incomplètes pour l'ELO");
-      return;
-    }
+//     if (!user || user.score == null || user.played_games == null) {
+//       console.error("Données incomplètes pour l'ELO");
+//       return;
+//     }
 
-    const updatedScore = user.score;
-    const updatedPlayedGames = user.played_games;
+//     const updatedScore = user.score;
+//     const updatedPlayedGames = user.played_games;
 
-    fetch(`http://localhost:8000/api/user/${user.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        score: updatedScore,
-        played_games: updatedPlayedGames,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => {
-            throw new Error(`Erreur ${response.status} : ${text}`);
-          });
-        }
-        return response.json();
-      })
-      .then((updateUser) => {
-        runInAction(() => {
-          console.log(updateUser);
-          console.log(user);
-          user.elo = updateUser.elo;
-        });
-        this.refreshCurrentUser();
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la mise à jour de l'ELO :", error);
-      });
-  }
+//     fetch(`http://localhost:8000/api/user/${user.id}`, {
+//       method: "PATCH",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         score: updatedScore,
+//         played_games: updatedPlayedGames,
+//       }),
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           return response.text().then((text) => {
+//             throw new Error(`Erreur ${response.status} : ${text}`);
+//           });
+//         }
+//         return response.json();
+//       })
+//       .then((updateUser) => {
+//         runInAction(() => {
+//           console.log(updateUser);
+//           console.log(user);
+//           user.elo = updateUser.elo;
+//         });
+//         this.refreshCurrentUser();
+//       })
+//       .catch((error) => {
+//         console.error("Erreur lors de la mise à jour de l'ELO :", error);
+//       });
+//   }
 
-  /**
-   * Refresh date -> currentUser
-   * @returns
-   */
-  async refreshCurrentUser() {
-    if (!this._currentUser?.id) {
-      return;
-    }
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/user/${this._currentUser.id}`
-      );
+//   /**
+//    * Refresh date -> currentUser
+//    * @returns
+//    */
+//   async refreshCurrentUser() {
+//     if (!this._currentUser?.id) {
+//       return;
+//     }
+//     try {
+//       const response = await fetch(
+//         `http://localhost:8000/api/user/${this._currentUser.id}`
+//       );
 
-      if (!response.ok) {
-        throw new Error(
-          `Erreur HTTP ${response.status} lors du rafraîchissement du user`
-        );
-      }
+//       if (!response.ok) {
+//         throw new Error(
+//           `Erreur HTTP ${response.status} lors du rafraîchissement du user`
+//         );
+//       }
 
-      const data = await response.json();
+//       const data = await response.json();
 
-      runInAction(() => {
-        const updatedUser = new Users(data);
-        this._currentUser = updatedUser;
-        localStorage.setItem("currentUser", JSON.stringify(data));
-      });
-    } catch (err) {
-      console.error("Erreur refreshCurrentUser :", err);
-    }
-  }
-}
+//       runInAction(() => {
+//         const updatedUser = new Users(data);
+//         this._currentUser = updatedUser;
+//         localStorage.setItem("currentUser", JSON.stringify(data));
+//       });
+//     } catch (err) {
+//       console.error("Erreur refreshCurrentUser :", err);
+//     }
+//   }
+// }
